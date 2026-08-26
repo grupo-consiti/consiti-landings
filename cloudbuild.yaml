@@ -1,0 +1,61 @@
+# Cloud Build: build imagen → push a Artifact Registry → deploy a Cloud Run.
+# Mismo patrón que grupo-consiti/consiti-web-landingpage.
+#
+# Disparo automático: trigger `odoo-factura-ia-landing-main` (push a main, us-central1)
+# en el proyecto consiti-landing-page, con la SA sa-odoo-factura-ia-build.
+#
+# Despliegue manual desde el repo:
+#   gcloud builds submit --config=cloudbuild.yaml --project=consiti-landing-page .
+#
+# /api/capi (Meta CAPI) NO se despliega aquí: es fase 2 (docs/DESPLIEGUE-GCP.md §5).
+# Cuando exista el token rotado en Secret Manager, va como servicio aparte y se
+# enruta desde nginx.conf con `location = /api/capi { proxy_pass ...; }`.
+
+substitutions:
+  _REGION: us-central1
+  _AR_REPO: cloud-run-source-deploy
+  _SERVICE_NAME: odoo-factura-ia-landing
+  # Runtime SA dedicada, sin roles (nginx no llama a ninguna API de GCP).
+  _RUN_SA: odoo-factura-ia-run@consiti-landing-page.iam.gserviceaccount.com
+
+options:
+  logging: CLOUD_LOGGING_ONLY   # obligatorio con SA de build propia
+  dynamicSubstitutions: true    # para ${SHORT_SHA:-manual}
+
+# No usamos `images:` top-level: Cloud Build lo pushea DESPUÉS del último step
+# y el deploy necesita la imagen ya en el registry.
+steps:
+  - id: build-and-push
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
+        TAG="${SHORT_SHA:-manual}"
+        docker build -t "$$IMG:$$TAG" -t "$$IMG:latest" .
+        docker push "$$IMG:$$TAG"
+        docker push "$$IMG:latest"
+
+  - id: deploy-cloud-run
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
+        TAG="${SHORT_SHA:-manual}"
+        gcloud run deploy "${_SERVICE_NAME}" \
+          --image "$$IMG:$$TAG" \
+          --region "${_REGION}" \
+          --platform managed \
+          --port 8080 \
+          --service-account "${_RUN_SA}" \
+          --cpu 1 --memory 256Mi \
+          --min-instances 0 --max-instances 5 --concurrency 200 \
+          --allow-unauthenticated \
+          --quiet
+
+timeout: 600s

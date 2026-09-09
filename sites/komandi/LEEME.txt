@@ -1,0 +1,80 @@
+LANDING KOMANDI
+===============
+
+*** IMPORTANTE: ESTA PAGINA LLEVA noindex A PROPOSITO. NO LO QUITE. ***
+
+    Todavia no comunicamos el nombre "Komandi" hacia afuera porque estamos
+    resolviendo el registro de marca. Puede apuntar el dominio y dejarla
+    arriba, pero sin enlazarla y sin anunciarla. Si Google la indexa antes
+    de tiempo, el nombre se hace publico y eso no se puede deshacer.
+
+    No es un noindex de ambiente de prueba. Es intencional.
+
+    (El noindex no estorba la vista previa del enlace: si comparte la
+     direccion por WhatsApp, igual sale con titulo, descripcion e imagen.)
+
+
+Que es:  la pagina de Komandi.
+
+Va en:   komandi.stradialabs.com
+         Este subdominio hay que registrarlo, todavia no existe.
+
+Deploy:  Vercel estatico, igual que la landing de Alianzas Contables.
+         Sin build. Sin carpeta de imagenes.
+
+
+LOS CUATRO ARCHIVOS VAN EN LA RAIZ DEL SITIO
+--------------------------------------------
+
+  index.html             la pagina completa. El CSS, el JavaScript y el logo
+                         van dentro del archivo.
+  og-komandi.png         imagen de vista previa del enlace (1200x630).
+  favicon.ico            icono de pestaNa (16, 32 y 48 px).
+  apple-touch-icon.png   icono de "agregar a inicio" en iPhone (180 px).
+
+Los tres archivos de imagen NO son opcionales y NO se pueden meter dentro del
+HTML: tanto Google como iPhone necesitan poder ir a buscar el archivo. Tienen
+que quedar accesibles asi, en la raiz:
+
+    https://komandi.stradialabs.com/og-komandi.png
+    https://komandi.stradialabs.com/favicon.ico
+    https://komandi.stradialabs.com/apple-touch-icon.png
+
+
+DOS COSAS MAS
+-------------
+
+1. Se escribe KOMANDI, con K. Ni el repositorio, ni el proyecto de Vercel,
+   ni el subdominio deben decir "Comandi". Ese es el nombre anterior.
+
+2. El texto "Komandi" del encabezado y del pie esta escrito en tipografia
+   a proposito, no es un archivo de logo. NO lo reemplace por ninguno de
+   los archivos logotipo_version0X.png: esos dicen el nombre viejo.
+   Cuando llegue el logo nuevo, Briant lo manda.
+
+
+SI LA PUBLICA EN OTRA DIRECCION
+-------------------------------
+
+Hay cinco URLs en el <head> que hay que cambiar: canonical, og:url, og:image,
+twitter:image y la del bloque JSON-LD. Estan todas juntas y hay un comentario
+que lo explica. El favicon y el apple-touch usan rutas relativas a la raiz,
+esas no se tocan.
+
+
+PARA VERIFICAR AL TERMINAR
+--------------------------
+
+[ ] Subdominio apuntado y HTTPS activo
+[ ] noindex verificado EN VIVO despues de publicar  <-- lo mas importante
+[ ] Los cuatro archivos responden en la raiz (probar las tres URLs de arriba)
+[ ] Nada dice "Comandi": repositorio, proyecto de Vercel, subdominio
+[ ] Los botones de WhatsApp abren en wa.me/50372559059 con el mensaje puesto
+[ ] Revisada en telefono, no solo en computadora
+[ ] Sin anunciar y sin compartir hasta que Briant lo autorice
+
+
+Cualquier duda del contenido se la pasa a Briant.
+No editar textos ni precios.
+
+08-sep-2026 - Uso interno.

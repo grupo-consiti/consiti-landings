@@ -1,0 +1,64 @@
+LANDING VENDI
+=============
+
+Que es:  la nueva pagina de Vendi.
+
+Va en:   vendi.stradialabs.com
+         Reemplaza lo que hoy esta en vendi.consiti.com, que tiene precios
+         viejos y ya no corresponde.
+
+Deploy:  Vercel estatico, igual que la landing de Alianzas Contables.
+         Sin build. Sin carpeta de imagenes.
+
+
+LOS CUATRO ARCHIVOS VAN EN LA RAIZ DEL SITIO
+--------------------------------------------
+
+  index.html             la pagina completa. El CSS, el JavaScript y el logo
+                         van dentro del archivo.
+  og-vendi.png           imagen de vista previa del enlace (1200x630).
+  favicon.ico            icono de pestaNa (16, 32 y 48 px).
+  apple-touch-icon.png   icono de "agregar a inicio" en iPhone (180 px).
+
+Los tres archivos de imagen NO son opcionales y NO se pueden meter dentro del
+HTML: tanto Google como iPhone necesitan poder ir a buscar el archivo. Tienen
+que quedar accesibles asi, en la raiz:
+
+    https://vendi.stradialabs.com/og-vendi.png
+    https://vendi.stradialabs.com/favicon.ico
+    https://vendi.stradialabs.com/apple-touch-icon.png
+
+
+SI LA PUBLICA EN OTRA DIRECCION
+-------------------------------
+
+Hay cinco URLs en el <head> que hay que cambiar: canonical, og:url, og:image,
+twitter:image y la del bloque JSON-LD. Estan todas juntas y hay un comentario
+que lo explica. El favicon y el apple-touch usan rutas relativas a la raiz,
+esas no se tocan.
+
+
+SI LA SUBE PRIMERO A UNA DIRECCION DE PRUEBA
+--------------------------------------------
+
+Active el noindex. En el <head> hay esta linea comentada, solo hay que
+descomentarla:
+
+    <!-- <meta name="robots" content="noindex, nofollow"> -->
+
+En el dominio final se deja comentada: esta pagina si se quiere en Google.
+
+
+PARA VERIFICAR AL TERMINAR
+--------------------------
+
+[ ] Dominio apuntado y HTTPS activo
+[ ] Los cuatro archivos responden en la raiz (probar las tres URLs de arriba)
+[ ] Los botones de WhatsApp abren en wa.me/50372559059 con el mensaje puesto
+[ ] Revisada en telefono, no solo en computadora
+
+
+Cualquier duda del contenido se la pasa a Briant.
+No editar textos ni precios.
+
+08-sep-2026 - Uso interno.

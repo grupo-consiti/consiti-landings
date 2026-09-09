@@ -1,29 +1,25 @@
-# Cloud Build: build imagen → push a Artifact Registry → deploy a Cloud Run.
-# Mismo patrón que grupo-consiti/consiti-web-landingpage.
+# Cloud Build genérico del monorepo de landings.
+# Un solo archivo para TODOS los sitios: cada trigger pasa _SITE / _SERVICE_NAME
+# / _RUN_SA por --substitutions y filtra por --included-files=sites/<sitio>/**,
+# de modo que un push solo reconstruye la landing que cambió.
 #
-# Disparo automático: trigger `odoo-factura-ia-landing-main` (push a main, us-central1)
-# en el proyecto consiti-landing-page, con la SA sa-odoo-factura-ia-build.
-#
-# Despliegue manual desde el repo:
-#   gcloud builds submit --config=cloudbuild.yaml --project=consiti-landing-page .
-#
-# /api/capi (Meta CAPI) NO se despliega aquí: es fase 2 (docs/DESPLIEGUE-GCP.md §5).
-# Cuando exista el token rotado en Secret Manager, va como servicio aparte y se
-# enruta desde nginx.conf con `location = /api/capi { proxy_pass ...; }`.
+# Deploy manual de un sitio:
+#   gcloud builds submit --config=cloudbuild.yaml --project=consiti-landing-page \
+#     --substitutions=_SITE=factura-ia,_SERVICE_NAME=odoo-factura-ia-landing,_RUN_SA=odoo-factura-ia-run@consiti-landing-page.iam.gserviceaccount.com .
 
 substitutions:
   _REGION: us-central1
   _AR_REPO: cloud-run-source-deploy
-  _SERVICE_NAME: odoo-factura-ia-landing
-  # Runtime SA dedicada, sin roles (nginx no llama a ninguna API de GCP).
-  _RUN_SA: odoo-factura-ia-run@consiti-landing-page.iam.gserviceaccount.com
+  _SITE: ""          # carpeta en sites/  (lo fija el trigger)
+  _SERVICE_NAME: ""  # servicio Cloud Run (lo fija el trigger)
+  _RUN_SA: ""        # runtime SA del servicio (lo fija el trigger)
 
 options:
-  logging: CLOUD_LOGGING_ONLY   # obligatorio con SA de build propia
-  dynamicSubstitutions: true    # para ${SHORT_SHA:-manual}
+  logging: CLOUD_LOGGING_ONLY
+  dynamicSubstitutions: true
 
-# No usamos `images:` top-level: Cloud Build lo pushea DESPUÉS del último step
-# y el deploy necesita la imagen ya en el registry.
+# El build context es sites/${_SITE}: solo se sube esa landing al builder,
+# no las demás (evita arrastrar los videos de otros sitios).
 steps:
   - id: build-and-push
     name: gcr.io/cloud-builders/docker
@@ -32,9 +28,10 @@ steps:
       - -c
       - |
         set -euo pipefail
+        test -n "${_SITE}" -a -n "${_SERVICE_NAME}" -a -n "${_RUN_SA}" || { echo "faltan _SITE/_SERVICE_NAME/_RUN_SA"; exit 1; }
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
         TAG="${SHORT_SHA:-manual}"
-        docker build -t "$$IMG:$$TAG" -t "$$IMG:latest" .
+        docker build -f Dockerfile -t "$$IMG:$$TAG" -t "$$IMG:latest" "sites/${_SITE}"
         docker push "$$IMG:$$TAG"
         docker push "$$IMG:latest"
 
@@ -48,14 +45,9 @@ steps:
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
         TAG="${SHORT_SHA:-manual}"
         gcloud run deploy "${_SERVICE_NAME}" \
-          --image "$$IMG:$$TAG" \
-          --region "${_REGION}" \
-          --platform managed \
-          --port 8080 \
-          --service-account "${_RUN_SA}" \
-          --cpu 1 --memory 256Mi \
-          --min-instances 0 --max-instances 5 --concurrency 200 \
-          --allow-unauthenticated \
-          --quiet
+          --image "$$IMG:$$TAG" --region "${_REGION}" --platform managed \
+          --port 8080 --service-account "${_RUN_SA}" \
+          --cpu 1 --memory 256Mi --min-instances 0 --max-instances 5 --concurrency 200 \
+          --allow-unauthenticated --quiet
 
 timeout: 600s

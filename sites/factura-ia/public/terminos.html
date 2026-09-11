@@ -12,13 +12,26 @@
 
 <!-- ============================================================
      ANALITICA CON CONSENTIMIENTO PREVIO
-     El Meta Pixel ya no se carga al entrar; lo carga assets/consent.js
-     solo si la persona acepta las cookies (privacidad y cookies, §9).
+     El Meta Pixel y GA4 ya no se cargan al entrar; los carga
+     assets/consent.js solo si la persona acepta las cookies
+     (privacidad y cookies, §9). Hotjar SI se carga al entrar (abajo).
      ============================================================ -->
 <script>
   window.CONSENT_CFG = { pixelId: "2238963863532324", ga4Id: "G-BTME51TFEN" };
 </script>
 <script src="assets/consent.js" defer></script>
+
+<!-- Hotjar Tracking Code for FacturaIA -->
+<script>
+   (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:6776565,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -203,10 +216,12 @@
 
         <h3 id="cookies">Cookies</h3>
         <p>
-          Al entrar al sitio <strong>no se activa ninguna cookie de medición</strong>. Un aviso
-          permite <strong>aceptar</strong> o <strong>rechazar</strong> las cookies no esenciales; solo
-          si acepta se cargan las herramientas de analítica. La elección puede cambiarse cuando quiera
-          desde <a href="#" onclick="if(window.openCookiePrefs)openCookiePrefs();return false;">Preferencias de cookies</a>.
+          Al entrar al sitio solo se activa la herramienta de <strong>análisis de uso del sitio</strong>
+          (Hotjar), que registra la navegación de forma anónima para mejorar las páginas. Las cookies de
+          <strong>publicidad y estadísticas</strong> (Meta y Google) <strong>no se activan al entrar</strong>:
+          un aviso permite <strong>aceptarlas</strong> o <strong>rechazarlas</strong> y solo se cargan si
+          acepta. La elección puede cambiarse cuando quiera desde
+          <a href="#" onclick="if(window.openCookiePrefs)openCookiePrefs();return false;">Preferencias de cookies</a>.
         </p>
         <div class="tabla-wrap">
           <table>
@@ -217,6 +232,7 @@
               <tr><td>Preferencia de consentimiento <span class="mut">(esencial)</span></td><td>Grupo Consiti (propia)</td><td>Recordar si aceptó o rechazó las cookies</td><td>Almacenamiento local</td></tr>
               <tr><td>Analítica de campañas</td><td>Meta Platforms — Pixel</td><td>Medir visitas y publicidad</td><td><code>_fbp</code>, <code>_fbc</code> · ~3 meses</td></tr>
               <tr><td>Analítica de uso</td><td>Google — Analytics 4</td><td>Estadísticas agregadas de uso</td><td><code>_ga</code>, <code>_ga_*</code> · ~2 años</td></tr>
+              <tr><td>Analítica de uso</td><td>Hotjar</td><td>Mapas de calor y grabación anónima de la navegación para mejorar el sitio <span class="mut">(se activa al entrar)</span></td><td><code>_hjSessionUser_*</code> · ~1 año · <code>_hjSession_*</code> · 30 min</td></tr>
             </tbody>
           </table>
         </div>

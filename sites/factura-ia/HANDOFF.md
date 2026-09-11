@@ -20,7 +20,8 @@ Landing de marketing de **Factura IA** (Grupo Consiti S.A. de C.V.) — facturac
 | Contenido y diseño (rediseño v2) | ✅ **Listo** |
 | Legales (`/terminos`, consolidada, sin SLA) | ✅ Listo (sin revisión de abogado, por decisión de Briant) |
 | Consentimiento de cookies (Pixel/GA gateados) | ✅ Funcionando |
-| Analítica en código: GA4 `G-BTME51TFEN` · Pixel `2238963863532324` | ✅ Puesto |
+| Hotjar `6776565` — **se carga al entrar, sin gateo** (decisión de negocio) | ⚠️ Revisar con legal |
+| Analítica en código: GA4 `G-BTME51TFEN` · Pixel `2238963863532324` · Hotjar `6776565` | ✅ Puesto |
 | og:image + logo ("Factura IA") | ✅ Listo |
 | **Despliegue** | 🔴 **Pendiente — en GCP, con Duvan** |
 | Dominio definitivo | 🔴 Pendiente (Duvan Rondo) |
@@ -43,6 +44,7 @@ Landing de marketing de **Factura IA** (Grupo Consiti S.A. de C.V.) — facturac
 |---|---|
 | Meta Pixel | `2238963863532324` (público, en código) |
 | GA4 Measurement ID | `G-BTME51TFEN` (público, en código) |
+| Hotjar Site ID | `6776565` (público, en código) |
 | `META_CAPI_TOKEN` | Secreto → Secret Manager (rotar) |
 | Preview privado (temporal) | https://odoo-factura-ia-landing.vercel.app |
 

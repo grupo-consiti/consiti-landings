@@ -4,7 +4,7 @@
 
 Son 4 tareas. Ninguna es de diseño ni de código de fondo: son datos/credenciales que se pegan en su lugar. Orden sugerido: **1 → 2 → 3 → 4**.
 
-> ⚠️ **Importante sobre el consentimiento de cookies.** El Pixel de Meta y GA4 **solo se disparan si el visitante ACEPTA las cookies**. Al probar cualquier cosa, primero hacé clic en **Aceptar** en el banner, o no vas a ver eventos. (Es lo que nos hace cumplir la ley; es correcto.)
+> ⚠️ **Importante sobre el consentimiento de cookies.** El Pixel de Meta y GA4 **solo se disparan si el visitante ACEPTA las cookies** (Hotjar no: se carga al entrar, para todos). Al probar cualquier cosa, primero hacé clic en **Aceptar** en el banner, o no vas a ver eventos. (Es lo que nos hace cumplir la ley; es correcto.)
 
 ---
 

@@ -92,7 +92,7 @@
     el.innerHTML =
       '<div class="ck-in">' +
       '<p class="ck-tx">Usamos cookies propias y de terceros para medir el uso del sitio y mejorar su experiencia. ' +
-      'Puede aceptarlas o rechazarlas; si las rechaza, no se activa ninguna cookie de medición. ' +
+      'Puede aceptarlas o rechazarlas; si las rechaza, no se activan las cookies de Meta ni de Google Analytics. ' +
       '<a href="/terminos#cookies">Más información</a>.</p>' +
       '<div class="ck-bt">' +
       '<button type="button" class="ck-b ck-no">Rechazar</button>' +

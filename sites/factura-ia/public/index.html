@@ -545,8 +545,10 @@ footer a:hover{color:#fff}
 .cta-movil{display:none}
 @media(max-width:820px){
   .wa-float{display:none}
-  body{padding-bottom:62px}
-  .cta-movil{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:82;align-items:center;justify-content:space-between;gap:14px;height:60px;padding:0 16px;background:rgba(10,6,22,.97);border-top:1px solid var(--linea-osc);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  .cta-movil{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:82;align-items:center;justify-content:space-between;gap:14px;min-height:60px;padding:0 16px;padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(10,6,22,.97);border-top:1px solid var(--linea-osc);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .28s ease;will-change:transform}
+  .cta-movil.oculta{transform:translateY(130%)}
+  @media(prefers-reduced-motion:reduce){.cta-movil{transition:none}}
   .cta-movil-precio{font-family:var(--texto);font-size:.95rem;color:#fff;line-height:1.2}
   .cta-movil-precio b{font-family:var(--mono);font-weight:700}
   .cta-movil-btn{display:inline-flex;align-items:center;gap:7px;background:var(--wa);color:#fff;font-family:var(--display);font-weight:700;font-size:.95rem;text-decoration:none;padding:11px 22px;border-radius:999px;flex:none}
@@ -1840,6 +1842,21 @@ document.getElementById("anio").textContent=new Date().getFullYear();
   }
   apply();
   if(mq.addEventListener) mq.addEventListener('change', apply);
+})();
+</script>
+
+<!-- Barra CTA móvil: se oculta al bajar (no tapa el contenido) y reaparece al subir -->
+<script>
+(function(){
+  var bar=document.querySelector(".cta-movil"); if(!bar) return;
+  var lastY=window.pageYOffset||0, ticking=false;
+  function upd(){
+    var y=window.pageYOffset||0;
+    if(y>lastY+6 && y>240){ bar.classList.add("oculta"); }
+    else if(y<lastY-6){ bar.classList.remove("oculta"); }
+    lastY=y; ticking=false;
+  }
+  window.addEventListener("scroll",function(){ if(!ticking){ requestAnimationFrame(upd); ticking=true; } },{passive:true});
 })();
 </script>
 </body>

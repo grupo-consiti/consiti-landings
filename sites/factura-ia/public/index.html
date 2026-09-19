@@ -1288,18 +1288,18 @@ var WA = "50372559059";
 var MENSAJES = {
   nav:"Buen día. Vengo de la página de Factura IA y quiero información sobre los planes.",
   "menu-movil":"Buen día. Vengo de la página de Factura IA y quiero información sobre los planes.",
-  hero:"Buen día. Vengo de la página de Factura IA y quiero información sobre los planes.",
-  contadores:"Buen día. Soy contador y llevo la contabilidad de ______ empresas. Quiero ver la cuenta de despacho.",
+  hero:"Buen día. Vengo de la página de Factura IA y quiero empezar a facturar electrónicamente. ¿Me pueden dar más información?",
+  contadores:"Buen día. Manejo la contabilidad de varias empresas y quiero información sobre la cuenta para despachos.",
   dte20:"Buen día. Quiero quedar cubierto para la Normativa DTE 2.0 antes del 1 de diciembre.",
-  migracion:"Buen día. Actualmente facturo con ______ y quiero saber qué implica cambiarme a Factura IA.",
+  migracion:"Buen día. Actualmente uso otro sistema de facturación y quiero conocer el proceso para cambiarme a Factura IA.",
   "plan-starter":"Buen día. Emito unas 30 facturas al mes y quiero contratar el plan Starter de $14.99 + IVA.",
   "plan-professional":"Buen día. Emito unas 100 facturas al mes y quiero contratar el plan Professional de $24.99 + IVA.",
   "plan-advanced":"Buen día. Emito unas 500 facturas al mes y quiero contratar el plan Advanced de $34.99 + IVA.",
   "plan-deluxe":"Buen día. Emito unas 1,000 facturas al mes y quiero contratar el plan Deluxe de $59.99 + IVA.",
   "plan-enterprise":"Buen día. Emito más de 1,000 facturas al mes y quiero conocer el plan Enterprise.",
   cierre:"Buen día. Quiero empezar a facturar con Factura IA.",
-  footer:"Buen día. Quiero información sobre Factura IA.",
-  flotante:"Buen día. Tengo una consulta sobre Factura IA."
+  footer:"Buen día. Quiero información sobre Factura IA para empezar a facturar electrónicamente.",
+  flotante:"Buen día. Vengo de la página de Factura IA y quiero información para empezar a facturar electrónicamente."
 };
 function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
 document.querySelectorAll("[data-wa]").forEach(function(a){
@@ -1342,11 +1342,11 @@ document.querySelectorAll("[data-wa]").forEach(function(a){
 
 /* ============ Calculadora de plan ============ */
 var PLANES=[
-  {n:"Starter",p:"$14.99",impl_num:40,d:"Hasta 30 facturas al mes. Consumidor final, crédito fiscal y notas de crédito y débito.",wa:"Buen día. Emito unas 30 facturas al mes y quiero contratar el plan Starter de $14.99 + IVA."},
-  {n:"Professional",p:"$24.99",impl_num:50,d:"Hasta 100 facturas al mes. Agrega los anexos de IVA y los libros en PDF y Excel, su logo en la factura, exportación, sujeto excluido y retención.",wa:"Buen día. Emito unas 100 facturas al mes y quiero contratar el plan Professional de $24.99 + IVA."},
-  {n:"Advanced",p:"$34.99",impl_num:60,d:"Hasta 500 facturas al mes. Incluye la carga automática de sus facturas de compra, que le ahorra la digitación.",wa:"Buen día. Emito unas 500 facturas al mes y quiero contratar el plan Advanced de $34.99 + IVA."},
-  {n:"Deluxe",p:"$59.99",impl_num:70,d:"Hasta 1,000 facturas al mes y un módulo del ERP a elección: punto de venta, inventario, compras, cotizaciones o CRM.",wa:"Buen día. Emito unas 1,000 facturas al mes y quiero contratar el plan Deluxe de $59.99 + IVA."},
-  {n:"Enterprise",p:"$150",impl_num:100,d:"Facturas sin límite y una persona de nuestro equipo asignada a su sistema, disponible en horario de oficina.",wa:"Buen día. Emito más de 1,000 facturas al mes y quiero conocer el plan Enterprise."}
+  {n:"Starter",p:"$14.99",impl_num:40,d:"Hasta 30 facturas al mes. Consumidor final, crédito fiscal y notas de crédito y débito.",wa:"Buen día. Según la calculadora, mi plan es Starter (unas 30 facturas al mes). Quiero información para contratarlo."},
+  {n:"Professional",p:"$24.99",impl_num:50,d:"Hasta 100 facturas al mes. Agrega los anexos de IVA y los libros en PDF y Excel, su logo en la factura, exportación, sujeto excluido y retención.",wa:"Buen día. Según la calculadora, mi plan es Professional (unas 100 facturas al mes). Quiero información para contratarlo."},
+  {n:"Advanced",p:"$34.99",impl_num:60,d:"Hasta 500 facturas al mes. Incluye la carga automática de sus facturas de compra, que le ahorra la digitación.",wa:"Buen día. Según la calculadora, mi plan es Advanced (unas 500 facturas al mes). Quiero información para contratarlo."},
+  {n:"Deluxe",p:"$59.99",impl_num:70,d:"Hasta 1,000 facturas al mes y un módulo del ERP a elección: punto de venta, inventario, compras, cotizaciones o CRM.",wa:"Buen día. Según la calculadora, mi plan es Deluxe (unas 1,000 facturas al mes). Quiero información para contratarlo."},
+  {n:"Enterprise",p:"$150",impl_num:100,d:"Facturas sin límite y una persona de nuestro equipo asignada a su sistema, disponible en horario de oficina.",wa:"Buen día. Según la calculadora, mi plan es Enterprise (más de 1,000 facturas al mes). Quiero información para contratarlo."}
 ];
 (function(){
   var cont=document.getElementById("opciones"); if(!cont) return;

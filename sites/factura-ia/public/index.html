@@ -635,7 +635,7 @@ footer a:hover{color:#fff}
         <video id="demo-emitir"
                poster="assets/emitir-factura-poster.webp"
                width="1600" height="1200"
-               autoplay muted loop playsinline preload="metadata"
+               muted loop playsinline preload="none"
                aria-label="Grabación de pantalla real: se abre una factura de cliente en borrador, se elige el cliente y el producto, se presiona Publicar y Enviar, y la factura queda emitida con su sello de Hacienda, su UUID y su número de control.">
           <source src="assets/emitir-factura.webm" type="video/webm">
           <source src="assets/emitir-factura.mp4" type="video/mp4">
@@ -718,7 +718,7 @@ footer a:hover{color:#fff}
         <video id="demo-compras"
                poster="assets/carga-compras-poster.webp"
                width="1600" height="900"
-               autoplay muted loop playsinline preload="metadata"
+               muted loop playsinline preload="none"
                aria-label="Grabación de pantalla real: se suben los archivos JSON de las facturas de compra, se presiona Procesar con IA y el sistema registra la factura de proveedor con su fecha, su tipo de documento y su sello de Hacienda, sin digitar nada.">
           <source src="assets/carga-compras.webm" type="video/webm">
           <source src="assets/carga-compras.mp4" type="video/mp4">
@@ -748,7 +748,7 @@ footer a:hover{color:#fff}
         <video id="demo-anexos"
                poster="assets/anexos-libros-poster.webp"
                width="1280" height="720"
-               autoplay muted loop playsinline preload="metadata"
+               muted loop playsinline preload="none"
                aria-label="Grabación de pantalla real: se elige el período y el formato del libro de consumidor, se presiona Descargar, y se abre el PDF que genera el sistema con todas las columnas del anexo: ventas exentas, no sujetas, gravadas locales, gravadas de exportación, débito fiscal, IVA percibido, IVA retenido y total de ventas.">
           <source src="assets/anexos-libros.webm" type="video/webm">
           <source src="assets/anexos-libros.mp4" type="video/mp4">
@@ -1537,15 +1537,22 @@ document.getElementById("anio").textContent=new Date().getFullYear();
     });
     return;
   }
-  if(!("IntersectionObserver" in window)) return;
-  /* el navegador pausa el video al salir de vista pero no siempre lo reanuda al volver */
+  /* sin IntersectionObserver: cargar y reproducir los tres (degradacion) */
+  if(!("IntersectionObserver" in window)){
+    Array.prototype.forEach.call(vids,function(v){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); });
+    return;
+  }
+  /* preload="none" + sin autoplay: nada se descarga al iniciar. El primer
+     play() de cada video dispara su descarga, y solo ocurre cuando el video
+     esta a punto de entrar en pantalla (rootMargin), no antes. Al salir de
+     vista se pausa; lo ya bajado se conserva y reanuda al volver. */
   var io=new IntersectionObserver(function(en){
     en.forEach(function(e){
       var v=e.target;
       if(e.isIntersecting){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
       else if(!v.paused){ v.pause(); }
     });
-  },{threshold:.25});
+  },{threshold:.01,rootMargin:"200px 0px"});
   Array.prototype.forEach.call(vids,function(v){ io.observe(v); });
 })();
 </script>

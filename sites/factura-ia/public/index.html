@@ -146,6 +146,16 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
 .nav-links a{text-decoration:none;color:rgba(255,255,255,.72);padding:10px 0}
 .nav-links a:hover{color:#fff}
 .nav-links a.precio-nav{color:var(--amarillo);font-weight:600}
+/* Par de audiencia en el menu: Para empresas | Para contadores */
+.nav-aud{display:inline-flex;align-items:center;gap:10px}
+.nav-aud .sep{color:rgba(255,255,255,.28);font-weight:300}
+/* Teaser de contadores dentro del funnel de empresas (el modulo completo vive mas abajo) */
+.teaser-conta{padding:44px 0}
+.teaser-conta-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px;background:var(--nube);border:1px solid var(--linea);border-radius:18px;padding:26px 30px}
+.teaser-conta .eyebrow{margin-bottom:6px}
+.teaser-conta-h{font-family:var(--display);font-weight:800;font-size:1.28rem;letter-spacing:-.02em;color:var(--tinta);margin:0;max-width:42ch;line-height:1.2}
+.teaser-conta .btn{flex:none}
+@media(max-width:640px){.teaser-conta-card{flex-direction:column;align-items:flex-start}.teaser-conta .btn{width:100%}}
 .burger{display:none;margin-left:auto;background:transparent;border:1px solid var(--linea-osc);border-radius:10px;padding:9px 11px;cursor:pointer}
 .burger svg{display:block;color:#fff}
 .drawer{display:none;background:var(--noche);border-bottom:1px solid var(--linea-osc);padding:8px 22px 20px}
@@ -529,7 +539,7 @@ footer a:hover{color:#fff}
     <nav class="nav-links">
       <a href="#como-funciona">Cómo funciona</a>
       <a class="precio-nav" href="#precio">Precios desde $14.99</a>
-      <a href="#contadores">Para contadores</a>
+      <span class="nav-aud"><a href="#precio">Para empresas</a><span class="sep" aria-hidden="true">|</span><a href="#contadores">Para contadores</a></span>
       <a href="#cambiar">Cambiar de proveedor</a>
       <a href="#faq">Preguntas</a>
     </nav>
@@ -541,6 +551,7 @@ footer a:hover{color:#fff}
   <div class="drawer" id="drawer">
     <a href="#como-funciona">Cómo funciona</a>
     <a href="#precio">Precios desde $14.99</a>
+    <a href="#precio">Para empresas</a>
     <a href="#contadores">Para contadores</a>
     <a href="#cambiar">Cambiar de proveedor</a>
     <a href="#faq">Preguntas</a>
@@ -784,37 +795,15 @@ footer a:hover{color:#fff}
   </div>
 </section>
 
-<!-- ================= 4. PARA CONTADORES ================= -->
-<section class="conta dark" id="contadores">
+<!-- ===== 4. TEASER PARA CONTADORES (el modulo completo se movio mas abajo, id=contadores) ===== -->
+<section class="teaser-conta">
   <div class="wrap">
-    <span class="eyebrow rv">Para contadores y despachos</span>
-    <h2 class="rv">Si lleva la contabilidad de varias empresas, esto es para usted</h2>
-    <div class="conta-grid" style="margin-top:30px">
-      <div class="rv">
-        <ul class="conta-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span><b>Cuenta de despacho, sin costo.</b> No paga por tener acceso a las empresas de sus clientes. Cada empresa paga su plan; su cuenta de administración va incluida.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span><b>Todas sus empresas desde una sola sesión.</b> Cambia de una a otra sin volver a entrar.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span><b>Los anexos de todos sus clientes en una sola descarga.</b> No entra empresa por empresa: filtra el período una vez y baja el cierre completo de su cartera, en PDF y Excel.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span><b>Todos los documentos.</b> Crédito fiscal, exportación, sujeto excluido, retención, notas de crédito y débito.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span><b>Sus clientes no lo llaman a usted por soporte.</b> Nos llaman a nosotros, y sin costo.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span><b>La Normativa 2.0 la actualizamos nosotros</b>, en todas sus empresas a la vez.</span></li>
-        </ul>
-        <a class="btn btn-wa btn-sm" data-wa="contadores" href="#" style="margin-top:24px">Quiero una cuenta de despacho</a>
+    <div class="teaser-conta-card rv">
+      <div>
+        <span class="eyebrow">¿Es contador?</span>
+        <p class="teaser-conta-h">Administre todos sus clientes desde una sola cuenta.</p>
       </div>
-
-      <figure class="shot rv">
-        <img src="assets/multiempresa.webp" width="1600" height="628" loading="lazy" decoding="async"
-             alt="Vista del contador en el sistema: el selector de empresas abierto con la cartera de empresas (nombres de ejemplo), y el menú lateral de Facturas, Anexos y Libros.">
-        <figcaption><span class="ok" aria-hidden="true">✓</span>
-          Un contador cambia entre todas las empresas de su cartera desde un solo lugar. Nombres de ejemplo.
-        </figcaption>
-      </figure>
+      <a class="btn btn-ghost" href="#contadores">Conocer Factura IA para contadores →</a>
     </div>
   </div>
 </section>
@@ -1140,6 +1129,41 @@ footer a:hover{color:#fff}
 </section>
 
 <!-- ================= 11. FAQ ================= -->
+<!-- ================= PARA CONTADORES (subseccion dedicada, fuera del funnel de empresas) ================= -->
+<section class="conta dark" id="contadores">
+  <div class="wrap">
+    <span class="eyebrow rv">Para contadores y despachos</span>
+    <h2 class="rv">Si lleva la contabilidad de varias empresas, esto es para usted</h2>
+    <div class="conta-grid" style="margin-top:30px">
+      <div class="rv">
+        <ul class="conta-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Cuenta de despacho, sin costo.</b> No paga por tener acceso a las empresas de sus clientes. Cada empresa paga su plan; su cuenta de administración va incluida.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Todas sus empresas desde una sola sesión.</b> Cambia de una a otra sin volver a entrar.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Los anexos de todos sus clientes en una sola descarga.</b> No entra empresa por empresa: filtra el período una vez y baja el cierre completo de su cartera, en PDF y Excel.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Todos los documentos.</b> Crédito fiscal, exportación, sujeto excluido, retención, notas de crédito y débito.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Sus clientes no lo llaman a usted por soporte.</b> Nos llaman a nosotros, y sin costo.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>La Normativa 2.0 la actualizamos nosotros</b>, en todas sus empresas a la vez.</span></li>
+        </ul>
+        <a class="btn btn-wa btn-sm" data-wa="contadores" href="#" style="margin-top:24px">Quiero una cuenta de despacho</a>
+      </div>
+
+      <figure class="shot rv">
+        <img src="assets/multiempresa.webp" width="1600" height="628" loading="lazy" decoding="async"
+             alt="Vista del contador en el sistema: el selector de empresas abierto con la cartera de empresas (nombres de ejemplo), y el menú lateral de Facturas, Anexos y Libros.">
+        <figcaption><span class="ok" aria-hidden="true">✓</span>
+          Un contador cambia entre todas las empresas de su cartera desde un solo lugar. Nombres de ejemplo.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section style="background:var(--nube)" id="faq">
   <div class="wrap">
     <span class="eyebrow rv">Preguntas frecuentes</span>

@@ -584,6 +584,40 @@ footer a:hover{color:#fff}
   .hero-cta,.res-cta,.cierre-cta{flex-direction:column;align-items:stretch}
   .hero-cta .btn,.res-cta .btn,.cierre-cta .btn{width:100%}
 }
+
+/* ============================================================
+   DENSIDAD MÓVIL (<=640px): mismo contenido, menos fatiga.
+   Ritmo de espacios más corto, tarjetas más compactas, áreas
+   táctiles >=44px y las 'cinco preguntas' plegadas por defecto.
+   ============================================================ */
+@media(max-width:640px){
+  section{padding:40px 0}
+  .hero{padding:40px 0 44px}
+  .campana-in{padding:12px 18px}
+  .franja-in{padding:13px 18px}
+  h1{font-size:1.95rem;line-height:1.1}
+  h2{font-size:1.5rem}
+  .lede{font-size:1rem;margin-top:12px}
+  /* áreas táctiles a 44px+ */
+  footer a{padding:12px 0}
+  .drawer a{padding:15px 0}
+  .pc-todo summary{padding:16px 0 8px}
+  /* tarjetas de plan más compactas + preview de 3 en móvil */
+  .planes-cards{gap:14px;margin-top:22px}
+  .plan-card{padding:20px 18px}
+  .pc-preview{gap:8px;margin-top:14px}
+  .pc-preview li:nth-child(n+4){display:none}
+  /* menos aire alto entre encabezado y contenido */
+  .preguntas{margin-top:26px}
+  .cifras{gap:12px}
+  .nota-planes{margin-top:16px;padding:16px 18px}
+  /* 'cinco preguntas' como acordeón en móvil */
+  .preg-colapsable .preguntas-cab{cursor:pointer;position:relative;padding-right:50px;-webkit-tap-highlight-color:transparent}
+  .preg-colapsable .preguntas-cab:after{content:"+";position:absolute;right:22px;top:20px;font-family:var(--mono);font-size:1.6rem;line-height:1;color:var(--violeta)}
+  .preg-colapsable:not(.preg-cerrado) .preguntas-cab:after{content:"\2013"}
+  .preg-colapsable.preg-cerrado ol{display:none}
+  .preg-colapsable .preguntas-cab p{margin-bottom:0}
+}
 </style>
 </head>
 <body>
@@ -1726,6 +1760,36 @@ document.getElementById("anio").textContent=new Date().getFullYear();
     });
   },{threshold:.01,rootMargin:"200px 0px"});
   Array.prototype.forEach.call(vids,function(v){ io.observe(v); });
+})();
+</script>
+
+<!-- Cinco preguntas: acordeón solo en móvil (progressive disclosure) -->
+<script>
+(function(){
+  var p=document.querySelector('#respaldo .preguntas');
+  if(!p) return;
+  var cab=p.querySelector('.preguntas-cab'), ol=p.querySelector('ol');
+  if(!cab||!ol) return;
+  var mq=window.matchMedia('(max-width:640px)');
+  var armado=false;
+  function toggle(){ p.classList.toggle('preg-cerrado'); cab.setAttribute('aria-expanded', p.classList.contains('preg-cerrado')?'false':'true'); }
+  function apply(){
+    if(mq.matches){
+      p.classList.add('preg-colapsable');
+      if(!p.classList.contains('preg-cerrado')) p.classList.add('preg-cerrado');
+      if(!armado){
+        armado=true;
+        cab.setAttribute('role','button'); cab.setAttribute('tabindex','0');
+        cab.setAttribute('aria-expanded','false');
+        cab.addEventListener('click', toggle);
+        cab.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+      }
+    } else {
+      p.classList.remove('preg-colapsable','preg-cerrado');
+    }
+  }
+  apply();
+  if(mq.addEventListener) mq.addEventListener('change', apply);
 })();
 </script>
 </body>

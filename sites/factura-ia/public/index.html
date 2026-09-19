@@ -393,6 +393,14 @@ details.tecnico code{font-family:var(--mono);font-size:.84rem;color:var(--violet
 .tecnico-lista{margin:24px 0 0;padding-left:20px;font-size:.93rem;line-height:1.8;color:rgba(255,255,255,.78)}
 .tecnico-lista li{margin:6px 0}
 .tecnico-lista code{font-family:var(--mono);font-size:.84rem;color:var(--violeta-hi)}
+/* Modulo DTE 2.0 consolidado: promesa fuerte + checklist; el detalle
+   tecnico se mueve al acordeon details.tecnico (Ver cambios tecnicos). */
+.norma-intro{color:rgba(255,255,255,.82);font-size:1.05rem;margin:14px 0 0;max-width:46ch}
+.norma-nosotros{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px}
+.norma-nosotros li{display:flex;gap:12px;align-items:flex-start;font-size:1.02rem;line-height:1.45;color:rgba(255,255,255,.9)}
+.norma-nosotros svg{flex:0 0 18px;width:18px;height:18px;margin-top:4px;color:#3DD68C}
+.norma-incluido{margin:20px 0 0;font-size:1.08rem;color:rgba(255,255,255,.9)}
+.norma-incluido b{color:#fff}
 
 /* ============ MIGRACIÓN ============ */
 .migra{background:var(--nube)}
@@ -927,17 +935,31 @@ footer a:hover{color:#fff}
     </div>
     <div class="norma-grid">
       <div class="rv">
-        <h2>El detalle técnico, para su contador o su programador</h2>
-        <ul class="tecnico-lista">
-          <li>Normativa de Cumplimiento DTE versión 2.0, publicada el 25 de mayo de 2026, en sustitución de la 1.2.</li>
-          <li>Plazo para adaptar los sistemas de transmisión: 1 de diciembre de 2026.</li>
-          <li>Nuevo Evento de Retorno (ERET) para ajustar facturas electrónicas, de exportación y de sujeto excluido.</li>
-          <li>Código de Generación al estándar <code>UUID v4</code>.</li>
-          <li>Catálogos actualizados: distritos, recintos fiscales y regímenes de exportación.</li>
-          <li>Notificación automática del evento y del archivo de invalidación al receptor.</li>
-          <li>Comprobantes de control interno para operaciones especiales y venta simplificada.</li>
-          <li>Entrega obligatoria del <code>JSON</code> firmado, que es el documento con validez jurídica.</li>
+        <span class="eyebrow">DTE 2.0</span>
+        <h2>Usted no tiene que actualizar nada.</h2>
+        <p class="norma-intro">Del cambio a la Normativa 2.0 nos encargamos nosotros:</p>
+        <ul class="norma-nosotros">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Actualizamos la plataforma.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Realizamos las pruebas.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Mantenemos la compatibilidad.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Aplicamos los cambios a su cuenta.</span></li>
         </ul>
+        <p class="norma-incluido"><b>Incluido en todos los planes.</b></p>
+        <details class="tecnico">
+          <summary>Ver cambios técnicos</summary>
+          <div class="cuerpo">
+            <ul>
+              <li>Normativa de Cumplimiento DTE versión 2.0, publicada el 25 de mayo de 2026, en sustitución de la 1.2.</li>
+              <li>Plazo para adaptar los sistemas de transmisión: 1 de diciembre de 2026.</li>
+              <li>Nuevo Evento de Retorno (ERET) para ajustar facturas electrónicas, de exportación y de sujeto excluido.</li>
+              <li>Código de Generación al estándar <code>UUID v4</code>.</li>
+              <li>Catálogos actualizados: distritos, recintos fiscales y regímenes de exportación.</li>
+              <li>Notificación automática del evento y del archivo de invalidación al receptor.</li>
+              <li>Comprobantes de control interno para operaciones especiales y venta simplificada.</li>
+              <li>Entrega obligatoria del <code>JSON</code> firmado, que es el documento con validez jurídica.</li>
+            </ul>
+          </div>
+        </details>
         <div class="hero-cta">
           <a class="btn btn-wa" data-wa="dte20" href="#">Quiero quedar cubierto</a>
         </div>

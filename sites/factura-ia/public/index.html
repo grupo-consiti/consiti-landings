@@ -447,6 +447,35 @@ td.reco{background:rgba(82,22,231,.05);font-weight:600}
 .nota-planes{margin-top:22px;padding:20px 22px;background:var(--nube);border:1px solid var(--linea);border-radius:14px;font-size:.92rem;color:var(--gris);line-height:1.65}
 .nota-planes b{color:var(--tinta)}
 
+/* ---- Tarjetas de planes: solo mobile (<=820px), generadas por JS desde la
+   misma tabla para que precios y features nunca se desincronicen. Sin JS,
+   la tabla con scroll queda como fallback (no se agrega .cards-ok). ---- */
+.planes-cards{display:none;grid-template-columns:1fr;gap:16px;margin-top:32px}
+.plan-card{border:1px solid var(--linea);border-radius:18px;background:var(--papel);padding:22px 20px;box-shadow:0 12px 30px -22px rgba(20,10,46,.35)}
+.plan-card.reco{border-color:var(--violeta);box-shadow:0 16px 40px -22px rgba(82,22,231,.45)}
+.pc-ribbon{display:inline-block;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--violeta);border-radius:999px;padding:5px 12px;margin-bottom:12px}
+.pc-name{font-family:var(--display);font-weight:800;font-size:1.3rem;margin:0 0 6px}
+.pc-price .tp{font-family:var(--mono);font-weight:700;font-size:1.7rem;letter-spacing:-.04em}
+.pc-price small{font-family:var(--texto);font-size:.8rem;color:var(--gris-2);margin-left:6px}
+.pc-facturas{margin:10px 0 0;font-weight:600;color:var(--tinta)}
+.pc-preview{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:9px}
+.pc-preview li{display:flex;gap:9px;align-items:flex-start;font-size:.95rem;color:var(--gris)}
+.pc-preview .si{flex:none}
+.pc-todo{margin-top:14px;border-top:1px solid var(--linea)}
+.pc-todo summary{cursor:pointer;list-style:none;padding:14px 0 4px;font-family:var(--display);font-weight:700;font-size:.95rem;color:var(--violeta);display:flex;align-items:center;gap:8px}
+.pc-todo summary::-webkit-details-marker{display:none}
+.pc-todo summary:after{content:"\2193";font-family:var(--mono);transition:transform .2s}
+.pc-todo[open] summary:after{transform:rotate(180deg)}
+.pc-full{list-style:none;margin:6px 0 4px;padding:0;display:grid;gap:0}
+.pc-full li{display:flex;justify-content:space-between;gap:14px;font-size:.9rem;color:var(--gris);border-bottom:1px dashed var(--linea);padding:9px 0}
+.pc-full li b{color:var(--tinta);font-weight:600;text-align:right;flex:none}
+.pc-full li b.si{color:#0A7A4B}.pc-full li b.no{color:#6E6786}
+.plan-card .btn{width:100%;margin-top:18px}
+@media(max-width:820px){
+  .wrap.cards-ok .tabla-wrap,.wrap.cards-ok .scroll-hint{display:none}
+  .wrap.cards-ok .planes-cards{display:grid}
+}
+
 /* ============ TESTIMONIOS ============ */
 .tst{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
 @media(max-width:900px){.tst{grid-template-columns:1fr}}
@@ -1073,6 +1102,7 @@ footer a:hover{color:#fff}
       </table>
     </div>
     <p class="scroll-hint">← Deslice la tabla para ver todos los planes →</p>
+    <div class="planes-cards" aria-label="Planes de Factura IA"></div>
 
     <div class="nota-planes rv">
       <b>Si se pasa de las facturas incluidas</b> no lo suspendemos: cada factura extra se cobra
@@ -1302,6 +1332,60 @@ var MENSAJES = {
   flotante:"Buen día. Vengo de la página de Factura IA y quiero información para empezar a facturar electrónicamente."
 };
 function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
+/* ============ Tabla de planes -> tarjetas en mobile ============
+   Genera una tarjeta por plan a partir de la tabla comparativa. Corre ANTES
+   del cableado de [data-wa] de abajo, para que los botones Contratar clonados
+   queden con su enlace de WhatsApp y su medicion igual que los de la tabla. */
+(function(){
+  var tabla=document.querySelector(".tabla-wrap table");
+  var cont=document.querySelector(".planes-cards");
+  if(!tabla||!cont) return;
+  var head=tabla.querySelectorAll("thead th");
+  var planes=[];
+  for(var c=1;c<head.length;c++){ planes.push({i:c-1,nombre:head[c].textContent.trim(),reco:head[c].classList.contains("reco")}); }
+  var filas=Array.prototype.slice.call(tabla.querySelectorAll("tbody tr"));
+  function td(f,i){ return f.querySelectorAll("td")[i]; }
+  function lbl(f){ var th=f.querySelector("th"); return th?th.textContent.trim():""; }
+  var fPrecio=null,fFacturas=null,fCta=null;
+  filas.forEach(function(f){
+    var e=lbl(f).toLowerCase();
+    if(e.indexOf("precio al mes")===0) fPrecio=f;
+    else if(e.indexOf("facturas incluidas")===0) fFacturas=f;
+    if(f.querySelector("a[data-wa]")) fCta=f;
+  });
+  planes.forEach(function(pl){
+    var art=document.createElement("article");
+    art.className="plan-card"+(pl.reco?" reco":"");
+    var h="";
+    if(pl.reco) h+='<span class="pc-ribbon">Recomendado</span>';
+    h+='<h3 class="pc-name">'+pl.nombre+"</h3>";
+    if(fPrecio){ var tp=td(fPrecio,pl.i).querySelector(".tp"); h+='<div class="pc-price"><span class="tp">'+(tp?tp.textContent.trim():"")+'</span><small>+ IVA al mes</small></div>'; }
+    if(fFacturas){ var fx=td(fFacturas,pl.i).textContent.trim(); h+='<p class="pc-facturas">'+(/\d/.test(fx)?fx+" facturas al mes":fx+" de facturas al mes")+"</p>"; }
+    var prev="",n=0;
+    filas.forEach(function(f){
+      if(n>=4||f===fPrecio||f===fFacturas||f===fCta) return;
+      var cel=td(f,pl.i);
+      if(cel&&cel.classList.contains("si")){ prev+='<li><span class="si" aria-hidden="true">\u2713</span> '+lbl(f)+"</li>"; n++; }
+    });
+    if(prev) h+='<ul class="pc-preview">'+prev+"</ul>";
+    var full="";
+    filas.forEach(function(f){
+      if(f===fPrecio||f===fFacturas||f===fCta) return;
+      var e=lbl(f); if(!e) return;
+      var cel=td(f,pl.i); if(!cel) return;
+      var v;
+      if(cel.classList.contains("si")) v='<b class="si" aria-hidden="true">\u2713</b>';
+      else if(cel.classList.contains("no")) v='<b class="no" aria-hidden="true">\u2014</b>';
+      else v="<b>"+cel.textContent.trim().replace(/\s+/g," ").replace("+ IVA"," + IVA")+"</b>";
+      full+="<li>"+e+v+"</li>";
+    });
+    h+='<details class="pc-todo"><summary>Ver todas las características</summary><ul class="pc-full">'+full+"</ul></details>";
+    art.innerHTML=h;
+    if(fCta){ var a=td(fCta,pl.i).querySelector("a[data-wa]"); if(a) art.appendChild(a.cloneNode(true)); }
+    cont.appendChild(art);
+  });
+  var wrap=cont.closest(".wrap"); if(wrap) wrap.classList.add("cards-ok");
+})();
 document.querySelectorAll("[data-wa]").forEach(function(a){
   var id=a.getAttribute("data-wa");
   a.href=waURL(MENSAJES[id]||MENSAJES.nav); a.target="_blank"; a.rel="noopener";

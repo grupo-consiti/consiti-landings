@@ -638,7 +638,6 @@ footer a:hover{color:#fff}
   <div class="wrap campana-in">
     <span class="ahora"><span class="dot" aria-hidden="true"></span>Ahora mismo</span>
     <p>Hacienda fijó el <b>1 de diciembre de 2026</b> para la Normativa DTE 2.0. Ya la estamos aplicando en todas las cuentas, sin costo y sin trámite de su parte.</p>
-    <span class="dias" id="cuenta-campana" aria-hidden="true"></span>
     <a class="ver" href="#normativa">Ver el detalle →</a>
   </div>
 </div>
@@ -1569,11 +1568,9 @@ var PLANES=[
     var d=Math.ceil((META-new Date())/86400000);
     if(d>0){
       set("cuenta",d+" días"); set("cuenta-2",d+" días");
-      set("cuenta-campana","Faltan "+d+" días");
     }else{
       /* plazo vencido: el mensaje cambia a que ya es obligatoria y que ayudamos a cumplir */
       set("cuenta","Ya en vigencia");
-      set("cuenta-campana","Ya en vigencia");
       set("cuenta-txt","La Normativa DTE 2.0 ya es obligatoria. Nosotros le ayudamos a cumplir sin que deje de facturar.");
       set("cuenta-2","Vigente");
       set("cuenta-2-txt","La Normativa DTE 2.0 ya es obligatoria — le ayudamos a cumplir.");

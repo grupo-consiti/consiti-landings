@@ -353,9 +353,9 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
 /* ============ EMPRESA DETRÁS ============ */
 .cifras{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--linea);border-radius:16px;overflow:hidden;margin-top:34px}
 @media(max-width:760px){.cifras{grid-template-columns:1fr 1fr}}
-.cifras div{padding:28px 22px;border-right:1px solid var(--linea)}
-.cifras div:last-child{border-right:none}
-@media(max-width:760px){.cifras div:nth-child(2n){border-right:none}.cifras div:nth-child(-n+2){border-bottom:1px solid var(--linea)}}
+.cifras > div{padding:28px 22px;border-right:1px solid var(--linea)}
+.cifras > div:last-child{border-right:none}
+@media(max-width:760px){.cifras > div:nth-child(2n){border-right:none}.cifras > div:nth-child(-n+2){border-bottom:1px solid var(--linea)}}
 .cifras .n{font-family:var(--mono);font-weight:700;font-size:2.05rem;letter-spacing:-.045em;color:var(--violeta);line-height:1}
 .cifras .l{font-size:.87rem;color:var(--gris);margin-top:9px;line-height:1.45}
 .preguntas{margin-top:44px;border:1px solid var(--linea);border-radius:20px;overflow:hidden}
@@ -612,7 +612,7 @@ footer a:hover{color:#fff}
   /* menos aire alto entre encabezado y contenido */
   .preguntas{margin-top:26px}
   .cifras{gap:0}
-  .cifras div{min-width:0;padding:22px 14px}
+  .cifras > div{min-width:0;padding:22px 14px}
   .cifras .n{font-size:1.5rem;letter-spacing:-.03em;overflow-wrap:break-word}
   .cifras .l{font-size:.82rem}
   .nota-planes{margin-top:16px;padding:16px 18px}

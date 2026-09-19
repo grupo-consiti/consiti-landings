@@ -529,6 +529,17 @@ footer a:hover{color:#fff}
 /* ============ WA flotante ============ */
 .wa-float{position:fixed;bottom:20px;right:20px;z-index:80;display:flex;align-items:center;gap:10px;padding:13px 20px 13px 15px;border-radius:999px;background:var(--wa);color:#04371A;font-family:var(--display);font-weight:700;font-size:.92rem;text-decoration:none;box-shadow:0 10px 30px rgba(37,211,102,.42)}
 @media(max-width:600px){.wa-float{padding:14px;gap:0}.wa-float span{display:none}}
+/* Barra CTA fija en mobile: en una landing larga da acceso permanente a conversion
+   y es menos invasiva que el flotante grande. Sustituye al flotante en <=820px. */
+.cta-movil{display:none}
+@media(max-width:820px){
+  .wa-float{display:none}
+  body{padding-bottom:62px}
+  .cta-movil{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:82;align-items:center;justify-content:space-between;gap:14px;height:60px;padding:0 16px;background:rgba(10,6,22,.97);border-top:1px solid var(--linea-osc);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .cta-movil-precio{font-family:var(--texto);font-size:.95rem;color:#fff;line-height:1.2}
+  .cta-movil-precio b{font-family:var(--mono);font-weight:700}
+  .cta-movil-btn{display:inline-flex;align-items:center;gap:7px;background:var(--wa);color:#04371A;font-family:var(--display);font-weight:700;font-size:.95rem;text-decoration:none;padding:11px 22px;border-radius:999px;flex:none}
+}
 
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .rv.in{opacity:1;transform:none}
@@ -577,7 +588,7 @@ footer a:hover{color:#fff}
       <a href="#cambiar">Cambiar de proveedor</a>
       <a href="#faq">Preguntas</a>
     </nav>
-    <a class="btn btn-wa btn-sm" data-wa="nav" href="#">Escríbanos</a>
+    <a class="btn btn-wa btn-sm" data-wa="nav" href="#">Hablar por WhatsApp</a>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -588,7 +599,7 @@ footer a:hover{color:#fff}
     <a href="#contadores">Para contadores</a>
     <a href="#cambiar">Cambiar de proveedor</a>
     <a href="#faq">Preguntas</a>
-    <a class="btn btn-wa" data-wa="menu-movil" href="#">Escríbanos por WhatsApp</a>
+    <a class="btn btn-wa" data-wa="menu-movil" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg> Hablar por WhatsApp</a>
   </div>
 </header>
 
@@ -609,10 +620,10 @@ footer a:hover{color:#fff}
       </p>
 
       <div class="hero-cta">
-        <a class="btn btn-v" href="#precio">Ver planes desde $14.99</a>
+        <a class="btn btn-v" href="#precio">Ver precios</a>
         <a class="btn btn-wa" data-wa="hero" href="#">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg>
-          Escríbanos por WhatsApp
+          Hablar por WhatsApp
         </a>
       </div>
       <p class="horario">Actualizaciones normativas incluidas en todos los planes · Soporte sin costo · Listo en menos de 24 horas</p>
@@ -962,7 +973,7 @@ footer a:hover{color:#fff}
           </div>
         </details>
         <div class="hero-cta">
-          <a class="btn btn-wa" data-wa="dte20" href="#">Quiero quedar cubierto</a>
+          <a class="btn btn-wa" data-wa="dte20" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg> Quedar cubierto</a>
         </div>
       </div>
 
@@ -999,7 +1010,7 @@ footer a:hover{color:#fff}
         <p class="micro-cifras"><b>215 migraciones</b> completadas desde otro proveedor · puesta en marcha en <b>8 h</b> (nuestro récord) · <b>0 días</b> sin facturar</p>
       </div>
       <div>
-        <a class="btn btn-v" data-wa="migracion" href="#" style="width:100%">Quiero cambiarme</a>
+        <a class="btn btn-wa" data-wa="migracion" href="#" style="width:100%"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg> Cambiarme a Factura IA</a>
         <p style="font-size:.84rem;color:var(--gris);margin-top:13px;text-align:center;line-height:1.5">
           Cuéntenos con quién está y le decimos exactamente qué implica.
         </p>
@@ -1244,7 +1255,7 @@ footer a:hover{color:#fff}
     <h2 class="rv">Empiece a facturar en menos de 24 horas</h2>
     <p class="lede rv">Escríbanos, vemos juntos qué plan le toca y el papeleo ante Hacienda queda de nuestro lado.</p>
     <div class="cierre-cta rv">
-      <a class="btn btn-wa" data-wa="cierre" href="#">Escríbanos por WhatsApp</a>
+      <a class="btn btn-wa" data-wa="cierre" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg> Hablar por WhatsApp</a>
       <a class="btn btn-ghost" href="#precio">Ver precios</a>
     </div>
     <p class="horario rv">Lunes a viernes, 8:00 a.m. a 5:00 p.m. · Respondemos el mismo día</p>
@@ -1291,10 +1302,16 @@ footer a:hover{color:#fff}
   </div>
 </footer>
 
-<a class="wa-float" data-wa="flotante" href="#" aria-label="Escríbanos por WhatsApp">
+<a class="wa-float" data-wa="flotante" href="#" aria-label="Hablar por WhatsApp">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="#04371A"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg>
   <span>Escríbanos</span>
 </a>
+
+<!-- Barra CTA fija en mobile: reemplaza al boton flotante en pantallas chicas -->
+<div class="cta-movil">
+  <span class="cta-movil-precio">Desde <b>$14.99</b> / mes</span>
+  <a class="cta-movil-btn" data-wa="sticky" href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 1.9 3 4.7 4.1 2.3.9 2.8.8 3.3.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2"/></svg> Escribir</a>
+</div>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"Factura IA de Grupo Consiti","description":"Facturación electrónica DTE para empresas en El Salvador desde 14.99 dólares al mes, con soporte incluido y actualización a la Normativa DTE 2.0.","brand":{"@type":"Brand","name":"Grupo Consiti"},"offers":{"@type":"AggregateOffer","lowPrice":"14.99","highPrice":"150.00","priceCurrency":"USD","offerCount":"5","availability":"https://schema.org/InStock"}}
@@ -1360,6 +1377,7 @@ var MENSAJES = {
   "plan-enterprise":"Hola, emito más de 1,000 facturas al mes y quiero conocer el plan Enterprise.",
   cierre:"Hola, quiero empezar a facturar con Factura IA.",
   footer:"Hola, quiero información sobre Factura IA para empezar a facturar electrónicamente.",
+  sticky:"Hola, vengo de la página de Factura IA y quiero empezar a facturar electrónicamente. ¿Me pueden dar más información?",
   flotante:"Hola, vengo de la página de Factura IA y quiero información para empezar a facturar electrónicamente."
 };
 function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }

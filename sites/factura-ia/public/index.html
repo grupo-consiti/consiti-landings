@@ -144,8 +144,8 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
 .mark span{font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px}
 .mark-logo{height:30px;width:auto;display:block}
 @media(max-width:600px){.mark-logo{height:26px}}
-.nav-links{display:flex;gap:24px;margin-left:auto;font-size:.93rem;font-weight:500}
-.nav-links a{text-decoration:none;color:rgba(255,255,255,.72);padding:10px 0}
+.nav-links{display:flex;gap:20px;margin-left:auto;font-size:.93rem;font-weight:500}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.72);padding:10px 0;white-space:nowrap}
 .nav-links a:hover{color:#fff}
 .nav-links a.precio-nav{color:var(--amarillo);font-weight:600}
 /* Par de audiencia en el menu: Para empresas | Para contadores */
@@ -164,7 +164,7 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
 .drawer.abierto{display:block}
 .drawer a{display:block;padding:14px 0;color:rgba(255,255,255,.85);text-decoration:none;font-weight:500;border-bottom:1px solid var(--linea-osc)}
 .drawer .btn{width:100%;margin-top:18px}
-@media(max-width:940px){
+@media(max-width:1100px){
   .nav-links{display:none}
   .burger{display:block}
   .nav-in .btn{display:none}
@@ -611,7 +611,10 @@ footer a:hover{color:#fff}
   .pc-preview li:nth-child(n+4){display:none}
   /* menos aire alto entre encabezado y contenido */
   .preguntas{margin-top:26px}
-  .cifras{gap:12px}
+  .cifras{gap:0}
+  .cifras div{min-width:0;padding:22px 14px}
+  .cifras .n{font-size:1.5rem;letter-spacing:-.03em;overflow-wrap:break-word}
+  .cifras .l{font-size:.82rem}
   .nota-planes{margin-top:16px;padding:16px 18px}
   /* 'cinco preguntas' como acordeón en móvil */
   .preg-colapsable .preguntas-cab{cursor:pointer;position:relative;padding-right:50px;-webkit-tap-highlight-color:transparent}
@@ -660,7 +663,7 @@ footer a:hover{color:#fff}
       <a href="#cambiar">Cambiar de proveedor</a>
       <a href="#faq">Preguntas</a>
     </nav>
-    <a class="btn btn-wa btn-sm" data-wa="nav" href="#">Hablar por WhatsApp</a>
+    <a class="btn btn-wa btn-sm" data-wa="nav" href="#">Escríbanos</a>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>

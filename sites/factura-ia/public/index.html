@@ -618,6 +618,31 @@ footer a:hover{color:#fff}
   .preg-colapsable.preg-cerrado ol{display:none}
   .preg-colapsable .preguntas-cab p{margin-bottom:0}
 }
+
+/* ============ WIZARD DE PLAN (reemplaza la calculadora directa) ============ */
+.wiz{margin-top:34px}
+.wiz-launch{background:var(--nube);border:1px solid var(--linea);border-radius:22px;padding:30px 28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.wiz-launch[hidden]{display:none}
+.wiz-launch-t{font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.02em;margin:0}
+.wiz-launch-s{font-size:.98rem;color:var(--gris);margin:8px 0 0;max-width:48ch;line-height:1.55}
+.wiz-launch .btn{flex:none}
+.wiz-flow{background:var(--papel);border:1px solid var(--linea);border-radius:22px;padding:28px 26px;box-shadow:0 24px 60px -36px rgba(20,10,46,.3)}
+.wiz-flow[hidden]{display:none}
+.wiz-top{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.wiz-back{background:none;border:none;color:var(--violeta);font-family:var(--display);font-weight:700;font-size:.9rem;cursor:pointer;padding:8px 8px 8px 0;white-space:nowrap}
+.wiz-progress{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris-2);white-space:nowrap}
+.wiz-bar{flex:1;height:6px;background:var(--nube);border-radius:999px;overflow:hidden}
+.wiz-bar i{display:block;height:100%;width:50%;background:var(--violeta);border-radius:999px;transition:width .3s ease}
+.wiz-step[hidden]{display:none}
+.wiz-step{animation:sube .35s ease both}
+.wiz-q{font-family:var(--display);font-weight:700;font-size:1.16rem;margin:0 0 18px;line-height:1.3}
+.opciones-2{grid-template-columns:1fr 1fr}
+@media(max-width:520px){.opciones-2{grid-template-columns:1fr}}
+.wiz-hint{font-size:.86rem;color:var(--gris-2);margin-top:14px;line-height:1.5}
+.wiz-result .res-plan{color:var(--violeta)}
+.wiz-restart{margin-top:18px;background:none;border:none;color:var(--gris);font-size:.86rem;cursor:pointer;text-decoration:underline;padding:8px 0}
+@media(max-width:640px){.wiz-launch{padding:24px 20px}.wiz-flow{padding:22px 18px}.wiz-launch .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.wiz-step{animation:none}.wiz-bar i{transition:none}}
 </style>
 </head>
 <body>
@@ -806,41 +831,64 @@ footer a:hover{color:#fff}
 <section class="calc" id="precio">
   <div class="wrap">
     <span class="eyebrow rv">Precios</span>
-    <h2 class="rv">Díganos cuántas facturas hace y le decimos el precio</h2>
-    <p class="lede rv">
-      Sin cotizaciones y sin llamadas de venta para saber cuánto cuesta.
-      El precio está publicado y es el mismo para todos.
-    </p>
+    <h2 class="rv">Conozca qué plan se adecua a su negocio</h2>
+    <p class="lede rv">Sin cotizaciones ni llamadas de venta. Responda dos preguntas rápidas y le decimos el plan ideal y el precio exacto.</p>
 
-    <div class="calc-box rv">
-      <p class="calc-preg">¿Cuántas facturas emite, más o menos, en un día normal?</p>
-      <div class="opciones" id="opciones">
-        <button data-plan="0">1 o 2<small>~30 al mes</small></button>
-        <button data-plan="1">3 a 5<small>~100 al mes</small></button>
-        <button data-plan="2">Hasta 20<small>~500 al mes</small></button>
-        <button data-plan="3">Hasta 40<small>~1,000 al mes</small></button>
-        <button data-plan="4">Más de 40<small>sin límite</small></button>
+    <div class="wiz rv" id="wiz">
+      <div class="wiz-launch" id="wiz-launch">
+        <div>
+          <h3 class="wiz-launch-t">¿No sabe cuál le toca?</h3>
+          <p class="wiz-launch-s">Le hacemos dos preguntas rápidas y le mostramos su plan ideal, con el precio exacto y sin compromiso.</p>
+        </div>
+        <button class="btn btn-v" id="wiz-start" type="button">Descubrir mi plan</button>
       </div>
 
-      <div class="resultado" id="resultado">
-        <div class="res-grid">
-          <div>
-            <div class="res-plan">Su plan recomendado</div>
-            <div class="res-nombre" id="r-nombre">—</div>
-            <p class="res-detalle" id="r-detalle">—</p>
-          </div>
-          <div class="res-precio">
-            <div class="p" id="r-precio">—</div>
-            <div class="m">+ IVA al mes</div>
+      <div class="wiz-flow" id="wiz-flow" hidden>
+        <div class="wiz-top">
+          <button class="wiz-back" id="wiz-back" type="button">← Atrás</button>
+          <span class="wiz-progress" id="wiz-progress">Paso 1 de 2</span>
+          <div class="wiz-bar"><i id="wiz-bar-i"></i></div>
+        </div>
+
+        <div class="wiz-step" data-step="1">
+          <p class="wiz-q">¿Cuántas facturas emite, más o menos, en un día normal?</p>
+          <div class="opciones" id="wiz-vol">
+            <button type="button" data-plan="0">1 o 2<small>~30 al mes</small></button>
+            <button type="button" data-plan="1">3 a 5<small>~100 al mes</small></button>
+            <button type="button" data-plan="2">Hasta 20<small>~500 al mes</small></button>
+            <button type="button" data-plan="3">Hasta 40<small>~1,000 al mes</small></button>
+            <button type="button" data-plan="4">Más de 40<small>sin límite</small></button>
           </div>
         </div>
-        <p class="res-primer" id="r-primer"></p>
-        <div class="res-aviso" id="r-aviso">
-          <b>Ojo:</b> con Starter no se generan anexos de IVA ni libros. Si su contador se los pide, el plan es Professional.
+
+        <div class="wiz-step" data-step="2" hidden>
+          <p class="wiz-q">¿Su contador le pide anexos de IVA y libros?</p>
+          <div class="opciones opciones-2" id="wiz-anexos">
+            <button type="button" data-anexos="si">Sí, los necesito</button>
+            <button type="button" data-anexos="no">No, o no estoy seguro</button>
+          </div>
+          <p class="wiz-hint">Los anexos de IVA y los libros están incluidos desde el plan Professional.</p>
         </div>
-        <div class="res-cta">
-          <a class="btn btn-wa" id="r-cta" href="#">Contratar por WhatsApp</a>
-          <a class="btn btn-ghost" href="#tabla">Ver todo lo que incluye</a>
+
+        <div class="wiz-step wiz-result" data-step="3" hidden>
+          <div class="res-plan">Este plan es ideal para usted</div>
+          <div class="res-grid">
+            <div>
+              <div class="res-nombre" id="r-nombre">—</div>
+              <p class="res-detalle" id="r-detalle">—</p>
+            </div>
+            <div class="res-precio">
+              <div class="p" id="r-precio">—</div>
+              <div class="m">+ IVA al mes</div>
+            </div>
+          </div>
+          <p class="res-primer" id="r-primer"></p>
+          <p class="wiz-hint" id="r-aviso-starter" hidden>Con Starter no se generan anexos de IVA ni libros; si su contador se los pide, el plan es Professional.</p>
+          <div class="res-cta">
+            <a class="btn btn-wa" id="r-cta" href="#">Contratar por WhatsApp</a>
+            <a class="btn btn-ghost" href="#tabla">Ver todo lo que incluye</a>
+          </div>
+          <button class="wiz-restart" id="wiz-restart" type="button">Empezar de nuevo</button>
         </div>
       </div>
     </div>
@@ -1557,78 +1605,81 @@ var PLANES=[
   {n:"Enterprise",p:"$150",impl_num:100,d:"Facturas sin límite y una persona de nuestro equipo asignada a su sistema, disponible en horario de oficina.",wa:"Hola, según la calculadora, mi plan es Enterprise (más de 1,000 facturas al mes). Quiero información para contratarlo."}
 ];
 (function(){
-  var cont=document.getElementById("opciones"); if(!cont) return;
-  var res=document.getElementById("resultado");
-  var aviso=document.getElementById("r-aviso");
-  var primer=document.getElementById("r-primer");
-  var botones=cont.querySelectorAll("button");
-
-  /* Pinta el resultado de un plan SIN analitica. Se reusa en el clic y en la
-     preseleccion inicial, para no mandar un select_item falso al cargar. */
+  var wiz=document.getElementById("wiz"); if(!wiz) return;
+  var launch=document.getElementById("wiz-launch");
+  var flow=document.getElementById("wiz-flow");
+  var steps=[].slice.call(flow.querySelectorAll(".wiz-step"));
+  var barI=document.getElementById("wiz-bar-i");
+  var prog=document.getElementById("wiz-progress");
+  var back=document.getElementById("wiz-back");
+  var st={vol:null, anexos:null, step:1};
+  /* Starter (indice 0) no trae anexos: si el contador los pide, sube a Professional (1). */
+  function planIdx(){ var i=st.vol; if(i===0 && st.anexos==="si") i=1; return i; }
+  function show(n){
+    st.step=n;
+    steps.forEach(function(el){ el.hidden = (+el.getAttribute("data-step")!==n); });
+    if(n===3){ prog.textContent="Listo"; barI.style.width="100%"; }
+    else { prog.textContent="Paso "+n+" de 2"; barI.style.width=(n*50)+"%"; }
+    var f=steps[n-1] && steps[n-1].querySelector("button:not([disabled]), a.btn");
+    if(f){ try{ f.focus({preventScroll:true}); }catch(e){} }
+  }
   function pintar(idx){
     var pl=PLANES[idx];
-    botones.forEach(function(x){ x.classList.toggle("on", +x.getAttribute("data-plan")===idx); });
     document.getElementById("r-nombre").textContent=pl.n;
     document.getElementById("r-detalle").textContent=pl.d;
     document.getElementById("r-precio").textContent=pl.p;
-    /* Desglose del primer mes: mensualidad + implementacion (un solo pago).
-       Decir el costo real primero convierte una objecion en prueba de honestidad. */
     var mensual=Number(String(pl.p).replace(/[^0-9.]/g,""))||0;
     var total=mensual+pl.impl_num;
-    var fmt=function(v){ return "$"+(v%1===0 ? v : v.toFixed(2)); };
-    primer.innerHTML="<b>Primer mes:</b> "+pl.p+" + $"+pl.impl_num+
-      " de implementación (un solo pago) = "+fmt(total)+" + IVA. "+
-      "Desde el segundo mes, "+pl.p+" + IVA.";
-    /* Aviso solo para Starter: no genera anexos de IVA ni libros. */
-    aviso.classList.toggle("ver", pl.n==="Starter");
+    var fmt=function(v){ return "$"+(v%1===0?v:v.toFixed(2)); };
+    document.getElementById("r-primer").innerHTML="<b>Primer mes:</b> "+pl.p+" + $"+pl.impl_num+" de implementación (un solo pago) = "+fmt(total)+" + IVA. Desde el segundo mes, "+pl.p+" + IVA.";
+    document.getElementById("r-aviso-starter").hidden = (pl.n!=="Starter");
     var cta=document.getElementById("r-cta");
     cta.href=waURL(pl.wa); cta.target="_blank"; cta.rel="noopener";
     cta.textContent="Contratar "+pl.n+" por WhatsApp";
     cta.setAttribute("data-plan-calc", pl.n);
-    res.classList.add("ver");
     return pl;
   }
-
-  botones.forEach(function(b){
-    b.addEventListener("click",function(){
-      var pl=pintar(+b.getAttribute("data-plan"));
-      /* GA4: select_item marca qué plan le calzó a cada visitante.
-         Es el dato que dice si la calculadora está bien calibrada. */
-      trackGA("select_item", {
-        item_list_name: "Calculadora de precio",
-        item_name: pl.n,
-        value: Number(String(pl.p).replace(/[^0-9.]/g,"")) || 0,
-        currency: "USD"
-      });
-      window.dataLayer=window.dataLayer||[];
-      window.dataLayer.push({event:"calculadora_plan",plan:pl.n});
-    });
+  function resultado(){
+    var pl=pintar(planIdx());
+    show(3);
+    trackGA("select_item", { item_list_name:"Wizard de plan", item_name:pl.n, value:Number(String(pl.p).replace(/[^0-9.]/g,""))||0, currency:"USD" });
+    window.dataLayer=window.dataLayer||[]; window.dataLayer.push({event:"wizard_plan", plan:pl.n});
+  }
+  document.getElementById("wiz-start").addEventListener("click", function(){
+    launch.hidden=true; flow.hidden=false; st.vol=null; st.anexos=null;
+    Array.prototype.forEach.call(flow.querySelectorAll("button.on"), function(x){ x.classList.remove("on"); });
+    show(1);
   });
-
-  /* Preseleccion: Professional (~100 al mes). El visitante ve una cifra
-     concreta sin trabajo. Sin analitica porque no es una eleccion suya. */
-  pintar(1);
-
-  /* El CTA del resultado también es un Lead, con el plan que salió en la calculadora */
+  document.getElementById("wiz-vol").addEventListener("click", function(e){
+    var b=e.target.closest("button[data-plan]"); if(!b) return;
+    st.vol=+b.getAttribute("data-plan");
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(x){ x.classList.toggle("on", x===b); });
+    show(2);
+  });
+  document.getElementById("wiz-anexos").addEventListener("click", function(e){
+    var b=e.target.closest("button[data-anexos]"); if(!b) return;
+    st.anexos=b.getAttribute("data-anexos");
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(x){ x.classList.toggle("on", x===b); });
+    resultado();
+  });
+  back.addEventListener("click", function(){
+    if(st.step===1){ flow.hidden=true; launch.hidden=false; }
+    else if(st.step===2){ show(1); }
+    else { show(2); }
+  });
+  document.getElementById("wiz-restart").addEventListener("click", function(){
+    st.vol=null; st.anexos=null;
+    Array.prototype.forEach.call(flow.querySelectorAll("button.on"), function(x){ x.classList.remove("on"); });
+    show(1);
+  });
+  /* El CTA del resultado es un Lead, con el plan que salió en el wizard */
   var ctaRes=document.getElementById("r-cta");
-  if(ctaRes) ctaRes.addEventListener("click",function(){
-    var n=ctaRes.getAttribute("data-plan-calc");
-    var p=null;
+  if(ctaRes) ctaRes.addEventListener("click", function(){
+    var n=ctaRes.getAttribute("data-plan-calc"), p=null;
     for(var i=0;i<PLANES.length;i++){ if(PLANES[i].n===n){ p=PLANES[i]; break; } }
-    var valor = p ? Number(String(p.p).replace(/[^0-9.]/g,"")) || 0 : 0;
-    trackLead({
-      content_name: n||"Calculadora",
-      content_category: "Plan Facturación",
-      value: valor,
-      currency: "USD",
-      cta_id: "calculadora"
-    });
-    trackGA("generate_lead", {
-      cta_id: "calculadora",
-      item_name: n||"Calculadora",
-      value: valor,
-      currency: "USD"
-    });
+    var valor=p?Number(String(p.p).replace(/[^0-9.]/g,""))||0:0;
+    trackLead({ content_name:n||"Wizard", content_category:"Plan Facturación", value:valor, currency:"USD", cta_id:"wizard" });
+    trackGA("generate_lead", { cta_id:"wizard", item_name:n||"Wizard", value:valor, currency:"USD" });
   });
 })();
 

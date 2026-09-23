@@ -26,6 +26,10 @@ substitutions:
   _RUN_SA: ""        # runtime SA del servicio (lo fija el trigger)
   _MEMORY: "256Mi"   # nginx estático; worky (Node/SSR) sube a 512Mi
   _CONCURRENCY: "200" # worky baja a 80
+  # Tag de imagen = commit corto (o "manual" en gcloud builds submit sin repo).
+  # Lo evalúa Cloud Build (dynamicSubstitutions), NO el shell: SHORT_SHA no se
+  # exporta como env al step, por eso ${SHORT_SHA:-manual} en bash siempre daba "manual".
+  _TAG: ${SHORT_SHA:-manual}
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -42,7 +46,7 @@ steps:
         set -euo pipefail
         test -n "${_SITE}" -a -n "${_SERVICE_NAME}" -a -n "${_RUN_SA}" || { echo "faltan _SITE/_SERVICE_NAME/_RUN_SA"; exit 1; }
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
-        TAG="${SHORT_SHA:-manual}"
+        TAG="${_TAG}"
         DF="sites/${_SITE}/Dockerfile"; [ -f "$$DF" ] || DF="Dockerfile"
         docker build -f "$$DF" -t "$$IMG:$$TAG" -t "$$IMG:latest" "sites/${_SITE}"
 
@@ -64,7 +68,7 @@ steps:
       - -c
       - |
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
-        TAG="${SHORT_SHA:-manual}"
+        TAG="${_TAG}"
         IGN=""; [ -f "sites/${_SITE}/.trivyignore" ] && IGN="--ignorefile=sites/${_SITE}/.trivyignore"
         trivy image --cache-dir=/workspace/trivy --skip-db-update \
           --exit-code=1 --severity=CRITICAL,HIGH --ignore-unfixed --timeout=10m \
@@ -79,7 +83,7 @@ steps:
       - |
         set -euo pipefail
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
-        TAG="${SHORT_SHA:-manual}"
+        TAG="${_TAG}"
         docker push "$$IMG:$$TAG"
         docker push "$$IMG:latest"
 
@@ -92,7 +96,7 @@ steps:
       - |
         set -euo pipefail
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
-        TAG="${SHORT_SHA:-manual}"
+        TAG="${_TAG}"
         gcloud run deploy "${_SERVICE_NAME}" \
           --image "$$IMG:$$TAG" --region "${_REGION}" --platform managed \
           --port 8080 --service-account "${_RUN_SA}" \

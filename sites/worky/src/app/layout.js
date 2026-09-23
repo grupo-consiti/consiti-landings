@@ -19,6 +19,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://worky.consiti.com";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
   title: "Worky — Trabaja con nosotros | Grupo Consiti",
   description:
     "Un perfil, todas nuestras plazas. Crea tu perfil gratis en el banco de talento de Grupo Consiti: cuando abrimos una vacante que encaja contigo, te escribimos.",

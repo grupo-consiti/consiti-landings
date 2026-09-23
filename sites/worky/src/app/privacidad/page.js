@@ -52,8 +52,8 @@ export default function Privacidad() {
       <p>
         En cuentas de Google de Grupo Consiti: los datos del perfil en una hoja de Google
         Sheets y los archivos —tu foto y tu CV— en Google Drive. El sitio está alojado en
-        Vercel. Tanto Google como Vercel actúan como proveedores de infraestructura y
-        pueden almacenar la información en servidores fuera de El Salvador.
+        Google Cloud (Cloud Run). Google actúa como proveedor de infraestructura y
+        puede almacenar la información en servidores fuera de El Salvador.
       </p>
       <p>Solo el equipo de Recursos Humanos y Dirección de Consiti tiene acceso.</p>
 

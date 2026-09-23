@@ -28,16 +28,15 @@ var HEADERS = [
   "Campaña", "Fuente", "Anuncio",
 ];
 
-// Mientras el DNS de worky.consiti.com no esté listo, los enlaces de los correos
-// apuntan al dominio de Vercel. Cuando el subdominio funcione, cambiá estas dos
-// líneas y volvé a publicar el script.
-var URL_PLAZAS = "https://worky-zeta.vercel.app/#plazas";
+// worky.consiti.com ya está en producción: los enlaces de los correos apuntan al
+// dominio propio. (Antes iban al dominio temporal de Vercel.)
+var URL_PLAZAS = "https://worky.consiti.com/#plazas";
 var URL_CONSITI = "https://consiti.com";
 // Logo para los correos. Va la versión MONOCROMÁTICA (todo blanco): la cabecera
 // del correo es morada, y en la versión normal la W y la "y" son moradas y se
 // perderían sobre ese fondo.
-// Al mover el sitio a worky.consiti.com, cambiá solo esta línea.
-var URL_LOGO = "https://worky-zeta.vercel.app/logo-worky-mono.png";
+// Sirve desde worky.consiti.com.
+var URL_LOGO = "https://worky.consiti.com/logo-worky-mono.png";
 // Tope de correos por corrida de reactivación (cuidá la cuota diaria de Gmail).
 var REACTIVACION_LOTE = 50;
 

@@ -16,6 +16,9 @@ FROM node:20-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOSTNAME=0.0.0.0
+# Seguridad (gate ARQ-6): parchar paquetes Alpine (openssl HIGH) y quitar npm del
+# runtime — no se usa (standalone corre node server.js) y arrastra CVEs (tar CRITICAL).
+RUN apk --no-cache upgrade && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public

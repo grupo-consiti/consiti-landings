@@ -1,0 +1,20 @@
+{
+  "name": "worky-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Worky — banco de talento con IA. Landing comercial y explicativa.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}

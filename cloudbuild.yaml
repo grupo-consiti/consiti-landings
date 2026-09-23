@@ -1,11 +1,22 @@
 # Cloud Build genérico del monorepo de landings.
 # Un solo archivo para TODOS los sitios: cada trigger pasa _SITE / _SERVICE_NAME
-# / _RUN_SA por --substitutions y filtra por --included-files=sites/<sitio>/**,
-# de modo que un push solo reconstruye la landing que cambió.
+# / _RUN_SA (y opcional _MEMORY / _CONCURRENCY) por --substitutions y filtra por
+# --included-files=sites/<sitio>/**, de modo que un push solo reconstruye la
+# landing que cambió.
+#
+# Sitios nginx-estáticos (factura-ia, vendi, komandi): usan el Dockerfile genérico
+# de la raíz. Sitios Node/SSR (worky): traen su propio sites/<sitio>/Dockerfile,
+# que este build detecta y usa automáticamente.
+#
+# Gate de seguridad ARQ-6 (runbook YouTrack ARQ-A-2): entre build y push se
+# restaura la cache central de la DB de Trivy (gs://consiti-trivy-db en
+# consiti-foundation) y se escanea la imagen; CVEs CRITICAL/HIGH con fix bloquean
+# el push. PRERREQUISITO: la SA de build (sa-landings-build@) necesita
+# roles/storage.objectViewer sobre ese bucket, o el escaneo falla.
 #
 # Deploy manual de un sitio:
 #   gcloud builds submit --config=cloudbuild.yaml --project=consiti-landing-page \
-#     --substitutions=_SITE=factura-ia,_SERVICE_NAME=odoo-factura-ia-landing,_RUN_SA=odoo-factura-ia-run@consiti-landing-page.iam.gserviceaccount.com .
+#     --substitutions=_SITE=worky,_SERVICE_NAME=worky-landing,_RUN_SA=worky-run@consiti-landing-page.iam.gserviceaccount.com,_MEMORY=512Mi,_CONCURRENCY=80 .
 
 substitutions:
   _REGION: us-central1
@@ -13,15 +24,16 @@ substitutions:
   _SITE: ""          # carpeta en sites/  (lo fija el trigger)
   _SERVICE_NAME: ""  # servicio Cloud Run (lo fija el trigger)
   _RUN_SA: ""        # runtime SA del servicio (lo fija el trigger)
+  _MEMORY: "256Mi"   # nginx estático; worky (Node/SSR) sube a 512Mi
+  _CONCURRENCY: "200" # worky baja a 80
 
 options:
   logging: CLOUD_LOGGING_ONLY
   dynamicSubstitutions: true
 
-# El build context es sites/${_SITE}: solo se sube esa landing al builder,
-# no las demás (evita arrastrar los videos de otros sitios).
 steps:
-  - id: build-and-push
+  # 1) Build (sin push). Dockerfile propio del sitio si existe, si no el genérico.
+  - id: build
     name: gcr.io/cloud-builders/docker
     entrypoint: bash
     args:
@@ -31,10 +43,47 @@ steps:
         test -n "${_SITE}" -a -n "${_SERVICE_NAME}" -a -n "${_RUN_SA}" || { echo "faltan _SITE/_SERVICE_NAME/_RUN_SA"; exit 1; }
         IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
         TAG="${SHORT_SHA:-manual}"
-        docker build -f Dockerfile -t "$$IMG:$$TAG" -t "$$IMG:latest" "sites/${_SITE}"
+        DF="sites/${_SITE}/Dockerfile"; [ -f "$$DF" ] || DF="Dockerfile"
+        docker build -f "$$DF" -t "$$IMG:$$TAG" -t "$$IMG:latest" "sites/${_SITE}"
+
+  # 2) ARQ-6 · Restaurar la cache de la DB de Trivy (bucket central en consiti-foundation).
+  - id: trivy-restore
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        mkdir -p /workspace/trivy
+        gsutil -q -m rsync -r gs://consiti-trivy-db/cache /workspace/trivy || echo "trivy cache miss"
+
+  # 3) ARQ-6 · Gate: falla el build (bloquea el push) ante CVEs CRITICAL/HIGH con fix.
+  - id: trivy-gate
+    name: aquasec/trivy
+    entrypoint: sh
+    args:
+      - -c
+      - |
+        IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
+        TAG="${SHORT_SHA:-manual}"
+        IGN=""; [ -f "sites/${_SITE}/.trivyignore" ] && IGN="--ignorefile=sites/${_SITE}/.trivyignore"
+        trivy image --cache-dir=/workspace/trivy --skip-db-update \
+          --exit-code=1 --severity=CRITICAL,HIGH --ignore-unfixed --timeout=10m \
+          $$IGN "$$IMG:$$TAG"
+
+  # 4) Push (solo si el gate pasó).
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        IMG="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE_NAME}"
+        TAG="${SHORT_SHA:-manual}"
         docker push "$$IMG:$$TAG"
         docker push "$$IMG:latest"
 
+  # 5) Deploy a Cloud Run.
   - id: deploy-cloud-run
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
     entrypoint: bash
@@ -47,7 +96,7 @@ steps:
         gcloud run deploy "${_SERVICE_NAME}" \
           --image "$$IMG:$$TAG" --region "${_REGION}" --platform managed \
           --port 8080 --service-account "${_RUN_SA}" \
-          --cpu 1 --memory 256Mi --min-instances 0 --max-instances 5 --concurrency 200 \
+          --cpu 1 --memory "${_MEMORY}" --min-instances 0 --max-instances 5 --concurrency "${_CONCURRENCY}" \
           --allow-unauthenticated --quiet
 
-timeout: 600s
+timeout: 1200s

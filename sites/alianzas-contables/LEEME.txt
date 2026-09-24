@@ -1,0 +1,39 @@
+LANDING PROGRAMA DE ALIANZAS CONTABLES (FACTURA IA)
+===================================================
+
+Que es:  la pagina para reclutar contadores y despachos contables al
+         Programa de Alianzas Contables de Factura IA.
+
+Va en:   dominio por definir (lo confirma Briant).
+         Hoy vive temporalmente en alianzas-contables-facturaia.vercel.app,
+         en una cuenta de Vercel personal. Cuando este sitio quede en Cloud
+         Run, esa copia en Vercel se da de baja.
+
+Deploy:  estatico con nginx, igual que vendi y komandi. Sin build.
+
+
+ARCHIVOS
+--------
+
+  public/index.html   la pagina completa. El CSS y el JavaScript van dentro
+                      del archivo.
+  public/fotos/       logos, favicon, apple-touch y las dos fotos de la pagina.
+                      El HTML las pide con rutas relativas (fotos/...), asi que
+                      no se tocan si cambia el dominio.
+
+
+COMO LLEGAN LOS LEADS
+---------------------
+
+Todos los botones dicen "Contactar" y abren un wizard de 5 pasos (perfil,
+clientes con declaracion mensual, departamento, medio de contacto y datos).
+Al final se abre WhatsApp con el resumen listo para el 7255-9059 (Briant).
+No hay backend, formulario ni base de datos: no necesita secretos ni
+variables de entorno.
+
+
+INDEXACION
+----------
+
+La pagina trae <meta name="robots" content="noindex, nofollow">. Asi estaba
+en Vercel. Si se decide indexarla, se borra esa linea del <head>.

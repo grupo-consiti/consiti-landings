@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programa de Alianzas Contables · Factura IA</title>
+<meta name="description" content="Programa de alianzas para contadores y despachos de El Salvador. Gane el 100 % de cada implementación y un ingreso mensual por sus clientes activos. Factura IA implementa, capacita, da soporte y entrega los anexos de IVA listos para subirlos a Hacienda en formato CSV." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" href="fotos/favicon-facturaia.png" />
+<link rel="apple-touch-icon" href="fotos/apple-touch-facturaia.png" />
+<link rel="preload" as="image" href="fotos/logo-facturaia-color-dark.png" fetchpriority="high" />
+<style>
+:root{
+  --ink:#140A2E; --ink-soft:#655d7d; --ink-mute:#938ca8;
+  --purple:#5216E7; --purple-deep:#3b0fb0; --purple-soft:#8b6cff;
+  --amber:#FF8A00; --amber-soft:#ffb454;
+  --wa:#25D366; --wa-deep:#1eb355; --wa-ink:#FFFFFF;
+  --paper:#FFFFFF; --lilac:#F6F4FF; --lilac-2:#EDE8FF; --night:#0A0616;
+  --line:#E9E5F7; --line-soft:#F0EDFB;
+  --sh-sm:0 1px 2px rgba(20,10,46,.05);
+  --sh:0 2px 6px rgba(20,10,46,.04),0 14px 30px -12px rgba(20,10,46,.16);
+  --sh-lg:0 10px 24px -8px rgba(20,10,46,.12),0 36px 70px -24px rgba(20,10,46,.28);
+  --sh-purple:0 24px 60px -20px rgba(82,22,231,.55);
+  --r:18px; --r-lg:26px; --r-sm:12px;
+  --maxw:1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Instrument Sans',system-ui,Arial,sans-serif;background:var(--paper);color:var(--ink);
+  line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:'Archivo',system-ui,sans-serif;letter-spacing:-.025em;line-height:1.08;text-wrap:balance}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.sec{padding:clamp(60px,9vw,116px) 0;position:relative}
+.sec.lilac{background:var(--lilac)}
+.sec.night{background:var(--night);color:#fff}
+.sec.night h2,.sec.night h3,.sec.night h4{color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:12px;
+  font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--purple)}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--amber);border-radius:2px}
+.night .eyebrow,.on-dark .eyebrow{color:var(--amber-soft)}
+.night .eyebrow::before{background:var(--amber)}
+h2.title{font-size:clamp(1.9rem,3.6vw,3rem);font-weight:800;margin:16px 0 0;max-width:20ch}
+.center{text-align:center}.center .lead,.center h2.title,.center .eyebrow{margin-left:auto;margin-right:auto}
+.lead{font-size:clamp(1.05rem,1.5vw,1.22rem);color:var(--ink-soft);max-width:62ch;margin-top:18px}
+.night .lead{color:rgba(255,255,255,.72)}
+.kicker{font-size:clamp(1.15rem,1.7vw,1.35rem);font-weight:600;color:var(--ink);margin-top:26px}
+.night .kicker,.hero .kicker,.final .kicker{color:#fff}
+.head{margin-bottom:clamp(38px,5vw,62px)}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:'Instrument Sans';
+  font-weight:700;font-size:1rem;text-decoration:none;border:0;cursor:pointer;border-radius:999px;
+  padding:15px 28px;transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,background .2s;white-space:nowrap}
+.btn svg{width:20px;height:20px;flex-shrink:0}
+.btn-wa{background:var(--wa);color:var(--wa-ink);box-shadow:0 10px 26px -8px rgba(37,211,102,.6)}
+.btn-wa:hover{background:var(--wa-deep);transform:translateY(-2px);box-shadow:0 16px 34px -8px rgba(37,211,102,.7)}
+.btn-purple{background:var(--purple);color:#fff;box-shadow:0 12px 30px -10px rgba(82,22,231,.65)}
+.btn-purple:hover{background:var(--purple-deep);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--purple);color:var(--purple);transform:translateY(-2px)}
+.night .btn-ghost,.hero .btn-ghost{color:#fff;border-color:rgba(255,255,255,.28)}
+.night .btn-ghost:hover,.hero .btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+.btn.lg{padding:18px 34px;font-size:1.08rem}
+.btn.sm{padding:11px 20px;font-size:.92rem}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+
+/* ---- header ---- */
+.announce{background:linear-gradient(90deg,var(--purple),var(--purple-deep));color:#fff;text-align:center;
+  font-size:.82rem;font-weight:500;padding:8px 16px;letter-spacing:.01em}
+.announce b{font-weight:700}
+header{position:sticky;top:0;z-index:900;background:#fff;border-bottom:1px solid var(--line);transition:padding .25s,box-shadow .25s}
+header.scrolled{box-shadow:0 8px 30px -12px rgba(20,10,46,.16)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0;transition:padding .25s}
+header.scrolled .nav{padding:9px 0}
+.logo{text-decoration:none;display:flex;align-items:flex-end;gap:10px}
+.logo img{height:34px;width:auto;display:block}
+.logo .by{font-family:'Instrument Sans';font-weight:500;font-size:.72rem;color:var(--ink-mute);letter-spacing:0;padding-bottom:3px;white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a.l{text-decoration:none;font-size:.95rem;font-weight:600;color:var(--ink);transition:color .2s}
+.nav-links a.l:hover{color:var(--purple)}
+
+/* ---- hero ---- */
+.hero{background:var(--night);color:#fff;position:relative;overflow:hidden;padding:clamp(52px,8vw,104px) 0 clamp(60px,9vw,110px)}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 60% at 82% 8%,rgba(82,22,231,.55),transparent 60%),
+  radial-gradient(50% 50% at 4% 96%,rgba(255,138,0,.16),transparent 60%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);background-size:34px 34px;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%);mask-image:linear-gradient(180deg,#000,transparent 80%)}
+.hero .wrap{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(36px,5vw,64px);align-items:center}
+.hero h1{font-size:clamp(2.3rem,5vw,4rem);font-weight:900;color:#fff;letter-spacing:-.035em;margin-top:20px}
+.hero h1 .g{background:linear-gradient(90deg,#c9b6ff,#fff 40%,var(--amber-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{color:rgba(255,255,255,.78);max-width:54ch}
+.trust{margin-top:30px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;color:rgba(255,255,255,.6);font-size:.88rem}
+.trust .t{display:flex;align-items:center;gap:8px}
+.trust b{color:#fff;font-family:'JetBrains Mono';font-weight:700}
+.trust .dot{width:5px;height:5px;border-radius:50%;background:var(--amber)}
+.hero-note{margin-top:26px;font-size:.9rem;color:rgba(255,255,255,.55);max-width:48ch;border-left:2px solid rgba(255,138,0,.5);padding-left:14px}
+
+/* hero visual */
+.hv{position:relative}
+.hv-photo{border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:var(--sh-lg)}
+.hv-photo img{width:100%;aspect-ratio:5/6;object-fit:cover}
+.earn-card{position:absolute;left:-26px;bottom:34px;background:#fff;color:var(--ink);border-radius:var(--r);
+  padding:20px 22px;box-shadow:var(--sh-lg);min-width:230px;border:1px solid var(--line)}
+.earn-card .lbl{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);font-family:'JetBrains Mono'}
+.earn-card .big{font-family:'Archivo';font-weight:900;font-size:2.4rem;letter-spacing:-.03em;background:linear-gradient(90deg,var(--purple),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.05}
+.earn-card .sub{font-size:.86rem;color:var(--ink-soft);margin-top:2px}
+.earn-card .bar{height:7px;border-radius:6px;background:var(--lilac-2);margin-top:14px;overflow:hidden}
+.earn-card .bar i{display:block;height:100%;width:72%;border-radius:6px;background:linear-gradient(90deg,var(--purple),var(--amber))}
+.badge-top{position:absolute;top:18px;right:18px;background:var(--wa);color:var(--wa-ink);font-weight:700;font-size:.78rem;
+  padding:8px 14px;border-radius:999px;display:flex;align-items:center;gap:7px;box-shadow:0 10px 24px -6px rgba(37,211,102,.5)}
+.badge-top svg{width:14px;height:14px}
+
+/* ---- generic grids/cards ---- */
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,60px);align-items:center}
+.split.s-11{grid-template-columns:1.1fr 1fr}
+.split.s-91{grid-template-columns:.9fr 1.1fr}
+.split.s-auto{grid-template-columns:auto 1fr;gap:clamp(28px,5vw,56px)}
+@media(max-width:860px){.split,.split.s-11,.split.s-91,.split.s-auto{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,2.4vw,30px);transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-5px);box-shadow:var(--sh);border-color:#d9d0f7}
+.night .card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)}
+.night .card:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2)}
+.card h4{font-size:1.12rem;font-weight:700;margin-bottom:8px}
+.card p{color:var(--ink-soft);font-size:.96rem}
+.night .card p{color:rgba(255,255,255,.7)}
+.ic{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(82,22,231,.12),rgba(255,138,0,.12))}
+.ic svg{width:24px;height:24px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.night .ic{background:linear-gradient(135deg,rgba(139,108,255,.22),rgba(255,138,0,.18))}
+.night .ic svg{stroke:var(--amber-soft)}
+
+/* number step badges */
+.step .n{font-family:'JetBrains Mono';font-weight:700;font-size:.95rem;color:#fff;background:linear-gradient(135deg,var(--purple),var(--purple-deep));
+  width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:var(--sh-purple)}
+
+/* check lists */
+.checks{list-style:none;display:grid;gap:12px}
+.checks li{position:relative;padding-left:32px;font-size:.98rem;color:var(--ink)}
+.night .checks li{color:rgba(255,255,255,.88)}
+.checks li::before{content:"";position:absolute;left:0;top:1px;width:21px;height:21px;border-radius:6px;
+  background:rgba(82,22,231,.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235216E7' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/13px no-repeat}
+.night .checks li::before{background-color:rgba(255,138,0,.16);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFB454' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")}
+.checks.two{grid-template-columns:1fr 1fr}
+.checks.three{grid-template-columns:1fr 1fr 1fr}
+
+/* ---- calculator ---- */
+.calc{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-lg);overflow:hidden}
+.calc-head{padding:clamp(22px,3vw,32px);border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--lilac),#fff)}
+.calc-head h3{font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800}
+.calc-head p{color:var(--ink-soft);margin-top:8px;font-size:.98rem}
+.calc-body{display:grid;grid-template-columns:1.55fr .95fr;gap:0}
+.calc-body>*,.calc-row>*{min-width:0}
+.calc-table{padding:clamp(16px,2vw,24px)}
+.calc-row{display:grid;grid-template-columns:1.3fr .8fr 1fr .9fr;gap:12px;align-items:center;padding:14px 8px;border-bottom:1px solid var(--line-soft)}
+.calc-row.h{border-bottom:1.5px solid var(--line);padding-bottom:10px}
+.calc-row.h span{font-family:'JetBrains Mono';font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-mute);font-weight:600}
+.calc-row .pname{font-family:'Archivo';font-weight:700;font-size:1rem}
+.calc-row .psub{font-size:.76rem;color:var(--ink-mute);font-family:'JetBrains Mono'}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:fit-content;background:#fff}
+.stepper button{width:30px;height:34px;border:0;background:var(--lilac);color:var(--purple);font-size:1.1rem;font-weight:700;cursor:pointer;transition:background .15s;line-height:1}
+.stepper button:hover{background:var(--lilac-2)}
+.stepper input{width:40px;height:34px;border:0;text-align:center;font-family:'JetBrains Mono';font-weight:700;font-size:.95rem;color:var(--ink);-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.stepper input:focus{outline:none}
+.stepper:focus-within{border-color:var(--purple);box-shadow:0 0 0 3px rgba(82,22,231,.12)}
+.calc-row .sub-t{font-family:'JetBrains Mono';font-weight:700;text-align:right;font-size:1rem;color:var(--ink)}
+.calc-side{background:var(--night);color:#fff;padding:clamp(24px,3vw,34px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.calc-side .res-lbl{font-family:'JetBrains Mono';font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--amber-soft)}
+.calc-side .res-big{font-family:'Archivo';font-weight:900;font-size:clamp(2.6rem,5vw,3.5rem);letter-spacing:-.03em;line-height:1;
+  background:linear-gradient(90deg,#fff,var(--amber-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+.calc-side .res-note{font-size:.86rem;color:rgba(255,255,255,.65)}
+.calc-side hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:2px 0}
+.mini{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:.9rem;color:rgba(255,255,255,.75)}
+.mini span{flex:1;min-width:0}
+.mini b{font-family:'JetBrains Mono';color:#fff;font-size:1.05rem;white-space:nowrap;flex-shrink:0}
+.calc-tag{display:none;align-items:center;gap:8px;background:rgba(37,211,102,.16);border:1px solid rgba(37,211,102,.4);
+  color:#7ef0a8;border-radius:12px;padding:10px 14px;font-size:.85rem;font-weight:600}
+.calc-tag.show{display:flex}
+.calc-tag svg{width:16px;height:16px;flex-shrink:0}
+.calc-side .btn{margin-top:4px}
+.calc-reset{background:none;border:0;color:rgba(255,255,255,.5);font-size:.8rem;cursor:pointer;text-decoration:underline;font-family:'Instrument Sans'}
+.calc-reset:hover{color:#fff}
+
+/* flow */
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;counter-reset:f}
+.flow .node{flex:1;min-width:160px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:22px;position:relative}
+.flow .node .fh{font-family:'JetBrains Mono';font-size:.72rem;color:var(--amber-soft);letter-spacing:.06em;margin-bottom:6px}
+.flow .node b{font-family:'Archivo';font-size:1.05rem;display:block;margin-bottom:4px}
+.flow .arrow{display:flex;align-items:center;color:var(--amber);font-size:1.5rem;padding:0 6px}
+.pipe{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-family:'Archivo';font-weight:700;font-size:clamp(.95rem,1.5vw,1.15rem)}
+.pipe .p{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 15px;box-shadow:var(--sh-sm)}
+.pipe .ar{color:var(--purple);font-size:1.3rem}
+
+/* options */
+.opt{border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3vw,34px);background:#fff;position:relative;transition:transform .25s,box-shadow .25s}
+.opt:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+.opt.feat{border:2px solid var(--purple);box-shadow:var(--sh-purple)}
+.opt .k{font-family:'JetBrains Mono';font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.opt.feat .k{color:var(--purple)}
+.opt h4{font-size:1.3rem;margin:8px 0 12px}
+.ribbon{position:absolute;top:-13px;right:22px;background:var(--amber);color:#3a1f00;font-size:.72rem;font-weight:700;padding:5px 13px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+
+/* plan cards */
+.plan{position:relative;display:flex;flex-direction:column}
+.plan h4{font-size:1.2rem;margin-bottom:2px}
+.plan .plan-price{font-family:'Archivo';font-weight:900;font-size:1.55rem;letter-spacing:-.02em;color:var(--purple)}
+.plan .plan-price small{font-family:'JetBrains Mono';font-weight:500;font-size:.72rem;color:var(--ink-mute);margin-left:5px;letter-spacing:0}
+.plan .plan-dte{font-family:'JetBrains Mono';font-size:.73rem;color:var(--ink-mute);margin:4px 0 16px;text-transform:uppercase;letter-spacing:.04em}
+.plan .checks{gap:9px;margin-bottom:18px}
+.plan .checks li{font-size:.9rem}
+.plan .plan-impl{margin-top:auto;border-top:1px dashed var(--line);padding-top:13px;font-size:.87rem;color:var(--ink-soft)}
+.plan .plan-impl b{font-family:'JetBrains Mono';color:var(--purple)}
+.plan.feat{border:2px solid var(--purple);box-shadow:var(--sh-purple)}
+
+/* ejemplo box metodologías */
+.ej{margin-top:16px;background:var(--lilac);border:1px dashed #d9d0f7;border-radius:12px;padding:13px 16px;font-family:'JetBrains Mono';font-size:.84rem;color:var(--ink);line-height:1.7}
+.ej b{color:var(--purple)}
+
+/* tri-summary */
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tri .box{border-radius:var(--r);padding:30px;border:1px solid var(--line)}
+.tri .box.you{background:linear-gradient(160deg,rgba(82,22,231,.08),rgba(255,138,0,.06));border-color:#d9d0f7}
+.tri .box .who{font-family:'JetBrains Mono';font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--purple);margin-bottom:10px}
+.tri .box .what{font-family:'Archivo';font-weight:700;font-size:1.15rem;line-height:1.3}
+
+/* FAQ */
+.faq{display:grid;gap:12px;max-width:860px;margin:0 auto}
+details.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px 20px;transition:box-shadow .2s,border-color .2s}
+details.q[open]{box-shadow:var(--sh);border-color:#d9d0f7}
+details.q summary{list-style:none;cursor:pointer;padding:16px 0;font-family:'Archivo';font-weight:700;font-size:1.02rem;display:flex;justify-content:space-between;align-items:center;gap:16px}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .pl{flex-shrink:0;width:24px;height:24px;position:relative;transition:transform .25s}
+details.q summary .pl::before,details.q summary .pl::after{content:"";position:absolute;background:var(--purple);border-radius:2px}
+details.q summary .pl::before{top:11px;left:4px;right:4px;height:2px}
+details.q summary .pl::after{left:11px;top:4px;bottom:4px;width:2px;transition:opacity .25s}
+details.q[open] summary .pl::after{opacity:0}
+details.q .a{padding:0 0 18px;color:var(--ink-soft);font-size:.98rem}
+
+/* form */
+.formwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:center}
+form.lead-form{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(26px,3vw,38px);box-shadow:var(--sh)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:13px 14px;font-family:'Instrument Sans';font-size:1rem;color:var(--ink);background:#fff;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(82,22,231,.12)}
+.consent{font-size:.8rem;color:var(--ink-mute);margin-top:12px}
+
+/* ---- wizard de contacto (pre-filtrado de leads) ---- */
+.wz-overlay{position:fixed;inset:0;z-index:1000;background:rgba(10,6,22,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.wz-overlay.open{opacity:1;visibility:visible}
+.wz{background:#fff;color:var(--ink);width:100%;max-width:560px;max-height:calc(100vh - 32px);overflow-y:auto;border-radius:var(--r-lg);
+  box-shadow:var(--sh-lg);padding:clamp(22px,4vw,34px);position:relative;transform:translateY(16px);transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.wz-overlay.open .wz{transform:none}
+.wz-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:var(--lilac);color:var(--ink);
+  font-size:1.3rem;line-height:1;cursor:pointer;transition:background .2s}
+.wz-x:hover{background:var(--lilac-2)}
+.wz-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-right:44px}
+.wz-count{font-family:'JetBrains Mono';font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+.wz-bar{height:6px;border-radius:6px;background:var(--lilac-2);margin:12px 0 22px;overflow:hidden}
+.wz-bar i{display:block;height:100%;width:20%;border-radius:6px;background:linear-gradient(90deg,var(--purple),var(--amber));transition:width .35s}
+.wz-step{display:none}
+.wz-step.on{display:block;animation:wzIn .3s ease}
+@keyframes wzIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.wz h3{font-size:clamp(1.3rem,3vw,1.6rem);font-weight:800}
+.wz .wz-sub{color:var(--ink-soft);font-size:.95rem;margin-top:6px}
+.wz-opts{display:grid;gap:12px;margin-top:20px}
+.wz-opt{position:relative;display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;
+  cursor:pointer;background:#fff;transition:border-color .2s,box-shadow .2s,background .2s}
+.wz-opt:hover{border-color:#cfc3f7}
+.wz-opt input{position:absolute;opacity:0;pointer-events:none}
+.wz-opt .oi{width:42px;height:42px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(82,22,231,.1),rgba(255,138,0,.12))}
+.wz-opt .oi svg{width:21px;height:21px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wz-opt b{font-family:'Archivo';font-size:1.02rem;display:block}
+.wz-opt small{display:block;color:var(--ink-mute);font-size:.84rem;line-height:1.4}
+.wz-opt:has(input:checked){border-color:var(--purple);background:var(--lilac);box-shadow:0 0 0 3px rgba(82,22,231,.12)}
+.wz-opt:has(input:focus-visible){outline:3px solid var(--purple);outline-offset:2px}
+.wz-fields{margin-top:18px}
+.wz-fields[hidden]{display:none}
+.wz .field input,.wz .field select{font-size:16px}
+.wz-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.wz-row{grid-template-columns:1fr}}
+.wz-note{background:var(--lilac);border:1px dashed #d9d0f7;border-radius:12px;padding:12px 14px;font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+.wz-err{color:#b3261e;font-size:.86rem;font-weight:600;margin-top:10px;min-height:1.2em}
+.wz-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px}
+.wz-nav .btn{padding:13px 26px}
+.wz-back{background:none;border:0;color:var(--ink-soft);font-family:'Instrument Sans';font-weight:600;font-size:.95rem;cursor:pointer;padding:10px 4px}
+.wz-back:hover{color:var(--purple)}
+.wz-back[hidden]{visibility:hidden;display:inline}
+.wz-done{text-align:center;padding:10px 0 4px}
+.wz-done .ok{width:64px;height:64px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--purple),var(--purple-deep));box-shadow:var(--sh-purple)}
+.wz-done .ok svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.wz-done p{color:var(--ink-soft);margin-top:10px}
+body.wz-lock{overflow:hidden}
+
+/* bloque de cierre: pasos del contacto */
+.contact-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(26px,3vw,38px);box-shadow:var(--sh)}
+.contact-card h4{font-size:1.2rem;margin-bottom:16px}
+.contact-card ol{list-style:none;display:grid;gap:14px;counter-reset:cc;margin-bottom:24px}
+.contact-card li{counter-increment:cc;display:flex;gap:12px;align-items:flex-start;font-size:.96rem;color:var(--ink-soft)}
+.contact-card li::before{content:counter(cc);flex-shrink:0;width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono';font-weight:700;font-size:.82rem;color:#fff;background:linear-gradient(135deg,var(--purple),var(--purple-deep))}
+.contact-card li b{color:var(--ink)}
+
+/* final */
+.final{background:var(--night);color:#fff;text-align:center;overflow:hidden}
+.final::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 50% 0%,rgba(82,22,231,.5),transparent 62%);pointer-events:none}
+.final .wrap{position:relative;z-index:2}
+.final h2{font-size:clamp(2rem,4.4vw,3.4rem);font-weight:900;color:#fff}
+.final .eyebrow{color:var(--amber-soft)}
+.final .lead{color:rgba(255,255,255,.75)}
+.final .kicker{color:var(--amber-soft);font-weight:700}
+.final .num{margin-top:22px;font-size:.95rem;color:rgba(255,255,255,.7)}
+.final .num b{font-family:'JetBrains Mono';color:var(--amber);font-weight:700}
+
+/* footer */
+footer{background:#050308;color:rgba(255,255,255,.6);padding:clamp(40px,5vw,64px) 0 34px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;align-items:start}
+footer .logo img{height:38px}
+footer .fdesc{font-size:.9rem;max-width:38ch;margin-top:14px}
+footer h5{color:#fff;font-family:'Archivo';font-size:.95rem;margin-bottom:14px}
+footer ul{list-style:none;display:grid;gap:9px}
+footer ul a{text-decoration:none;font-size:.9rem;color:rgba(255,255,255,.6);transition:color .2s}
+footer ul a:hover{color:var(--amber-soft)}
+.foot-bot{border-top:1px solid rgba(255,255,255,.1);margin-top:34px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.85rem}
+.foot-bot .close{color:var(--amber-soft);font-weight:600}
+
+/* botón flotante de contacto */
+.fab{position:fixed;right:22px;bottom:22px;z-index:950;display:inline-flex;align-items:center;gap:0;background:var(--purple);
+  color:#fff;text-decoration:none;font-weight:700;border-radius:999px;padding:15px;box-shadow:0 14px 34px -8px rgba(82,22,231,.65);
+  transition:padding .3s,transform .2s;overflow:hidden}
+.fab svg{width:26px;height:26px;flex-shrink:0}
+.fab .lab{max-width:0;opacity:0;white-space:nowrap;overflow:hidden;transition:max-width .35s,opacity .3s,margin .3s}
+.fab:hover{transform:translateY(-2px)}
+.fab:hover .lab{max-width:180px;opacity:1;margin-left:10px;margin-right:4px}
+.fab::after{content:"";position:absolute;inset:0;border-radius:999px;border:2px solid var(--purple);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.5);opacity:0}100%{opacity:0}}
+
+/* ---- dividers de onda entre zonas ---- */
+.hero,.sec{position:relative}
+.hero .wrap{position:relative;z-index:2}
+.wave-top,.wave-bot{position:absolute;left:0;right:0;height:56px;pointer-events:none;z-index:1}
+.wave-top{top:-1px}
+.wave-bot{bottom:-1px}
+.wave-top svg,.wave-bot svg{display:block;width:100%;height:calc(100% + 2px)}
+.wave-top svg{margin-top:-2px}
+
+/* ---- blobs y patrones decorativos ---- */
+.sec.lilac{position:relative;overflow:hidden}
+.sec.lilac::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(82,22,231,.09),transparent 65%);top:-160px;right:-160px;pointer-events:none}
+.sec.lilac::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,138,0,.08),transparent 65%);bottom:-140px;left:-140px;pointer-events:none}
+.sec.lilac .wrap{position:relative;z-index:1}
+.dots{position:absolute;width:220px;height:160px;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(circle at 2px 2px,rgba(82,22,231,.28) 2px,transparent 0);background-size:22px 22px}
+
+/* ---- floating hero cards ---- */
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.earn-card{animation:floaty 5.5s ease-in-out infinite}
+.badge-top{animation:floaty2 4.5s ease-in-out infinite}
+.mini-chip{position:absolute;top:38%;left:-30px;z-index:4;background:#fff;color:var(--ink);border:1px solid var(--line);
+  border-radius:14px;padding:12px 16px;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:10px;
+  font-size:.82rem;font-weight:600;animation:floaty 6.5s ease-in-out .8s infinite}
+.mini-chip .mi{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--lilac-2),#fff);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mini-chip .mi svg{width:18px;height:18px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mini-chip small{display:block;font-weight:500;color:var(--ink-mute);font-size:.7rem}
+
+/* ---- iconos en pasos / chips / tri ---- */
+.step .ictop{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.step .ictop .n{margin-bottom:0}
+.step .ictop .si{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(82,22,231,.1),rgba(255,138,0,.12));
+  display:flex;align-items:center;justify-content:center}
+.step .ictop .si svg{width:22px;height:22px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tri .box .tic{width:46px;height:46px;border-radius:13px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(82,22,231,.14),rgba(255,138,0,.14))}
+.tri .box .tic svg{width:24px;height:24px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pipe .p{display:inline-flex;align-items:center;gap:9px}
+.pipe .p svg{width:19px;height:19px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.pipe .p.hl{border-color:var(--purple);color:var(--purple)}
+.btn .go{transition:transform .22s}
+.btn:hover .go{transform:translateX(4px)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.stagger.in>*{opacity:1;transform:none}
+.stagger.in>*:nth-child(2){transition-delay:.07s}.stagger.in>*:nth-child(3){transition-delay:.14s}
+.stagger.in>*:nth-child(4){transition-delay:.21s}.stagger.in>*:nth-child(5){transition-delay:.28s}
+.stagger.in>*:nth-child(6){transition-delay:.35s}.stagger.in>*:nth-child(7){transition-delay:.42s}
+.stagger.in>*:nth-child(8){transition-delay:.49s}
+:focus-visible{outline:3px solid var(--purple);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){.reveal,.stagger>*{opacity:1;transform:none;transition:none}.fab::after{animation:none}}
+
+/* responsive */
+@media(max-width:1060px){.g5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:960px){
+  .nav-links a.l{display:none}
+  .hero-grid{grid-template-columns:1fr;gap:44px}
+  .hv{max-width:440px}
+  .calc-body{grid-template-columns:1fr}
+  .g4,.g5{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}
+  .tri{grid-template-columns:1fr}
+  .formwrap{grid-template-columns:1fr}
+  .checks.three{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .logo img{height:26px}
+  .logo .by{display:none}
+  .nav{gap:10px}
+  .btn-wa.sm,.btn-purple.sm{padding:10px 16px;font-size:.85rem}
+  .announce{font-size:.72rem;padding:7px 12px}
+  .g4,.g5,.g3,.g2,.checks.two,.checks.three,.foot-grid{grid-template-columns:1fr}
+  .calc-row{grid-template-columns:auto 1fr 1fr;gap:8px 10px}
+  .calc-row.h{display:none}
+  .calc-row .pcell{grid-column:1/-1}
+  .calc-row .sub-t{text-align:left;padding-top:2px}
+  .calc-row::before{content:none}
+  .stepper button{width:26px}
+  .stepper input{width:32px}
+  .btn{white-space:normal;text-align:center}
+  .cta-row .btn{width:100%}
+  .flow .arrow{transform:rotate(90deg);width:100%;justify-content:center;padding:4px 0}
+  .flow .node{width:100%}
+  .foot-bot{flex-direction:column}
+  .earn-card{left:0;right:0;bottom:-20px;margin:0 auto;min-width:0;width:88%}
+  .mini-chip{left:8px;top:10px;padding:9px 12px;font-size:.74rem}
+  .hv{margin-bottom:40px}
+}
+/* label helpers for mobile calc */
+.calc-row .m-lab{display:none;font-family:'JetBrains Mono';font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-mute);margin-bottom:4px}
+@media(max-width:640px){.calc-row .m-lab{display:block}}
+</style>
+</head>
+<body>
+
+<!-- 1. TOP BAR -->
+<div class="announce">Programa exclusivo para <b>contadores y despachos contables</b> de El Salvador</div>
+<header id="hd">
+  <div class="wrap nav">
+    <a href="#" class="logo"><img src="fotos/logo-facturaia-color-dark.png" alt="Factura IA" loading="eager" fetchpriority="high" decoding="async" /><span class="by">by Grupo Consiti</span></a>
+    <nav class="nav-links">
+      <a class="l" href="#planes">Planes</a>
+      <a class="l" href="#metodologias">Metodologías</a>
+      <a class="l" href="#calculadora">Calculadora</a>
+      <a class="l" href="#beneficios">Beneficios</a>
+      <a class="l" href="#faq">Preguntas</a>
+      <a class="btn btn-purple sm js-contact" href="#contactar">Contactar</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 2. HERO -->
+<section class="hero on-dark">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Programa de Alianzas Contables</span>
+        <h1>Convierta la facturación electrónica en <span class="g">ingresos para su despacho</span></h1>
+        <p class="lead">Refiera a sus clientes y gane de dos formas: el pago de cada implementación queda <strong style="color:#fff">100 % para usted</strong>, y sus clientes activos le generan un ingreso mensual.</p>
+        <div class="cta-row">
+          <a href="#contactar" class="btn btn-purple lg js-contact">
+            Contactar
+            <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#beneficios" class="btn btn-ghost lg">Conocer todos los beneficios</a>
+        </div>
+        <p class="hero-note">Planes desde $90 anuales. Y con 5 clientes activos referidos, la facturación electrónica de su propio despacho es gratis.</p>
+      </div>
+      <div class="hv reveal">
+        <div class="hv-photo"><img src="fotos/contador_02.jpg" alt="Contador aliado de Factura IA" loading="eager" fetchpriority="high" decoding="async" /></div>
+        <span class="badge-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> DTE emitido</span>
+        <div class="mini-chip"><span class="mi"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg></span><span>Libros de IVA<small>alimentados en vivo</small></span></div>
+        <div class="earn-card">
+          <div class="lbl">Pago único por implementación</div>
+          <div class="big">$200</div>
+          <div class="sub">5 clientes Starter × $40 · 100 % suyo</div>
+          <div class="bar"><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,56 480,56 720,28 C960,0 1200,0 1440,28 L1440,56 L0,56 Z" fill="#fff"/></svg></div>
+</section>
+<!-- 3. PLANES -->
+<section class="sec" id="planes">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Planes disponibles</span>
+      <h2 class="title">Primero, lo que su cliente recibe</h2>
+      <p class="lead">Seis planes según el volumen de emisión. Todos cumplen la normativa DTE e incluyen capacitación y soporte. La implementación tiene un <strong style="color:var(--ink)">precio oficial por plan</strong> — y ese ingreso es 100 % para usted.</p>
+    </div>
+    <div class="grid g3 stagger">
+      <div class="card plan">
+        <h4>Básico anual</h4>
+        <div class="plan-price">$90<small>/año + IVA</small></div>
+        <div class="plan-dte">15 DTEs mensuales</div>
+        <ul class="checks">
+          <li>Consumidor final y crédito fiscal</li>
+          <li>Normativa DTE incluida</li>
+          <li>Capacitación y cursos grabados</li>
+          <li>Un solo pago al año</li>
+        </ul>
+        <div class="plan-impl">Implementación <b>$30</b> · 100 % para usted</div>
+      </div>
+      <div class="card plan">
+        <h4>Starter</h4>
+        <div class="plan-price">$14.99<small>/mes + IVA</small></div>
+        <div class="plan-dte">30 DTEs mensuales</div>
+        <ul class="checks">
+          <li>Consumidor final y crédito fiscal</li>
+          <li>Notas de crédito y débito</li>
+          <li>Capacitación y cursos grabados</li>
+          <li>Soporte por correo</li>
+        </ul>
+        <div class="plan-impl">Implementación <b>$40</b> · 100 % para usted</div>
+      </div>
+      <div class="card plan feat">
+        <span class="ribbon">Recomendado</span>
+        <h4>Professional</h4>
+        <div class="plan-price">$24.99<small>/mes + IVA</small></div>
+        <div class="plan-dte">100 DTEs mensuales</div>
+        <ul class="checks">
+          <li>Todo lo del plan Starter</li>
+          <li>Anexos de IVA y libros en PDF y Excel</li>
+          <li>Su logo en la factura</li>
+          <li>Exportación, sujeto excluido y retención</li>
+          <li>Soporte por WhatsApp</li>
+        </ul>
+        <div class="plan-impl">Implementación <b>$50</b> · 100 % para usted</div>
+      </div>
+      <div class="card plan">
+        <h4>Advanced</h4>
+        <div class="plan-price">$34.99<small>/mes + IVA</small></div>
+        <div class="plan-dte">500 DTEs mensuales</div>
+        <ul class="checks">
+          <li>Todo lo del plan Professional</li>
+          <li>Carga automática de facturas de compra</li>
+          <li>Soporte por WhatsApp y llamada</li>
+        </ul>
+        <div class="plan-impl">Implementación <b>$60</b> · 100 % para usted</div>
+      </div>
+      <div class="card plan">
+        <h4>Deluxe</h4>
+        <div class="plan-price">$59.99<small>/mes + IVA</small></div>
+        <div class="plan-dte">1,000 DTEs mensuales</div>
+        <ul class="checks">
+          <li>Todo lo del plan Advanced</li>
+          <li>Un módulo del ERP a elección</li>
+          <li>Soporte por WhatsApp y llamada</li>
+        </ul>
+        <div class="plan-impl">Implementación <b>$70</b> · 100 % para usted</div>
+      </div>
+      <div class="card plan">
+        <h4>Empresarial</h4>
+        <div class="plan-price">A la medida</div>
+        <div class="plan-dte">DTEs ilimitados</div>
+        <ul class="checks">
+          <li>Todo lo del plan Deluxe</li>
+          <li>Una persona asignada a su sistema</li>
+          <li>Soluciones a la medida</li>
+        </ul>
+        <div class="plan-impl">Implementación <b>a convenir</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3b. METODOLOGÍAS DE INGRESO -->
+<section class="sec lilac" id="metodologias">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Metodologías de ingreso</span>
+      <h2 class="title">Dos formas de generar ingresos</h2>
+      <p class="lead">El programa le paga por referir y por mantener clientes activos. Así funciona cada metodología:</p>
+    </div>
+    <div class="grid g2 stagger">
+      <div class="opt feat"><span class="ribbon">Sin gestión mensual</span><span class="k">Metodología 1</span><h4>Pago único por implementación</h4><p>Cada cliente referido paga la implementación de su plan con el precio oficial del programa, y ese ingreso queda <strong style="color:var(--ink)">100 % para usted</strong>. Se cobra una sola vez, sin gestión posterior.</p>
+        <div class="ej">10 clientes Starter × $40 = <b>$400</b> de una sola vez</div>
+      </div>
+      <div class="opt"><span class="k">Metodología 2</span><h4>20 % de la mensualidad</h4><p>Gane cada mes el <strong style="color:var(--ink)">20 % de la mensualidad</strong> de sus clientes activos, mientras la relación con ellos sigue siendo completamente suya.</p>
+        <div class="ej">10 clientes Professional ≈ $250/mes → <b>$50/mes</b> para usted = <b>$600/año</b></div>
+      </div>
+    </div>
+    <p class="center reveal" style="color:var(--ink-soft);margin-top:26px">¿Maneja una cartera de alto volumen? Conversemos: existen condiciones especiales según la cantidad de clientes.</p>
+  </div>
+</section>
+
+<!-- 3c. CALCULADORA -->
+<section class="sec" id="calculadora">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Beneficio económico</span>
+      <h2 class="title">¿Cuánto puede ganar su despacho?</h2>
+      <p class="lead">Indique cuántos clientes puede referir por plan y compare su ingreso con cada metodología. Los precios de implementación son los oficiales del programa.</p>
+    </div>
+
+    <div class="calc reveal">
+      <div class="calc-head">
+        <h3>Calculadora de ingresos para su despacho</h3>
+        <p>Ajuste la cantidad de clientes por plan. Todo se recalcula al instante.</p>
+      </div>
+      <div class="calc-body">
+        <div class="calc-table">
+          <div class="calc-row h">
+            <span>Plan</span><span>Clientes</span><span style="text-align:right">Pago único</span><span style="text-align:right">20 % mensual</span>
+          </div>
+          <!-- rows injected by JS -->
+          <div id="calc-rows"></div>
+          <p style="color:var(--ink-mute);font-size:.78rem;margin-top:14px">El plan Empresarial se cotiza a la medida y no se incluye en la calculadora. Cifras redondeadas.</p>
+        </div>
+        <div class="calc-side">
+          <div>
+            <div class="res-lbl">Metodología 1 · Pago único (100 % suyo)</div>
+            <div class="res-big" id="res-total">$200</div>
+            <div class="res-note" id="res-clients">Con 5 clientes referidos · se cobra una sola vez</div>
+          </div>
+          <hr>
+          <div class="res-lbl">Metodología 2 · 20 % de la mensualidad</div>
+          <div class="mini"><span>Ingreso mensual recurrente</span><b id="res-sub">$15/mes</b></div>
+          <div class="mini"><span>Proyección anual</span><b id="res-year">$180/año</b></div>
+          <div class="calc-tag" id="tag5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+            ¡Con 5+ clientes activos, su facturación electrónica es gratis!
+          </div>
+          <a href="#contactar" class="btn btn-purple js-contact">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <button class="calc-reset" id="calc-reset" type="button">Reiniciar valores</button>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--ink-mute);font-size:.85rem;margin-top:16px">Las metodologías son independientes: compare y elija la que mejor se adapte a su despacho. Las proyecciones asumen clientes activos durante todo el año.</p>
+  </div>
+</section>
+
+<!-- 4. CÓMO FUNCIONA -->
+<section class="sec lilac" id="como">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Cómo funciona</span>
+      <h2 class="title">Usted refiere. Nosotros hacemos el resto.</h2>
+    </div>
+    <div class="grid g3 stagger">
+      <div class="card step"><div class="ictop"><div class="n">1</div><span class="si"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span></div><h4>Su único trabajo</h4><p>Identifique en su cartera a los clientes que necesitan facturación electrónica y refiéralos.</p></div>
+      <div class="card step"><div class="ictop"><div class="n">2</div><span class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.82-.33 1.7 1.7 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.51 1.7 1.7 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .33-1.82 1.7 1.7 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.51-1 1.7 1.7 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.82.33h0a1.7 1.7 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.51h0a1.7 1.7 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.33 1.82v0a1.7 1.7 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg></span></div><h4>Nuestro trabajo</h4><p>Implementación, activación, onboarding, capacitación, soporte y acompañamiento ante Hacienda.</p></div>
+      <div class="card step"><div class="ictop"><div class="n">3</div><span class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 .9-3 2.2c0 3.2 6 1.7 6 4.6 0 1.3-1.3 2.2-3 2.2s-3-1.1-3-2.5"/></svg></span></div><h4>Su recompensa</h4><p>El pago de la implementación, 100 % suyo, y los anexos de IVA listos cada mes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. AUTOMATIZACIÓN CONTABLE -->
+<section class="sec night">
+<div class="wave-top" aria-hidden="true"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,56 480,56 720,28 C960,0 1200,0 1440,28 L1440,0 L0,0 Z" fill="#F6F4FF"/></svg></div>
+  <div class="wrap">
+    <div class="head reveal" style="max-width:820px">
+      <span class="eyebrow">Anexos y libros de IVA</span>
+      <h2 class="title">La declaración de IVA de sus clientes, lista en un clic</h2>
+      <p class="lead">Mientras su cliente vende, cada venta alimenta <strong style="color:#fff">en vivo</strong> los libros y anexos de IVA. Al cierre del mes, usted solo descarga los reportes en el formato de Hacienda y presenta la declaración.</p>
+    </div>
+    <div class="grid g2 stagger">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></div>
+        <h4>Ventas: anexos en vivo</h4>
+        <p>Cada DTE emitido alimenta al instante los libros de ventas, los anexos y los archivos CSV en el formato de Hacienda. Nada que digitar ni armar en Excel.</p>
+      </div>
+      <div class="card" style="background:linear-gradient(160deg,rgba(82,22,231,.25),rgba(255,138,0,.1))">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg></div>
+        <h4>Compras: cientos de facturas en un archivo</h4>
+        <p>Suba el JSON y registre cientos de facturas de compra de una sola vez. El anexo 3 de compras queda listo, sin digitar factura por factura.</p>
+      </div>
+    </div>
+    <p class="kicker center reveal" style="margin:34px auto 0;max-width:62ch">Usted genera ingresos y recupera horas de trabajo operativo: más tiempo para atender y conseguir nuevos clientes.</p>
+    <div class="center reveal" style="margin-top:24px"><a href="#contactar" class="btn btn-purple js-contact">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </div>
+<div class="wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,56 480,56 720,28 C960,0 1200,0 1440,28 L1440,56 L0,56 Z" fill="#fff"/></svg></div>
+</section>
+<!-- 11. BENEFICIOS: CERTIFICACIÓN, MARCA, CAPTACIÓN Y REFERENCIAS -->
+<section class="sec" id="beneficios">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Beneficios del programa</span>
+      <h2 class="title">El programa también impulsa su despacho</h2>
+    </div>
+    <div class="grid g2 stagger">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div><h4>Certificación oficial</h4><p>Capacitación completa y certificación como <strong>Contador certificado en Factura IA by Grupo Consiti</strong>. Diferencie su despacho y monetice nuevos servicios.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h4>Presencia digital</h4><p>Landing page profesional con sus servicios, su contacto y las tarifas oficiales, más material comercial para redes sociales y su cartera.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4"/></svg></div><h4>Webinars y captación</h4><p>Webinars, charlas, eventos empresariales y campañas en conjunto para presentar sus servicios a nuevos prospectos.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M16 3h5v5M21 3l-7 7"/><path d="M8 21H3v-5M3 21l7-7"/></svg></div><h4>Referencias de clientes</h4><p>Le referimos empresas que buscan servicios contables o asesoría tributaria, según ubicación, especialidad y desempeño en el programa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14. CRECIMIENTO COMERCIAL -->
+<section class="sec night">
+<div class="wave-top" aria-hidden="true"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,56 480,56 720,28 C960,0 1200,0 1440,28 L1440,0 L0,0 Z" fill="#F6F4FF"/></svg></div>
+  <div class="wrap">
+    <div class="split s-auto">
+      <div class="reveal" style="text-align:center">
+        <div style="font-family:'Archivo';font-weight:900;font-size:clamp(4rem,10vw,7rem);line-height:.9;letter-spacing:-.05em;background:linear-gradient(160deg,var(--amber-soft),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent">5</div>
+        <div class="mono" style="color:rgba(255,255,255,.6);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em">clientes activos</div>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Incentivo para su despacho</span>
+        <h2 class="title">Su facturación electrónica, gratis</h2>
+        <p class="lead">Si usted tiene cinco clientes con nosotros, la facturación electrónica de su propio despacho va por nuestra cuenta.</p>
+        <ul class="checks" style="margin-top:18px">
+          <li>Aplica a la facturación del despacho del contador aliado</li>
+          <li>Se mantiene mientras conserve 5 clientes activos</li>
+          <li>Su despacho también cumple la normativa DTE, sin costo</li>
+        </ul>
+        <a href="#contactar" class="btn btn-purple js-contact" style="margin-top:22px">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+<div class="wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,56 480,56 720,28 C960,0 1200,0 1440,28 L1440,56 L0,56 Z" fill="#fff"/></svg></div>
+</section>
+<!-- 17. PERFIL, REQUISITOS Y ACOMPAÑAMIENTO -->
+<section class="sec">
+  <div class="wrap">
+    <div class="split s-91">
+      <div class="hv reveal">
+        <div class="hv-photo" style="box-shadow:var(--sh-lg)"><img src="fotos/contador_04.jpg" alt="Despacho contable aliado de Factura IA" loading="lazy" decoding="async" style="aspect-ratio:4/3" /></div>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Perfil y requisitos</span>
+        <h2 class="title">¿Quién puede formar parte?</h2>
+        <p class="lead">Contadores independientes, despachos, firmas de auditoría y consultores tributarios con cartera activa de clientes.</p>
+        <div class="grid" style="gap:16px;margin-top:24px">
+          <div class="card">
+            <h4 style="margin-bottom:14px">Requisitos</h4>
+            <ul class="checks">
+              <li>Residir en El Salvador, con cartera comprobable de clientes</li>
+              <li>Firmar el contrato de alianza y completar la capacitación inicial</li>
+              <li>Referir al menos 3 clientes al mes para mantener activa la alianza</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4 style="margin-bottom:14px">Usted no estará solo</h4>
+            <ul class="checks">
+              <li>Gestor de cuenta dedicado y soporte técnico especializado</li>
+              <li>Seguimiento de cada implementación y atención a dudas de sus clientes</li>
+              <li>+50 tutoriales en video y material comercial actualizado</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21. FAQ -->
+<section class="sec lilac" id="faq">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2 class="title">Lo que todo contador pregunta</h2>
+    </div>
+    <div class="faq reveal">
+      <details class="q"><summary>¿Quién cobra la implementación y cuánto?<span class="pl"></span></summary><div class="a">Usted. El programa define un precio oficial por plan — de $30 a $70 — y ese ingreso queda 100 % para usted.</div></details>
+      <details class="q"><summary>¿Factura IA cobra por implementar?<span class="pl"></span></summary><div class="a">No. Factura IA recibe únicamente la suscripción del plan contratado.</div></details>
+      <details class="q"><summary>¿Cómo gano el 20 % de la mensualidad?<span class="pl"></span></summary><div class="a">Cada cliente activo le genera un ingreso mensual equivalente al 20 % de su plan, mientras permanezca en el programa. El detalle operativo se lo explicamos al aplicar.</div></details>
+      <details class="q"><summary>¿Cuándo es gratis la facturación de mi despacho?<span class="pl"></span></summary><div class="a">Cuando usted mantiene 5 o más clientes activos referidos, la facturación electrónica de su propio despacho no tiene costo.</div></details>
+      <details class="q"><summary>¿Quién realiza el trabajo técnico?<span class="pl"></span></summary><div class="a">El equipo de Factura IA realiza la configuración, activación, onboarding y capacitación.</div></details>
+      <details class="q"><summary>¿Qué sucede con los libros y anexos de IVA?<span class="pl"></span></summary><div class="a">Cada venta del cliente los alimenta en vivo, y las facturas de compras se registran por lotes subiendo el JSON. Al cierre del mes descarga los anexos en formato CSV, listos para subirlos a Hacienda.</div></details>
+      <details class="q"><summary>¿Puedo participar como contador independiente?<span class="pl"></span></summary><div class="a">Sí, igual que despachos y firmas. Para mantener activa la alianza se refieren al menos 3 clientes al mes.</div></details>
+      <details class="q"><summary>¿Recibiré capacitación?<span class="pl"></span></summary><div class="a">Sí. Recibirá capacitación, material didáctico, tutoriales y la posibilidad de certificarse.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 23. CIERRE + FORMULARIO -->
+<section class="sec">
+  <div class="wrap">
+    <div class="formwrap">
+      <div class="reveal">
+        <span class="eyebrow">Es su momento</span>
+        <h2 class="title">Convierta su cartera en una nueva fuente de ingresos</h2>
+        <p class="lead">Su cartera puede empezar a generar ingresos esta misma semana. Presione <strong style="color:var(--ink)">Contactar</strong> y un asesor le atenderá por el medio que usted elija.</p>
+        <div class="trust" style="color:var(--ink-soft);margin-top:24px">
+          <span class="t"><span class="dot"></span> Respuesta el mismo día hábil</span>
+          <span class="t"><span class="dot"></span> Sin compromiso</span>
+        </div>
+      </div>
+      <div class="contact-card reveal" id="contactar">
+        <h4>Le contactamos como usted prefiera</h4>
+        <ol>
+          <li><span>Cuéntenos si es <b>contador independiente o despacho contable</b>.</span></li>
+          <li><span>Indíquenos <b>a cuántos clientes</b> les lleva la declaración cada mes.</span></li>
+          <li><span>Díganos <b>en qué departamento</b> reside.</span></li>
+          <li><span>Elija <b>llamada, WhatsApp o videollamada</b> con uno de nuestros asesores.</span></li>
+        </ol>
+        <a href="#contactar" class="btn btn-purple js-contact" style="width:100%">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <p class="consent">Toma menos de un minuto. Al enviar sus datos, usted autoriza a Factura IA a contactarle para brindarle información sobre el programa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 25. FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo"><img src="fotos/logo-facturaia-color-light.png" alt="Factura IA" loading="lazy" decoding="async" /></a>
+        <p class="fdesc">Facturación electrónica, anexos de IVA listos para Hacienda, capacitación y soporte para empresas de El Salvador. Un producto de Grupo Consiti S.A. de C.V.</p>
+      </div>
+      <div>
+        <h5>Programa</h5>
+        <ul>
+          <li><a href="#planes">Planes y precios</a></li>
+          <li><a href="#metodologias">Metodologías de ingreso</a></li>
+          <li><a href="#calculadora">Calculadora de ingresos</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="#" class="wa">WhatsApp: 7255-9059</a></li>
+          <li><a href="https://facturaiasv.com" target="_blank" rel="noopener">facturaiasv.com</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Grupo Consiti S.A. de C.V. — El Salvador</span>
+      <span class="close">Tecnología para sus clientes. Crecimiento para su despacho.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- 24. FLOATING WHATSAPP -->
+<a class="fab js-contact" href="#contactar" aria-label="Contactar">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span class="lab">Contactar</span>
+</a>
+
+<!-- WIZARD DE CONTACTO: pre-filtrado de leads -->
+<div class="wz-overlay" id="wz" aria-hidden="true">
+  <form class="wz" id="wzForm" role="dialog" aria-modal="true" aria-labelledby="wz-count" novalidate>
+    <button type="button" class="wz-x" data-wz-close aria-label="Cerrar">×</button>
+    <div class="wz-top"><span class="wz-count" id="wz-count">Paso 1 de 5</span></div>
+    <div class="wz-bar"><i id="wz-bar"></i></div>
+
+    <div class="wz-step on" data-step="1">
+      <h3>¿Cómo ejerce la contaduría?</h3>
+      <p class="wz-sub">Así le asignamos al asesor indicado.</p>
+      <div class="wz-opts">
+        <label class="wz-opt"><input type="radio" name="perfil" value="Contador independiente"><span class="oi"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span><b>Contador independiente</b><small>Atiende a sus clientes por cuenta propia</small></span></label>
+        <label class="wz-opt"><input type="radio" name="perfil" value="Despacho contable"><span class="oi"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><b>Despacho contable</b><small>Firma o despacho con equipo de trabajo</small></span></label>
+      </div>
+      <div class="wz-fields" id="wz-desp" hidden>
+        <div class="field"><label for="wz-despacho">Nombre del despacho <span style="color:var(--ink-mute);font-weight:500">(opcional)</span></label><input id="wz-despacho" name="despacho" type="text" placeholder="Su despacho o firma" autocomplete="organization"></div>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="2">
+      <h3>¿A cuántos clientes les lleva la declaración cada mes?</h3>
+      <p class="wz-sub">Cuente solo a los clientes a los que usted les presenta la declaración mensual.</p>
+      <div class="wz-opts">
+        <label class="wz-opt"><input type="radio" name="clientes" value="1 a 5"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>De 1 a 5 clientes</b><small>Una cartera que empieza a crecer</small></span></label>
+        <label class="wz-opt"><input type="radio" name="clientes" value="6 a 10"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>De 6 a 10 clientes</b><small>Una cartera consolidada</small></span></label>
+        <label class="wz-opt"><input type="radio" name="clientes" value="Más de 10"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>Más de 10 clientes</b><small>Una cartera amplia</small></span></label>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="3">
+      <h3>¿En qué zona reside?</h3>
+      <p class="wz-sub">Le conectamos con el asesor de su zona.</p>
+      <div class="wz-fields">
+        <div class="field"><label for="wz-dep">Departamento</label>
+          <select id="wz-dep" name="departamento"><option value="">Seleccione su departamento…</option><option>San Salvador</option><option>La Libertad</option><option>Santa Ana</option><option>San Miguel</option><option>Sonsonate</option><option>La Paz</option><option>Usulután</option><option>Ahuachapán</option><option>Cuscatlán</option><option>La Unión</option><option>Chalatenango</option><option>Morazán</option><option>San Vicente</option><option>Cabañas</option></select>
+        </div>
+        <div class="field"><label for="wz-mun">Municipio <span style="color:var(--ink-mute);font-weight:500">(opcional)</span></label><input id="wz-mun" name="municipio" type="text" placeholder="Ej.: Santa Tecla" autocomplete="address-level2"></div>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="4">
+      <h3>¿Cómo desea que le contactemos?</h3>
+      <p class="wz-sub">Elija el medio que le quede más cómodo.</p>
+      <div class="wz-opts">
+        <label class="wz-opt"><input type="radio" name="medio" value="Llamada telefónica"><span class="oi"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><span><b>Llamada telefónica</b><small>Un asesor le llama en el horario que usted elija</small></span></label>
+        <label class="wz-opt"><input type="radio" name="medio" value="WhatsApp"><span class="oi"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span><b>Mensaje por WhatsApp</b><small>Un asesor le escribe a su WhatsApp</small></span></label>
+        <label class="wz-opt"><input type="radio" name="medio" value="Videollamada"><span class="oi"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span><span><b>Videollamada con un asesor</b><small>Usted elige el día y la hora; le enviamos la invitación</small></span></label>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="5">
+      <h3>Sus datos de contacto</h3>
+      <p class="wz-sub" id="wz-s5">Complete sus datos para que el asesor le contacte.</p>
+      <div class="wz-fields">
+        <div class="field"><label for="wz-nom">Nombre completo</label><input id="wz-nom" name="nombre" type="text" placeholder="Su nombre" autocomplete="name"></div>
+      </div>
+      <div class="wz-fields" data-medio="Llamada telefónica" hidden>
+        <div class="wz-row">
+          <div class="field"><label for="wz-tel">Teléfono</label><input id="wz-tel" name="telefono" type="tel" inputmode="numeric" placeholder="7000-0000" autocomplete="tel-national"></div>
+          <div class="field"><label for="wz-hor">Horario para llamarle</label>
+            <select id="wz-hor" name="horario"><option value="">Seleccione…</option><option>Mañana (8:00 a 12:00)</option><option>Mediodía (12:00 a 2:00)</option><option>Tarde (2:00 a 5:00)</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="wz-fields" data-medio="WhatsApp" hidden>
+        <div class="field"><label for="wz-wa">Número de WhatsApp</label><input id="wz-wa" name="whatsapp" type="tel" inputmode="numeric" placeholder="7000-0000" autocomplete="tel-national"></div>
+      </div>
+      <div class="wz-fields" data-medio="Videollamada" hidden>
+        <div class="field"><label for="wz-mail">Correo electrónico</label><input id="wz-mail" name="correo" type="email" placeholder="usted@despacho.com" autocomplete="email"></div>
+        <div class="wz-row">
+          <div class="field"><label for="wz-dia">Día disponible</label><input id="wz-dia" name="dia" type="date"></div>
+          <div class="field"><label for="wz-hora">Hora</label><select id="wz-hora" name="hora"><option value="">Seleccione…</option><option>8:00 a. m.</option><option>9:00 a. m.</option><option>10:00 a. m.</option><option>11:00 a. m.</option><option>2:00 p. m.</option><option>3:00 p. m.</option><option>4:00 p. m.</option></select></div>
+        </div>
+        <p class="wz-note">Uno de nuestros asesores le estará enviando la invitación a la videollamada a este correo.</p>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="done">
+      <div class="wz-done">
+        <div class="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>¡Ya casi! Envíe su solicitud por WhatsApp</h3>
+        <p>Se abrió WhatsApp con sus datos listos. <strong style="color:var(--ink)">Presione enviar</strong> para completar su solicitud.</p>
+        <a class="btn btn-wa" id="wz-wa-link" href="#" target="_blank" rel="noopener" style="margin-top:16px">Abrir WhatsApp</a>
+        <p id="wz-done-msg"></p>
+      </div>
+    </div>
+
+    <p class="wz-err" id="wz-err" role="alert"></p>
+    <div class="wz-nav" id="wz-nav">
+      <button type="button" class="wz-back" id="wz-back" hidden>← Atrás</button>
+      <button type="submit" class="btn btn-purple" id="wz-next">Siguiente</button>
+    </div>
+  </form>
+</div>
+
+<script>
+var WA="https://wa.me/50372559059?text=Hola,%20deseo%20recibir%20informaci%C3%B3n%20sobre%20el%20Programa%20de%20Alianzas%20Contables%20de%20Factura%20IA.";
+document.querySelectorAll('a.wa').forEach(function(a){a.setAttribute('href',WA);a.setAttribute('target','_blank');a.setAttribute('rel','noopener');});
+
+/* header scroll */
+var hd=document.getElementById('hd');
+addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);},{passive:true});
+
+/* reveal */
+(function(){
+  var els=document.querySelectorAll('.reveal,.stagger');
+  if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var o=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');o.unobserve(x.target);}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  els.forEach(function(e){o.observe(e)});
+})();
+
+/* ===== CALCULADORA ===== */
+(function(){
+  var PLANS=[
+    {k:'basico',n:'Básico anual',s:'$90/año · impl. $30',mo:7.5,impl:30,c:0},
+    {k:'starter',n:'Starter',s:'$14.99/mes · impl. $40',mo:14.99,impl:40,c:5},
+    {k:'pro',n:'Professional',s:'$24.99/mes · impl. $50',mo:24.99,impl:50,c:0},
+    {k:'adv',n:'Advanced',s:'$34.99/mes · impl. $60',mo:34.99,impl:60,c:0},
+    {k:'deluxe',n:'Deluxe',s:'$59.99/mes · impl. $70',mo:59.99,impl:70,c:0}
+  ];
+  var DEF=JSON.parse(JSON.stringify(PLANS));
+  var wrap=document.getElementById('calc-rows');
+  function money(v){return '$'+v.toLocaleString('en-US',{maximumFractionDigits:0});}
+  function render(){
+    wrap.innerHTML='';
+    PLANS.forEach(function(p,i){
+      var row=document.createElement('div');row.className='calc-row';
+      row.innerHTML=
+        '<div class="pcell"><div class="pname">'+p.n+'</div><div class="psub">'+p.s+'</div></div>'+
+        '<div><div class="m-lab">Clientes</div><div class="stepper"><button type="button" data-a="dec" data-i="'+i+'" aria-label="menos">−</button>'+
+          '<input type="number" min="0" value="'+p.c+'" data-c="'+i+'" aria-label="Clientes '+p.n+'"><button type="button" data-a="inc" data-i="'+i+'" aria-label="más">+</button></div></div>'+
+        '<div><div class="m-lab">Pago único</div><div class="sub-t" data-t="'+i+'">'+money(p.c*p.impl)+'</div></div>'+
+        '<div><div class="m-lab">20 % mensual</div><div class="sub-t" data-p="'+i+'">'+money(p.c*p.mo*.2)+'</div></div>';
+      wrap.appendChild(row);
+    });
+    calc();
+  }
+  function calc(){
+    var impl=0,clients=0,m20=0;
+    PLANS.forEach(function(p,i){
+      var st=p.c*p.impl,s20=p.c*p.mo*.2;impl+=st;clients+=p.c;m20+=s20;
+      var c1=wrap.querySelector('[data-t="'+i+'"]');if(c1)c1.textContent=money(st);
+      var c2=wrap.querySelector('[data-p="'+i+'"]');if(c2)c2.textContent=money(s20);
+    });
+    document.getElementById('res-total').textContent=money(impl);
+    document.getElementById('res-clients').textContent='Con '+clients+' cliente'+(clients===1?'':'s')+' referido'+(clients===1?'':'s')+' · se cobra una sola vez';
+    document.getElementById('res-sub').textContent=money(m20)+'/mes';
+    document.getElementById('res-year').textContent=money(m20*12)+'/año';
+    document.getElementById('tag5').classList.toggle('show',clients>=5);
+  }
+  wrap.addEventListener('input',function(e){
+    var t=e.target;
+    if(t.dataset.c!==undefined){PLANS[+t.dataset.c].c=Math.max(0,parseInt(t.value||0));calc();}
+  });
+  wrap.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-a]');if(!b)return;
+    var i=+b.dataset.i;PLANS[i].c=Math.max(0,PLANS[i].c+(b.dataset.a==='inc'?1:-1));
+    var inp=wrap.querySelector('[data-c="'+i+'"]');if(inp)inp.value=PLANS[i].c;calc();
+  });
+  document.getElementById('calc-reset').addEventListener('click',function(){
+    PLANS=JSON.parse(JSON.stringify(DEF));render();
+  });
+  render();
+})();
+
+/* ===== WIZARD DE CONTACTO (pre-filtrado de leads) =====
+   Cada solicitud llega al WhatsApp de gestión 7255-9059 con los datos del contador. */
+(function(){
+  var WA_NUM='50372559059';
+  var ov=document.getElementById('wz'),f=document.getElementById('wzForm');
+  var steps=[].slice.call(f.querySelectorAll('.wz-step')),TOTAL=5,cur=1,lastFocus=null;
+  var err=document.getElementById('wz-err'),next=document.getElementById('wz-next'),back=document.getElementById('wz-back');
+
+  function val(n){var el=f.elements[n];if(!el)return'';if(el.length&&el[0]&&el[0].type==='radio'){var c=f.querySelector('input[name="'+n+'"]:checked');return c?c.value:'';}return (el.value||'').trim();}
+  function telOk(v){var d=v.replace(/\D/g,'');if(d.length===11&&d.indexOf('503')===0)d=d.slice(3);return /^[267]\d{7}$/.test(d);}
+  function telFmt(v){var d=v.replace(/\D/g,'');if(d.length===11&&d.indexOf('503')===0)d=d.slice(3);return d.slice(0,4)+'-'+d.slice(4);}
+  function fechaLarga(iso){var p=iso.split('-');var d=new Date(+p[0],+p[1]-1,+p[2]);return d.toLocaleDateString('es-SV',{weekday:'long',day:'numeric',month:'long'});}
+
+  /* día mínimo para videollamada: mañana */
+  var dia=document.getElementById('wz-dia');
+  (function(){var t=new Date();t.setDate(t.getDate()+1);dia.min=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');})();
+
+  function show(n){
+    cur=n;err.textContent='';
+    steps.forEach(function(s){s.classList.toggle('on',s.dataset.step===String(n));});
+    var done=n==='done';
+    document.getElementById('wz-count').textContent=done?'Último paso':'Paso '+n+' de '+TOTAL;
+    document.getElementById('wz-bar').style.width=(done?100:n/TOTAL*100)+'%';
+    back.hidden=done||n===1;
+    next.textContent=done?'Cerrar':(n===TOTAL?'Enviar solicitud':'Siguiente');
+    if(n===5){
+      var m=val('medio');
+      f.querySelectorAll('[data-medio]').forEach(function(b){b.hidden=b.dataset.medio!==m;});
+      document.getElementById('wz-s5').textContent=
+        m==='Llamada telefónica'?'Déjenos su teléfono y el horario en que le conviene recibir la llamada.':
+        m==='WhatsApp'?'Déjenos su número de WhatsApp y un asesor le escribirá.':
+        'Elija el día y la hora. Uno de nuestros asesores le enviará la invitación a su correo.';
+    }
+    var first=f.querySelector('.wz-step.on input:not([type=hidden]),.wz-step.on select');
+    if(first&&!done&&n!==1)setTimeout(function(){first.focus({preventScroll:true});},50);
+  }
+
+  function check(n){
+    if(n===1&&!val('perfil'))return 'Elija una opción para continuar.';
+    if(n===2&&!val('clientes'))return 'Elija la cantidad de clientes.';
+    if(n===3&&!val('departamento'))return 'Seleccione su departamento.';
+    if(n===4&&!val('medio'))return 'Elija cómo desea que le contactemos.';
+    if(n===5){
+      if(val('nombre').length<3)return 'Escriba su nombre completo.';
+      var m=val('medio');
+      if(m==='Llamada telefónica'){if(!telOk(val('telefono')))return 'Escriba un teléfono válido de 8 dígitos.';if(!val('horario'))return 'Elija el horario para llamarle.';}
+      if(m==='WhatsApp'&&!telOk(val('whatsapp')))return 'Escriba un número de WhatsApp válido de 8 dígitos.';
+      if(m==='Videollamada'){
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('correo')))return 'Escriba un correo válido para enviarle la invitación.';
+        var d=val('dia');if(!d)return 'Elija el día para la videollamada.';
+        if(d<dia.min)return 'Elija un día a partir de mañana.';
+        var wd=new Date(d+'T12:00').getDay();if(wd===0||wd===6)return 'Elija un día de lunes a viernes.';
+        if(!val('hora'))return 'Elija la hora de la videollamada.';
+      }
+    }
+    return '';
+  }
+
+  function lead(){
+    var m=val('medio'),o={
+      perfil:val('perfil'),despacho:val('despacho'),clientes:val('clientes'),
+      departamento:val('departamento'),municipio:val('municipio'),medio:m,nombre:val('nombre'),
+      origen:'Landing Alianzas Contables',fecha:new Date().toISOString()
+    };
+    if(m==='Llamada telefónica'){o.telefono=telFmt(val('telefono'));o.horario=val('horario');}
+    if(m==='WhatsApp'){o.whatsapp=telFmt(val('whatsapp'));}
+    if(m==='Videollamada'){o.correo=val('correo');o.dia=val('dia');o.hora=val('hora');}
+    return o;
+  }
+
+  /* mensaje que el contador envía al WhatsApp de gestión, en su propia voz */
+  function resumen(o){
+    var pref=o.medio==='Llamada telefónica'?'Llamada telefónica al '+o.telefono+', en horario de '+o.horario.toLowerCase():
+      o.medio==='WhatsApp'?'Mensaje por WhatsApp al '+o.whatsapp:
+      'Videollamada el '+fechaLarga(o.dia)+' a las '+o.hora.replace(/\.$/,'')+'. Por favor envíen la invitación a '+o.correo;
+    return ['Hola, deseo que me contacten sobre el Programa de Alianzas Contables de Factura IA.','',
+      'Nombre: '+o.nombre,
+      'Perfil: '+o.perfil+(o.despacho?' ('+o.despacho+')':''),
+      'Clientes a los que les llevo la declaración mensual: '+o.clientes,
+      'Zona: '+o.departamento+(o.municipio?', '+o.municipio:''),'',
+      'Prefiero que me contacten por: '+pref+'.'].join('\n');
+  }
+
+  function enviar(o){
+    var url='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(resumen(o));
+    document.getElementById('wz-wa-link').href=url;
+    window.open(url,'_blank','noopener');
+    document.getElementById('wz-done-msg').textContent=
+      o.medio==='Llamada telefónica'?'Un asesor le llamará al '+o.telefono+' en el horario que eligió: '+o.horario+'.':
+      o.medio==='WhatsApp'?'Un asesor le escribirá a su WhatsApp '+o.whatsapp+'.':
+      'Un asesor le estará enviando la invitación a '+o.correo+' para el '+fechaLarga(o.dia)+' a las '+o.hora.replace(/\.$/,'')+'.';
+  }
+
+  function open(e){
+    if(e)e.preventDefault();
+    lastFocus=document.activeElement;
+    if(cur==='done'){f.reset();document.getElementById('wz-desp').hidden=true;show(1);}
+    ov.classList.add('open');ov.setAttribute('aria-hidden','false');document.body.classList.add('wz-lock');
+    setTimeout(function(){var el=f.querySelector('.wz-step.on input');if(el)el.focus({preventScroll:true});},60);
+  }
+  function close(){
+    ov.classList.remove('open');ov.setAttribute('aria-hidden','true');document.body.classList.remove('wz-lock');
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
+  }
+
+  document.querySelectorAll('.js-contact').forEach(function(a){a.addEventListener('click',open);});
+  ov.addEventListener('click',function(e){if(e.target===ov)close();});
+  f.querySelector('[data-wz-close]').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){
+    if(!ov.classList.contains('open'))return;
+    if(e.key==='Escape')close();
+    if(e.key==='Tab'){ /* mantener el foco dentro del wizard */
+      var fo=[].slice.call(f.querySelectorAll('button,input,select,a[href]')).filter(function(x){return x.offsetParent!==null&&!x.disabled;});
+      if(!fo.length)return;var a=fo[0],z=fo[fo.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
+      else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}
+    }
+  });
+  back.addEventListener('click',function(){if(typeof cur==='number'&&cur>1)show(cur-1);});
+
+  /* elegir una tarjeta avanza sola (salvo despacho, que pide el nombre) */
+  f.addEventListener('change',function(e){
+    var t=e.target;if(t.type!=='radio')return;err.textContent='';
+    if(t.name==='perfil'){var d=t.value==='Despacho contable';document.getElementById('wz-desp').hidden=!d;if(d){setTimeout(function(){document.getElementById('wz-despacho').focus();},50);return;}}
+    setTimeout(function(){if(String(cur)===t.closest('.wz-step').dataset.step)show(cur+1);},260);
+  });
+
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(cur==='done'){close();return;}
+    var m=check(cur);if(m){err.textContent=m;return;}
+    if(cur<TOTAL){show(cur+1);return;}
+    enviar(lead());show('done');
+  });
+})();
+</script>
+</body>
+</html>

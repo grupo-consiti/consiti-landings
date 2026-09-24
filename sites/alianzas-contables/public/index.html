@@ -12,6 +12,18 @@
 <meta property="og:url" content="https://contadores.facturaiasv.com/" />
 <meta property="og:title" content="Programa de Alianzas Contables · Factura IA" />
 <meta property="og:description" content="Programa para contadores y despachos de El Salvador: gane el 100 % de cada implementación y un ingreso mensual por sus clientes activos." />
+<!-- ============================================================
+     META PIXEL CON CONSENTIMIENTO PREVIO
+     El Pixel NO se carga al entrar: lo carga assets/consent.js SOLO si la
+     persona acepta las cookies (mismo aviso y misma clave que facturaiasv.com).
+     - pixelId: conjunto de datos de Factura IA en Meta.
+     - Eventos: PageView (al aceptar), Contact (abre el wizard) y
+       Lead (envia la solicitud). Ver trackMeta() en el script del final.
+     ============================================================ -->
+<script>
+  window.CONSENT_CFG = { pixelId: "2238963863532324", ga4Id: "" };
+</script>
+<script src="assets/consent.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
@@ -841,8 +853,8 @@ footer ul a:hover{color:var(--amber-soft)}
         <ul>
           <li><a href="#" class="wa">WhatsApp: 7255-9059</a></li>
           <li><a href="https://facturaiasv.com" target="_blank" rel="noopener">facturaiasv.com</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="https://facturaiasv.com/terminos" target="_blank" rel="noopener">Términos y privacidad</a></li>
+          <li><a href="#" onclick="if(window.openCookiePrefs){openCookiePrefs();}return false;">Preferencias de cookies</a></li>
         </ul>
       </div>
     </div>
@@ -1028,6 +1040,8 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
    Cada solicitud llega al WhatsApp de gestión 7255-9059 con los datos del contador. */
 (function(){
   var WA_NUM='50372559059';
+  /* Meta Pixel: solo dispara si la persona aceptó cookies (consent.js carga fbq) */
+  function trackMeta(ev,data){try{if(window.__consentGranted&&window.fbq)window.fbq('track',ev,data||{});}catch(e){}}
   var ov=document.getElementById('wz'),f=document.getElementById('wzForm');
   var steps=[].slice.call(f.querySelectorAll('.wz-step')),TOTAL=5,cur=1,lastFocus=null;
   var err=document.getElementById('wz-err'),next=document.getElementById('wz-next'),back=document.getElementById('wz-back');
@@ -1120,6 +1134,7 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
   function open(e){
     if(e)e.preventDefault();
     lastFocus=document.activeElement;
+    trackMeta('Contact',{content_name:'Wizard Alianzas Contables'});
     if(cur==='done'){f.reset();document.getElementById('wz-desp').hidden=true;show(1);}
     ov.classList.add('open');ov.setAttribute('aria-hidden','false');document.body.classList.add('wz-lock');
     setTimeout(function(){var el=f.querySelector('.wz-step.on input');if(el)el.focus({preventScroll:true});},60);
@@ -1156,7 +1171,11 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
     if(cur==='done'){close();return;}
     var m=check(cur);if(m){err.textContent=m;return;}
     if(cur<TOTAL){show(cur+1);return;}
-    enviar(lead());show('done');
+    var o=lead();
+    /* sin datos personales: solo el perfil del contador para segmentar campañas */
+    trackMeta('Lead',{content_name:'Alianzas Contables',content_category:o.perfil,
+      clientes:o.clientes,departamento:o.departamento,medio:o.medio});
+    enviar(o);show('done');
   });
 })();
 </script>

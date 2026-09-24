@@ -17,6 +17,11 @@ ARCHIVOS
 
   public/index.html   la pagina completa. El CSS y el JavaScript van dentro
                       del archivo.
+  public/assets/consent.js
+                      aviso de cookies; carga el Pixel de Meta SOLO si la
+                      persona acepta (copia del de factura-ia).
+  public/robots.txt   permite todo y apunta al sitemap.
+  public/sitemap.xml  una sola URL: https://contadores.facturaiasv.com/
   public/fotos/       logos, favicon, apple-touch y las dos fotos de la pagina.
                       El HTML las pide con rutas relativas (fotos/...), asi que
                       no se tocan si cambia el dominio.
@@ -32,9 +37,21 @@ No hay backend, formulario ni base de datos: no necesita secretos ni
 variables de entorno.
 
 
+MEDICION (META PIXEL)
+---------------------
+
+Conjunto de datos de Factura IA: 2238963863532324 (el mismo de
+facturaiasv.com). Va en window.CONSENT_CFG, en el <head>.
+Eventos: PageView al aceptar cookies, Contact al abrir el wizard y Lead al
+enviar la solicitud (con perfil, clientes, departamento y medio; sin datos
+personales). No hay CAPI: el sitio es nginx estatico.
+
+
 INDEXACION
 ----------
 
 Se indexa: la pagina ya NO trae noindex. El canonical y el og:url apuntan a
 https://contadores.facturaiasv.com/ ; si el dominio cambiara, son esas dos
-lineas del <head>. Ojo que el nginx.conf no agregue X-Robots-Tag noindex.
+lineas del <head> (y robots.txt / sitemap.xml). Ojo que el nginx.conf no
+agregue X-Robots-Tag noindex. Ya en linea: dar de alta el dominio en Google
+Search Console y enviar el sitemap.

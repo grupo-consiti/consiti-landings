@@ -7,7 +7,7 @@ landing.
 
 ## Dos tipos de sitio
 
-- **Estáticos** (factura-ia, vendi, komandi): HTML servido por nginx. Usan el
+- **Estáticos** (factura-ia, vendi, komandi, alianzas-contables): HTML servido por nginx. Usan el
   `Dockerfile` genérico de la raíz (context = `sites/<sitio>`, sirve `public/`).
 - **Node / SSR** (worky): app Next.js con API server y OG dinámico. Trae su propio
   `sites/<sitio>/Dockerfile` (build `standalone` → `node server.js`), que el
@@ -22,6 +22,7 @@ sites/
   factura-ia/  nginx.conf + public/            # estático
   vendi/       nginx.conf + public/            # estático
   komandi/     nginx.conf + public/            # estático
+  alianzas-contables/ nginx.conf + public/     # estático
   worky/       Dockerfile + src/ + public/     # Next.js SSR
                  .trivyignore                   # excepciones del gate por sitio
 ```
@@ -33,6 +34,7 @@ sites/
 | Factura IA | `sites/factura-ia` | nginx | `odoo-factura-ia-landing` | `factura-ia-landing-main` |
 | Vendi | `sites/vendi` | nginx | `vendi-landing` | `vendi-landing-main` |
 | Komandi | `sites/komandi` | nginx | `komandi-landing` | `komandi-landing-main` |
+| Alianzas Contables (contadores.facturaiasv.com) | `sites/alianzas-contables` | nginx | `alianzas-contables-landing` *(por crear)* | `alianzas-contables-landing-main` *(por crear)* |
 | Worky | `sites/worky` | Next.js SSR | `worky-landing` | `worky-landing-main` |
 
 ## Seguridad de imágenes (gate ARQ-6 / runbook ARQ-A-2)

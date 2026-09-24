@@ -4,7 +4,7 @@ LANDING PROGRAMA DE ALIANZAS CONTABLES (FACTURA IA)
 Que es:  la pagina para reclutar contadores y despachos contables al
          Programa de Alianzas Contables de Factura IA.
 
-Va en:   dominio por definir (lo confirma Briant).
+Va en:   contadores.facturaiasv.com
          Hoy vive temporalmente en alianzas-contables-facturaia.vercel.app,
          en una cuenta de Vercel personal. Cuando este sitio quede en Cloud
          Run, esa copia en Vercel se da de baja.
@@ -35,5 +35,6 @@ variables de entorno.
 INDEXACION
 ----------
 
-La pagina trae <meta name="robots" content="noindex, nofollow">. Asi estaba
-en Vercel. Si se decide indexarla, se borra esa linea del <head>.
+Se indexa: la pagina ya NO trae noindex. El canonical y el og:url apuntan a
+https://contadores.facturaiasv.com/ ; si el dominio cambiara, son esas dos
+lineas del <head>. Ojo que el nginx.conf no agregue X-Robots-Tag noindex.

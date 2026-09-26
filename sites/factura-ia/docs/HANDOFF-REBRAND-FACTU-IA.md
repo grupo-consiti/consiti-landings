@@ -117,7 +117,7 @@ Los archivos se derivaron del PNG que entregó Briant (vectorizado, sin redibuja
 
 | Antes (eliminado del repo) | Ahora | Dónde se usa |
 |---|---|---|
-| `sites/factura-ia/public/assets/factura-ia-logo.svg` | `sites/factura-ia/public/assets/factu-ia-logo.svg` (mismo viewBox 90×30, texto blanco + subrayado amarillo #F4DC0C) | Header/footer de `index.html` y `terminos.html`, `smoke.sh` |
+| `sites/factura-ia/public/assets/factura-ia-logo.svg` | `sites/factura-ia/public/assets/factu-ia-logo.svg` (mismo viewBox 90×30, texto blanco + subrayado amarillo #FFDD00) | Header/footer de `index.html` y `terminos.html`, `smoke.sh` |
 | `sites/factura-ia/public/assets/og-facturaia.jpg` | `sites/factura-ia/public/assets/og-factuia.jpg` (1200×630; mismo arte, solo cambia el wordmark de arriba a la izquierda) | `<meta property="og:image">` de `index.html` |
 | `sites/alianzas-contables/public/fotos/logo-facturaia-color-dark.png` | `sites/alianzas-contables/public/fotos/logo-factuia-color-dark.png` (520×153) | Header de contadores + `preload` |
 | `sites/alianzas-contables/public/fotos/logo-facturaia-color-light.png` | `sites/alianzas-contables/public/fotos/logo-factuia-color-light.png` (520×153) | Footer de contadores |

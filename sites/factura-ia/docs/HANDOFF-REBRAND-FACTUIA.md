@@ -163,7 +163,7 @@ no se edita (no se despliega).
   Dentro del wizard, «Siguiente»/«Cerrar» van en morado (como en contadores) y «Enviar» en verde.
 - **Wizard (6 pasos):** tipo de negocio · facturas al mes (rangos alineados a la tabla: hasta 30 /
   31–100 / 101–500 / 501–1,000 / más de 1,000 / no estoy seguro) · quién es · sistema actual ·
-  medio (llamada, reunión virtual, WhatsApp) + franja (mañana 8–12, tarde 12–5, después de las 5;
+  medio (llamada, reunión virtual, WhatsApp) + franja (mañana 8–12, tarde 12–5;
   día opcional si es reunión) · nombre, negocio (opcional), teléfono SV de 8 dígitos (acepta +503)
   y línea de consentimiento.
 - **Envío:** arma un resumen legible (respuestas, plan de interés o sugerido, origen + `cta_id`) y

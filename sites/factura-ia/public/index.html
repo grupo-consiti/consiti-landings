@@ -1642,10 +1642,9 @@ body.cw-lock{overflow:hidden}
           <label class="cw-opt"><input type="radio" name="medio" value="WhatsApp"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span><b>WhatsApp</b><small>Le escribimos</small></span></label>
         </div>
         <p class="cw-label" id="cw-q5b">¿A qué hora le queda mejor?</p>
-        <div class="cw-opts tres" role="radiogroup" aria-labelledby="cw-q5b">
+        <div class="cw-opts" role="radiogroup" aria-labelledby="cw-q5b">
           <label class="cw-opt"><input type="radio" name="franja" value="Mañana (8:00 a 12:00)"><span><b>Mañana</b><small>8:00 a 12:00</small></span></label>
           <label class="cw-opt"><input type="radio" name="franja" value="Tarde (12:00 a 5:00 p. m.)"><span><b>Tarde</b><small>12:00 a 5:00 p. m.</small></span></label>
-          <label class="cw-opt"><input type="radio" name="franja" value="Después de las 5:00 p. m."><span><b>Después de las 5</b><small>Desde las 5:00 p. m.</small></span></label>
         </div>
         <div class="cw-extra" id="cw-dia-extra" hidden>
           <div class="cw-field"><label for="cw-dia">Día preferido para la reunión <span>(opcional)</span></label>
@@ -1829,8 +1828,7 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
   var MEDIO_TXT={"Llamada":"llamada", "Reunión virtual":"reunión virtual", "WhatsApp":"WhatsApp"};
   var FRANJA_TXT={
     "Mañana (8:00 a 12:00)":"en la franja de la mañana (8:00 a 12:00)",
-    "Tarde (12:00 a 5:00 p. m.)":"en la franja de la tarde (12:00 a 5:00 p. m.)",
-    "Después de las 5:00 p. m.":"después de las 5:00 p. m."
+    "Tarde (12:00 a 5:00 p. m.)":"en la franja de la tarde (12:00 a 5:00 p. m.)"
   };
   /* cierra la frase sin duplicar el punto de "p. m." */
   function punto(t){ return /\.$/.test(t)?t:t+"."; }

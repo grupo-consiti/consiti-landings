@@ -132,8 +132,8 @@ export const departments = [
         modality: "Remoto", modalityTag: "remote", type: "Freelance · Lunes a sábado",
         location: "Toda Latinoamérica",
         highlight: "Base + comisión",
-        desc: "Vende las soluciones de Grupo Consiti a cliente final con método B2B: Factura IA, Vendi y Komandi. Prospectas, manejas objeciones y cierras, con sueldo base más comisión y una semana de capacitación intensiva para arrancar.",
-        tags: ["Factura IA", "Vendi", "Komandi"],
+        desc: "Vende las soluciones de Grupo Consiti a cliente final con método B2B: Factu IA, Vendi y Komandi. Prospectas, manejas objeciones y cierras, con sueldo base más comisión y una semana de capacitación intensiva para arrancar.",
+        tags: ["Factu IA", "Vendi", "Komandi"],
         requirements: [
           "Experiencia comprobable en ventas B2B",
           "Experiencia en atención al cliente",

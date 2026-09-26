@@ -12,7 +12,7 @@ Son 4 tareas. Ninguna es de diseño ni de código de fondo: son datos/credencial
 
 Resultó que **no existía un pixel real**: el `27890392917235121` era un placeholder, así que desde julio los eventos no llegaban a ningún lado. Se **creó el pixel** en el portafolio *Grupo Consiti Portfolio*:
 
-> **Pixel de Factura IA: `2238963863532324`**
+> **Pixel de Factu IA: `2238963863532324`**
 
 Ya quedó puesto en el código (`index.html` y `terminos.html`), y **ya se conectó a la cuenta publicitaria** (Grupo Consiti ADS) ✅. El `META_PIXEL_ID` para CAPI se configura en el despliegue de GCP (ver tarea 3).
 

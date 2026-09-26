@@ -1,6 +1,6 @@
-# Odoo Factura IA — Landing
+# Odoo Factu IA — Landing
 
-Sitio de marketing de **Factura IA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
+Sitio de marketing de **Factu IA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
 
 **Despliegue:** se publicará en **Google Cloud (GCP)**. La guía paso a paso para quien despliega está en **[`docs/DESPLIEGUE-GCP.md`](docs/DESPLIEGUE-GCP.md)**.
 **Preview privado (temporal):** https://odoo-factura-ia-landing.vercel.app — solo para revisar; **no** es el destino final.

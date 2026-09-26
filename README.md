@@ -31,10 +31,10 @@ sites/
 
 | Sitio | Carpeta | Tipo | Servicio Cloud Run | Trigger |
 |-------|---------|------|--------------------|---------|
-| Factura IA | `sites/factura-ia` | nginx | `odoo-factura-ia-landing` | `factura-ia-landing-main` |
+| Factu IA (factuiasv.com) | `sites/factura-ia` | nginx | `odoo-factura-ia-landing` | `factura-ia-landing-main` |
 | Vendi | `sites/vendi` | nginx | `vendi-landing` | `vendi-landing-main` |
 | Komandi | `sites/komandi` | nginx | `komandi-landing` | `komandi-landing-main` |
-| Alianzas Contables (contadores.facturaiasv.com) | `sites/alianzas-contables` | nginx | `alianzas-contables-landing` *(por crear)* | `alianzas-contables-landing-main` *(por crear)* |
+| Alianzas Contables (contadores.factuiasv.com) | `sites/alianzas-contables` | nginx | `alianzas-contables-landing` *(por crear)* | `alianzas-contables-landing-main` *(por crear)* |
 | Worky | `sites/worky` | Next.js SSR | `worky-landing` | `worky-landing-main` |
 
 ## Seguridad de imágenes (gate ARQ-6 / runbook ARQ-A-2)

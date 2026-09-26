@@ -36,8 +36,9 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 - `cloudbuild.yaml`, `Dockerfile` y `.gitignore`: solo mencionan la carpeta.
 - Nombres de assets (`factura-ia-logo.svg`, `og-facturaia.jpg`, `fotos/*facturaia*.png`), para
   no romper rutas. Se renombran cuando lleguen los logos nuevos.
-- URLs de preview en Vercel (`odoo-factura-ia-landing.vercel.app`,
-  `alianzas-contables-facturaia.vercel.app`).
+- URL de preview en Vercel `odoo-factura-ia-landing.vercel.app`. (La copia de contadores
+  `alianzas-contables-facturaia.vercel.app` se dio de baja el 26-sep-2026; el sitio de
+  contadores vive solo en Cloud Run.)
 - Nombres de configuraciones externas que se citan tal cual existen hoy: dataset de Meta
   `FACTURA_IA`, propiedad GA4 "Factura IA" y flujo "Landing Factura IA", comentario del
   snippet de Hotjar "FacturaIA". Si se renombran en esas plataformas, hay que actualizar los

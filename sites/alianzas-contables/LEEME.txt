@@ -5,9 +5,8 @@ Que es:  la pagina para reclutar contadores y despachos contables al
          Programa de Alianzas Contables de Factu IA.
 
 Va en:   contadores.factuiasv.com
-         Hoy vive temporalmente en alianzas-contables-facturaia.vercel.app,
-         en una cuenta de Vercel personal. Cuando este sitio quede en Cloud
-         Run, esa copia en Vercel se da de baja.
+         Ya corre en Cloud Run. La copia temporal de Vercel
+         (alianzas-contables-facturaia.vercel.app) se dio de baja el 26-sep-2026.
 
 Deploy:  estatico con nginx, igual que vendi y komandi. Sin build.
 

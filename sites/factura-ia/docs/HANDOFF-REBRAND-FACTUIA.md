@@ -14,7 +14,7 @@
 `factuia.com` está tomado: no se usa.
 
 La marca es solo **"FactuIA"** (junto, sin espacio): es el **nombre legal**, registrado así en
-Hacienda y en el CNR. Una versión anterior de este PR usaba «Factu IA» separado; ya se unificó
+Hacienda y en el CNR. Una versión anterior de este PR escribía el nombre en dos palabras; ya se unificó
 todo a «FactuIA» (texto, metadatos, docs y el asset `assets/factuia-logo.svg`).
 Donde "Odoo" iba pegado al nombre del producto se quitó.
 "Odoo" como plataforma se queda ("sobre Odoo", "Odoo Partner"). El isotipo (el ticket) no cambia.

@@ -1,4 +1,4 @@
-# Odoo Factu IA — Landing
+# Factu IA — Landing
 
 Sitio de marketing de **Factu IA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
 

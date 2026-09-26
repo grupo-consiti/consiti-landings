@@ -9,7 +9,7 @@ Reglas que los dos respetan y que no se negocian:
 - Nada de requisitos de edad, sexo, estado civil ni apariencia: alejan buenos
   candidatos y son riesgo legal en un anuncio de empleo.
 - No se nombran clientes ni proveedores de Consiti.
-- Morado Consiti `#5216E7`. El amarillo `#FFDD00` es exclusivo de Odoo Factu IA y
+- Morado Consiti `#5216E7`. El amarillo `#FFDD00` es exclusivo de Factu IA y
   **no se usa** en piezas de Grupo Consiti.
 - Máximo unas 20 palabras dentro de la imagen.
 
@@ -91,7 +91,7 @@ Modalidad: remoto, freelance. Abierto a toda Latinoamérica
 Horario: lunes a sábado, de 8:30 a 5:30
 Esquema: sueldo base más comisión por venta (NO publicar montos)
 Qué vende: las soluciones de IA de Consiti al cliente final, con método B2B —
-  Odoo Factu IA (facturación electrónica), Vendi (agente de WhatsApp 24/7) y
+  Factu IA (facturación electrónica), Vendi (agente de WhatsApp 24/7) y
   Komandi (tomador de pedidos con IA)
 Requisitos: experiencia comprobable en ventas B2B; experiencia en atención al
   cliente; manejo de CRM y conocimiento de Odoo ERP; buen manejo de metas y de

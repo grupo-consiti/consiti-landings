@@ -7,11 +7,14 @@
 
 | Antes | Ahora |
 |---|---|
-| Factura IA / Odoo Factura IA | Factu IA / Odoo Factu IA |
+| Factura IA / Odoo Factura IA | **Factu IA** (sin "Odoo" pegado al nombre) |
 | facturaiasv.com | **factuiasv.com** |
 | contadores.facturaiasv.com | **contadores.factuiasv.com** |
 
 `factuia.com` está tomado: no se usa.
+
+La marca es solo **"Factu IA"**. Donde "Odoo" iba pegado al nombre del producto se quitó.
+"Odoo" como plataforma se queda ("sobre Odoo", "Odoo Partner"). El isotipo (el ticket) no cambia.
 
 El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-LD, `alt`,
 `aria-label` del favicon, términos, `consent.js`, mensajes de WhatsApp, `robots.txt`,
@@ -106,20 +109,22 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 - [ ] Repos `odoo-factura-ia-landing` y `contadores-referidores-fia` en GitHub (si aplica).
 
 ### (f) Logos y assets pendientes (Briant los está diseñando; no se inventó ninguno)
-Todos llevan "Factura IA" dibujado y hay que reemplazarlos por la versión nueva:
+Solo cambia el **wordmark**. Estos archivos llevan "Factura IA" dibujado y hay que reemplazarlos:
 
 | Ruta | Qué es |
 |---|---|
 | `sites/factura-ia/public/assets/factura-ia-logo.svg` | Wordmark del header/footer (index y términos). El texto está convertido a trazos, así que no se puede editar como texto |
 | `sites/factura-ia/public/assets/og-facturaia.jpg` | Imagen Open Graph 1200×630 con "Factura IA" |
-| `sites/factura-ia/public/assets/odoo-factura-logo.png` | Wordmark "Odoo Factura IA". Hoy no lo referencia ningún HTML; confirmar si se borra |
 | `sites/alianzas-contables/public/fotos/logo-facturaia-color-dark.png` | Logo del header de contadores |
 | `sites/alianzas-contables/public/fotos/logo-facturaia-color-light.png` | Logo del footer de contadores |
-| `sites/alianzas-contables/public/fotos/favicon-facturaia.png` | Favicon de contadores (revisar si lleva letras) |
-| `sites/alianzas-contables/public/fotos/apple-touch-facturaia.png` | Icono iOS de contadores (revisar si lleva letras) |
 
-`sites/factura-ia/public/assets/favicon.svg` no lleva texto (solo el ícono). Solo se actualizó
-su `aria-label`.
+**Se quedan igual (isotipo, el ticket):** `sites/factura-ia/public/assets/favicon.svg` (solo cambió
+su `aria-label`), `sites/alianzas-contables/public/fotos/favicon-facturaia.png` y
+`sites/alianzas-contables/public/fotos/apple-touch-facturaia.png`.
+
+Legado: `sites/factura-ia/public/assets/odoo-factura-logo.png` (wordmark "Odoo Factura IA") no lo
+referencia ningún HTML. Se puede borrar.
+
 Si los archivos nuevos cambian de nombre, actualizar las referencias en `index.html`,
 `terminos.html`, `smoke.sh` y los docs.
 

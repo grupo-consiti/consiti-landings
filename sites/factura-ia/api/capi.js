@@ -1,5 +1,5 @@
 // ============================================================
-//  Meta Conversions API (server-side) · Odoo Factu IA
+//  Meta Conversions API (server-side) · Factu IA
 // ============================================================
 //  Recibe eventos del navegador y los reenvía a Meta desde el
 //  servidor, con deduplicación por `event_id` contra el Pixel.

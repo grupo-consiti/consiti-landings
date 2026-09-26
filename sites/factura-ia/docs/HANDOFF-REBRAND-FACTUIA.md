@@ -1,4 +1,4 @@
-# HANDOFF — Rebrand "Factura IA" → "Factu IA"
+# HANDOFF — Rebrand "Factura IA" → "FactuIA"
 
 **Para:** Duvan Andres (mergea y despliega) · **Decidido por:** Briant Canizalez, 2026-09-26
 **Rama/PR:** `feat/rebrand-factu-ia` → `main`
@@ -7,13 +7,16 @@
 
 | Antes | Ahora |
 |---|---|
-| Factura IA / Odoo Factura IA | **Factu IA** (sin "Odoo" pegado al nombre) |
+| Factura IA / Odoo Factura IA | **FactuIA** (sin "Odoo" pegado al nombre) |
 | facturaiasv.com | **factuiasv.com** |
 | contadores.facturaiasv.com | **contadores.factuiasv.com** |
 
 `factuia.com` está tomado: no se usa.
 
-La marca es solo **"Factu IA"**. Donde "Odoo" iba pegado al nombre del producto se quitó.
+La marca es solo **"FactuIA"** (junto, sin espacio): es el **nombre legal**, registrado así en
+Hacienda y en el CNR. Una versión anterior de este PR usaba «Factu IA» separado; ya se unificó
+todo a «FactuIA» (texto, metadatos, docs y el asset `assets/factuia-logo.svg`).
+Donde "Odoo" iba pegado al nombre del producto se quitó.
 "Odoo" como plataforma se queda ("sobre Odoo", "Odoo Partner"). El isotipo (el ticket) no cambia.
 
 El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-LD, `alt`,
@@ -103,7 +106,7 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
       `/assets/og-factuia.jpg`, con el wordmark nuevo; pedir "Scrape Again" para refrescar la caché).
 
 ### (e) Opcional: renombrar infraestructura
-- [ ] Carpeta `sites/factura-ia` → `sites/factu-ia`. Actualizar `--included-files` del trigger,
+- [ ] Carpeta `sites/factura-ia` → `sites/factuia`. Actualizar `--included-files` del trigger,
       `_SITE`, README raíz, `Dockerfile` (comentario) y `cloudbuild.yaml` (comentario).
 - [ ] Servicio `odoo-factura-ia-landing` → nombre nuevo. Implica un servicio nuevo, mover los
       domain mappings y los secretos (`META_CAPI_TOKEN`) y borrar el viejo.
@@ -111,13 +114,13 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 - [ ] Repos `odoo-factura-ia-landing` y `contadores-referidores-fia` en GitHub (si aplica).
 
 ### (f) Logos y assets — ✅ wordmark nuevo aplicado (2026-09-26)
-Briant entregó el wordmark nuevo (se ve escrito «FactuIA», unido; en texto corrido sigue siendo
-«Factu IA»). Solo cambió el **wordmark**; isotipo, marca «IA» y subrayado amarillo son los mismos.
+Briant entregó el wordmark nuevo, escrito «FactuIA» (unido, igual que el nombre legal y que el
+texto corrido). Solo cambió el **wordmark**; isotipo, marca «IA» y subrayado amarillo son los mismos.
 Los archivos se derivaron del PNG que entregó Briant (vectorizado, sin redibujar).
 
 | Antes (eliminado del repo) | Ahora | Dónde se usa |
 |---|---|---|
-| `sites/factura-ia/public/assets/factura-ia-logo.svg` | `sites/factura-ia/public/assets/factu-ia-logo.svg` (mismo viewBox 90×30, texto blanco + subrayado amarillo #FFDD00) | Header/footer de `index.html` y `terminos.html`, `smoke.sh` |
+| `sites/factura-ia/public/assets/factura-ia-logo.svg` | `sites/factura-ia/public/assets/factuia-logo.svg` (mismo viewBox 90×30, texto blanco + subrayado amarillo #FFDD00; en una versión anterior del PR llevaba guion entre «factu» e «ia») | Header/footer de `index.html` y `terminos.html`, `smoke.sh` |
 | `sites/factura-ia/public/assets/og-facturaia.jpg` | `sites/factura-ia/public/assets/og-factuia.jpg` (1200×630; mismo arte, solo cambia el wordmark de arriba a la izquierda) | `<meta property="og:image">` de `index.html` |
 | `sites/alianzas-contables/public/fotos/logo-facturaia-color-dark.png` | `sites/alianzas-contables/public/fotos/logo-factuia-color-dark.png` (520×153) | Header de contadores + `preload` |
 | `sites/alianzas-contables/public/fotos/logo-facturaia-color-light.png` | `sites/alianzas-contables/public/fotos/logo-factuia-color-light.png` (520×153) | Footer de contadores |

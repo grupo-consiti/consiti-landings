@@ -31,7 +31,7 @@ sites/
 
 | Sitio | Carpeta | Tipo | Servicio Cloud Run | Trigger |
 |-------|---------|------|--------------------|---------|
-| Factu IA (factuiasv.com) | `sites/factura-ia` | nginx | `odoo-factura-ia-landing` | `factura-ia-landing-main` |
+| FactuIA (factuiasv.com) | `sites/factura-ia` | nginx | `odoo-factura-ia-landing` | `factura-ia-landing-main` |
 | Vendi | `sites/vendi` | nginx | `vendi-landing` | `vendi-landing-main` |
 | Komandi | `sites/komandi` | nginx | `komandi-landing` | `komandi-landing-main` |
 | Alianzas Contables (contadores.factuiasv.com) | `sites/alianzas-contables` | nginx | `alianzas-contables-landing` *(por crear)* | `alianzas-contables-landing-main` *(por crear)* |

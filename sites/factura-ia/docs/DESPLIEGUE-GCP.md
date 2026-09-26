@@ -1,6 +1,6 @@
 # Despliegue en Google Cloud (GCP) — guía para Duvan
 
-**Objetivo:** publicar la landing de **Factu IA** en GCP con el dominio definitivo.
+**Objetivo:** publicar la landing de **FactuIA** en GCP con el dominio definitivo.
 **Estado del contenido:** listo (rediseño v2, cifras reales, legales, cookies, analítica, og:image). Falta solo el despliegue + el dominio.
 
 > Esta guía la hereda quien despliega (Duvan). El resto del contexto del proyecto está en el [`README.md`](../README.md); la config de analítica en [`GUIA-CONFIG-BRIANT.md`](GUIA-CONFIG-BRIANT.md).
@@ -110,7 +110,7 @@ Se configuran en el entorno de la función/servicio de CAPI (Cloud Functions/Clo
 
 | Variable | Valor | Notas |
 |---|---|---|
-| `META_PIXEL_ID` | `2238963863532324` | Público (es el pixel de Factu IA) |
+| `META_PIXEL_ID` | `2238963863532324` | Público (es el pixel de FactuIA) |
 | `META_CAPI_TOKEN` | *(token de Meta)* | 🔒 **Secreto** → usar **Secret Manager** |
 | `META_TEST_EVENT_CODE` | *(opcional)* | Solo para "Probar eventos" |
 

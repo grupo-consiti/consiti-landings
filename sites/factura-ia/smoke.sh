@@ -23,11 +23,11 @@ chk /servicios               301 /
 chk /consiti-ai              301 /
 chk /privacidad              301 "/terminos#s9"
 chk /sla                     301 /terminos
-chk /assets/factu-ia-logo.svg 200
+chk /assets/factuia-logo.svg 200
 chk /docs/DESPLIEGUE-GCP.md  404
 chk /README.md               404
 chk /vercel.json             404
-# Rebrand Factu IA: 301 del dominio viejo. Solo en local (contra run.app el
+# Rebrand FactuIA: 301 del dominio viejo. Solo en local (contra run.app el
 # frontend de Google no respeta un Host ajeno).
 case "$B" in http://127.0.0.1*|http://localhost*)
   for h in facturaiasv.com www.facturaiasv.com www.factuiasv.com; do

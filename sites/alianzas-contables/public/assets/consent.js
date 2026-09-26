@@ -1,5 +1,5 @@
 /* ============================================================
-   CONSENTIMIENTO DE COOKIES  ·  Factu IA de Grupo Consiti
+   CONSENTIMIENTO DE COOKIES  ·  FactuIA de Grupo Consiti
    (copia de sites/factura-ia/public/assets/consent.js; misma clave, mismo aviso)
 
    Objetivo: consentimiento PREVIO. El Meta Pixel y Google Analytics

@@ -1,6 +1,6 @@
-# Factu IA — Landing
+# FactuIA — Landing
 
-Sitio de marketing de **Factu IA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
+Sitio de marketing de **FactuIA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
 
 **Despliegue:** se publicará en **Google Cloud (GCP)**. La guía paso a paso para quien despliega está en **[`docs/DESPLIEGUE-GCP.md`](docs/DESPLIEGUE-GCP.md)**.
 **Preview privado (temporal):** https://odoo-factura-ia-landing.vercel.app — solo para revisar; **no** es el destino final.
@@ -29,7 +29,7 @@ Tipografías (Google Fonts): **Archivo** (títulos), **Instrument Sans** (texto)
 ├── terminos.html         # Términos y Condiciones (incluye privacidad y cookies)
 ├── assets/
 │   ├── favicon.svg           # Favicon de marca
-│   ├── factu-ia-logo.svg   # Logo (header/footer)
+│   ├── factuia-logo.svg   # Logo (header/footer)
 │   ├── firma.png             # Trazo animado del hero
 │   ├── consent.js            # Banner de cookies + carga del Pixel/GA solo con consentimiento
 │   ├── legal.css             # Estilos de la página legal

@@ -1,8 +1,8 @@
-LANDING PROGRAMA DE ALIANZAS CONTABLES (FACTU IA)
+LANDING PROGRAMA DE ALIANZAS CONTABLES (FACTUIA)
 ===================================================
 
 Que es:  la pagina para reclutar contadores y despachos contables al
-         Programa de Alianzas Contables de Factu IA.
+         Programa de Alianzas Contables de FactuIA.
 
 Va en:   contadores.factuiasv.com
          Ya corre en Cloud Run. La copia temporal de Vercel
@@ -39,7 +39,7 @@ variables de entorno.
 MEDICION (META PIXEL)
 ---------------------
 
-Conjunto de datos de Factu IA: 2238963863532324 (el mismo de
+Conjunto de datos de FactuIA: 2238963863532324 (el mismo de
 factuiasv.com). Va en window.CONSENT_CFG, en el <head>.
 Eventos: PageView al aceptar cookies, Contact al abrir el wizard y Lead al
 enviar la solicitud (con perfil, clientes, departamento y medio; sin datos

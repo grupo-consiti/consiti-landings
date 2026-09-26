@@ -1,4 +1,4 @@
-# HANDOFF — Landing Factu IA
+# HANDOFF — Landing FactuIA
 
 **Resumen en 2 minutos para quien recibe el proyecto.** Última actualización: 21 de agosto de 2026.
 
@@ -6,7 +6,7 @@
 
 ## Qué es
 
-Landing de marketing de **Factu IA** (Grupo Consiti S.A. de C.V.) — facturación electrónica DTE para El Salvador. **Sitio estático** (HTML/CSS/JS, sin build ni dependencias) + **un endpoint opcional** para la Conversions API de Meta.
+Landing de marketing de **FactuIA** (Grupo Consiti S.A. de C.V.) — facturación electrónica DTE para El Salvador. **Sitio estático** (HTML/CSS/JS, sin build ni dependencias) + **un endpoint opcional** para la Conversions API de Meta.
 
 - `index.html` — la landing.
 - `terminos.html` — Términos y Condiciones (incluye privacidad y cookies).
@@ -22,7 +22,7 @@ Landing de marketing de **Factu IA** (Grupo Consiti S.A. de C.V.) — facturaci�
 | Consentimiento de cookies (Pixel/GA gateados) | ✅ Funcionando |
 | Hotjar `6776565` — **se carga al entrar, sin gateo** (decisión de negocio) | ⚠️ Revisar con legal |
 | Analítica en código: GA4 `G-BTME51TFEN` · Pixel `2238963863532324` · Hotjar `6776565` | ✅ Puesto |
-| og:image + logo ("Factu IA") | ✅ Listo |
+| og:image + logo ("FactuIA") | ✅ Listo |
 | **Despliegue** | 🔴 **Pendiente — en GCP, con Duvan** |
 | Dominio definitivo | 🔴 Pendiente (Duvan Rondo) |
 | Token de CAPI en Secret Manager | 🔴 Pendiente (**rotar**, ver abajo) |

@@ -58,7 +58,7 @@ Se creó la propiedad GA4 **"Factura IA"** (cuenta *Grupo Consiti*, zona horaria
 
 ## 4) La imagen para compartir (og:image) — ✅ Resuelto
 
-Se creó **`assets/og-facturaia.jpg`** (1200 × 630, ~67 KB): imagen de marca con el mensaje raíz *"Las reglas de Hacienda cambian…"* sobre el fondo morado, más la línea de confianza. Es exactamente el archivo que referencia el `<meta og:image>`, así que ya funciona.
+Se creó **`assets/og-factuia.jpg`** (1200 × 630, ~82 KB): imagen de marca con el mensaje raíz *"Las reglas de Hacienda cambian…"* sobre el fondo morado, más la línea de confianza. Es exactamente el archivo que referencia el `<meta og:image>`, así que ya funciona.
 
 **Cómo verificar (una vez publicado):** pegá el enlace en el **Sharing Debugger de Meta** (https://developers.facebook.com/tools/debug/) → *Scrape Again* para que actualice la vista previa.
 
@@ -69,6 +69,6 @@ Se creó **`assets/og-facturaia.jpg`** (1200 × 630, ~67 KB): imagen de marca co
 - [x] **1.** Pixel creado (`2238963863532324`), en el código y **conectado a la cuenta publicitaria** — el `META_PIXEL_ID` se pone en el entorno de GCP (tarea 3)
 - [x] **2.** GA4 creado y `G-BTME51TFEN` pegado en el código — falta marcar `generate_lead` y `select_item` como evento clave en GA4
 - [ ] **3.** Token de CAPI **nuevo** (el anterior quedó expuesto) + `META_PIXEL_ID`/`META_CAPI_TOKEN` en el entorno de GCP (Secret Manager) + probado con Test Events — ver [`DESPLIEGUE-GCP.md`](DESPLIEGUE-GCP.md)
-- [x] **4.** `assets/og-facturaia.jpg` (1200×630) creado — verificar la vista previa en el Sharing Debugger tras publicar
+- [x] **4.** `assets/og-factuia.jpg` (1200×630) creado — verificar la vista previa en el Sharing Debugger tras publicar
 
 > Estado: **1, 2 y 4 hechas** (pixel creado + conectado a la cuenta publicitaria, GA4 con ID en código, og:image listo). Queda: **marcar los 2 eventos clave** en GA4 cuando lleguen datos, y la **tarea 3 (token de CAPI)** que se hace en el despliegue de GCP con un token nuevo. Todo el despliegue está en [`DESPLIEGUE-GCP.md`](DESPLIEGUE-GCP.md).

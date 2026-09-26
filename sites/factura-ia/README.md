@@ -29,7 +29,7 @@ Tipografías (Google Fonts): **Archivo** (títulos), **Instrument Sans** (texto)
 ├── terminos.html         # Términos y Condiciones (incluye privacidad y cookies)
 ├── assets/
 │   ├── favicon.svg           # Favicon de marca
-│   ├── factura-ia-logo.svg   # Logo (header/footer)
+│   ├── factu-ia-logo.svg   # Logo (header/footer)
 │   ├── firma.png             # Trazo animado del hero
 │   ├── consent.js            # Banner de cookies + carga del Pixel/GA solo con consentimiento
 │   ├── legal.css             # Estilos de la página legal
@@ -150,5 +150,5 @@ un dato sin confirmar, se marca de nuevo antes de publicarlo como un hecho.
 - **Testimonios (assets 07, 08, 09)** — la sección **se retiró de la página** el 10/08/2026, aplicando la regla de publicación del brief: con cero testimonios firmados se borra completa. En `index.html` quedó un comentario con las instrucciones para reponerla, y los estilos `.tst` siguen intactos. Hace falta, por cada uno: foto real de 400×400 con la cara visible, nombre completo, cargo, empresa, municipio y **consentimiento por escrito**. El 07 —alguien que se cambió desde otro proveedor— es el que el deck marca como bloqueante de lanzamiento.
 - **Contenido legal incompleto** — 17 puntos sin resolver en privacidad, términos y SLA. Estaban escritos dentro de las páginas como recuadros visibles al público; se movieron a [`docs/PENDIENTES-LEGAL.md`](docs/PENDIENTES-LEGAL.md). **Bloquean la publicación en el dominio definitivo.**
 - `canonical` y `og:url` están comentados en las 4 páginas, a la espera de confirmar el dominio definitivo.
-- **Resuelto:** `assets/og-facturaia.jpg` (1200×630, ~67 KB) ya existe — imagen de marca con el mensaje raíz, para la vista previa al compartir.
+- **Resuelto:** `assets/og-factuia.jpg` (1200×630, ~82 KB) ya existe — imagen de marca con el mensaje raíz, para la vista previa al compartir.
 - **Asset 06** (selector multi-empresa) — **entregado:** `assets/multiempresa.webp`, colocado en la sección de contadores con nombres de empresa de ejemplo. Ya no hay placeholders de asset en la página.

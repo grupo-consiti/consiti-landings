@@ -34,8 +34,9 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 - Carpeta `sites/factura-ia` y cualquier ruta que usen CI o Cloud Build.
 - Servicio Cloud Run `odoo-factura-ia-landing` y trigger `factura-ia-landing-main`.
 - `cloudbuild.yaml`, `Dockerfile` y `.gitignore`: solo mencionan la carpeta.
-- Nombres de assets (`factura-ia-logo.svg`, `og-facturaia.jpg`, `fotos/*facturaia*.png`), para
-  no romper rutas. Se renombran cuando lleguen los logos nuevos.
+- Nombres de assets del **isotipo** (`fotos/favicon-facturaia.png`, `fotos/apple-touch-facturaia.png`):
+  el isotipo no cambia y se dejan con su nombre para no romper rutas. Los del **wordmark** ya se
+  reemplazaron por archivos nuevos (ver (f)).
 - URL de preview en Vercel `odoo-factura-ia-landing.vercel.app`. (La copia de contadores
   `alianzas-contables-facturaia.vercel.app` se dio de baja el 26-sep-2026; el sitio de
   contadores vive solo en Cloud Run.)
@@ -98,8 +99,8 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 - [ ] **GA4:** actualizar la URL del flujo web y, opcionalmente, renombrar la propiedad
       "Factura IA".
 - [ ] Hotjar: agregar el dominio nuevo al sitio.
-- [ ] Revisar el Sharing Debugger de Meta con la URL nueva (og:image sigue siendo
-      `/assets/og-facturaia.jpg`, que **todavía muestra "Factura IA"**: ver (f)).
+- [ ] Revisar el Sharing Debugger de Meta con la URL nueva (og:image ahora es
+      `/assets/og-factuia.jpg`, con el wordmark nuevo; pedir "Scrape Again" para refrescar la caché).
 
 ### (e) Opcional: renombrar infraestructura
 - [ ] Carpeta `sites/factura-ia` → `sites/factu-ia`. Actualizar `--included-files` del trigger,
@@ -109,25 +110,29 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 - [ ] Trigger `factura-ia-landing-main` → nombre nuevo.
 - [ ] Repos `odoo-factura-ia-landing` y `contadores-referidores-fia` en GitHub (si aplica).
 
-### (f) Logos y assets pendientes (Briant los está diseñando; no se inventó ninguno)
-Solo cambia el **wordmark**. Estos archivos llevan "Factura IA" dibujado y hay que reemplazarlos:
+### (f) Logos y assets — ✅ wordmark nuevo aplicado (2026-09-26)
+Briant entregó el wordmark nuevo (se ve escrito «FactuIA», unido; en texto corrido sigue siendo
+«Factu IA»). Solo cambió el **wordmark**; isotipo, marca «IA» y subrayado amarillo son los mismos.
+Los archivos se derivaron del PNG que entregó Briant (vectorizado, sin redibujar).
 
-| Ruta | Qué es |
-|---|---|
-| `sites/factura-ia/public/assets/factura-ia-logo.svg` | Wordmark del header/footer (index y términos). El texto está convertido a trazos, así que no se puede editar como texto |
-| `sites/factura-ia/public/assets/og-facturaia.jpg` | Imagen Open Graph 1200×630 con "Factura IA" |
-| `sites/alianzas-contables/public/fotos/logo-facturaia-color-dark.png` | Logo del header de contadores |
-| `sites/alianzas-contables/public/fotos/logo-facturaia-color-light.png` | Logo del footer de contadores |
+| Antes (eliminado del repo) | Ahora | Dónde se usa |
+|---|---|---|
+| `sites/factura-ia/public/assets/factura-ia-logo.svg` | `sites/factura-ia/public/assets/factu-ia-logo.svg` (mismo viewBox 90×30, texto blanco + subrayado amarillo #F4DC0C) | Header/footer de `index.html` y `terminos.html`, `smoke.sh` |
+| `sites/factura-ia/public/assets/og-facturaia.jpg` | `sites/factura-ia/public/assets/og-factuia.jpg` (1200×630; mismo arte, solo cambia el wordmark de arriba a la izquierda) | `<meta property="og:image">` de `index.html` |
+| `sites/alianzas-contables/public/fotos/logo-facturaia-color-dark.png` | `sites/alianzas-contables/public/fotos/logo-factuia-color-dark.png` (520×153) | Header de contadores + `preload` |
+| `sites/alianzas-contables/public/fotos/logo-facturaia-color-light.png` | `sites/alianzas-contables/public/fotos/logo-factuia-color-light.png` (520×153) | Footer de contadores |
+| `sites/factura-ia/public/assets/odoo-factura-logo.png` (legado "Odoo Factura IA", sin uso) | — (eliminado) | Ninguno |
 
-**Se quedan igual (isotipo, el ticket):** `sites/factura-ia/public/assets/favicon.svg` (solo cambió
-su `aria-label`), `sites/alianzas-contables/public/fotos/favicon-facturaia.png` y
+El CSS fija la **altura** de los logos (`.mark-logo` 30 px; `.logo img` 34/38/26 px), así que el
+tamaño visual en la página no cambia. El wordmark nuevo es un poco más alto en proporción que el
+viejo, así que se ve algo más angosto a la misma altura.
+
+**Se quedan igual (isotipo, el ticket):** `sites/factura-ia/public/assets/favicon.svg`,
+`sites/alianzas-contables/public/fotos/favicon-facturaia.png` y
 `sites/alianzas-contables/public/fotos/apple-touch-facturaia.png`.
 
-Legado: `sites/factura-ia/public/assets/odoo-factura-logo.png` (wordmark "Odoo Factura IA") no lo
-referencia ningún HTML. Se puede borrar.
-
-Si los archivos nuevos cambian de nombre, actualizar las referencias en `index.html`,
-`terminos.html`, `smoke.sh` y los docs.
+`docs/brief/` conserva la referencia vieja a `og-facturaia.jpg` porque es material histórico que
+no se edita (no se despliega).
 
 ### (g) Correo
 - [ ] Averiguar si existen buzones o alias `@facturaiasv.com`: MX del dominio viejo y quien

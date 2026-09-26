@@ -23,7 +23,7 @@ chk /servicios               301 /
 chk /consiti-ai              301 /
 chk /privacidad              301 "/terminos#s9"
 chk /sla                     301 /terminos
-chk /assets/factura-ia-logo.svg 200
+chk /assets/factu-ia-logo.svg 200
 chk /docs/DESPLIEGUE-GCP.md  404
 chk /README.md               404
 chk /vercel.json             404

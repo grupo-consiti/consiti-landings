@@ -10,7 +10,7 @@ Landing de marketing de **Factu IA** (Grupo Consiti S.A. de C.V.) — facturaci�
 
 - `index.html` — la landing.
 - `terminos.html` — Términos y Condiciones (incluye privacidad y cookies).
-- `assets/` — imágenes, videos, `consent.js`, `og-facturaia.jpg`, estilos legales.
+- `assets/` — imágenes, videos, `consent.js`, `og-factuia.jpg`, estilos legales.
 - `api/capi.js` — endpoint server-side de Meta CAPI (opcional; el sitio funciona sin él).
 
 ## Estado

@@ -142,3 +142,65 @@ no se edita (no se despliega).
       lo administre. En este repo no aparece ninguno. Si existen, crear los equivalentes en
       `@factuiasv.com`, dejar reenvío desde los viejos y actualizar firmas. Los viejos
       **no se eliminan**.
+
+## CTA «Contactar» + wizard de clientes (landing principal)
+
+**Decidido por:** Briant, 2026-09-26 · **Archivo:** `sites/factura-ia/public/index.html` (mismo PR)
+
+### Qué cambia
+- **Todos los CTA de conversión dicen «Contactar»** y ya no abren WhatsApp directo: abren un
+  **wizard de contacto para clientes** (modal; pantalla completa en <640 px). Afecta a nav, menú
+  móvil, hero, DTE 2.0, migración, contadores, tabla de planes (y sus tarjetas móviles), resultado
+  de «Descubrir mi plan», cierre, pie de página, barra fija móvil y botón flotante.
+  Se quitó el ícono de WhatsApp de esos botones (llevan la flecha de contadores).
+- Los enlaces de navegación («Ver precios», «Ver todo lo que incluye», «Conocer FactuIA para
+  contadores») no cambian. «Descubrir mi plan» sigue igual; solo su CTA final pasa a «Contactar»
+  y le pasa el plan recomendado al wizard.
+- **Botón:** clase `.btn-cta`, copia del `.btn` de contadores (Instrument Sans 700, pill,
+  flecha `.go`, tamaños `.sm`/`.lg`). **Color verde WhatsApp** por decisión de Briant, en
+  variables `--cta-bg` / `--cta-bg-hover` / `--cta-ink` / `--cta-shadow` / `--cta-shadow-hover`.
+  El texto va en tinta `#140A2E` y no en blanco: blanco sobre `#25D366` da 1.98:1 (no pasa AA).
+  Dentro del wizard, «Siguiente»/«Cerrar» van en morado (como en contadores) y «Enviar» en verde.
+- **Wizard (6 pasos):** tipo de negocio · facturas al mes (rangos alineados a la tabla: hasta 30 /
+  31–100 / 101–500 / 501–1,000 / más de 1,000 / no estoy seguro) · quién es · sistema actual ·
+  medio (llamada, reunión virtual, WhatsApp) + franja (mañana 8–12, tarde 12–5, después de las 5;
+  día opcional si es reunión) · nombre, negocio (opcional), teléfono SV de 8 dígitos (acepta +503)
+  y línea de consentimiento.
+- **Envío:** arma un resumen legible (respuestas, plan de interés o sugerido, origen + `cta_id`) y
+  abre WhatsApp al mismo número `WA` (7255-9059). La pantalla de gracias dice «Un asesor le
+  contactará por <medio> en la franja <franja>» y deja un botón «Abrir WhatsApp» (con aviso si el
+  navegador bloqueó la ventana). Dentro del wizard queda el enlace pequeño «¿Prefiere escribirnos
+  directo?».
+- Accesibilidad: `role="dialog"`, `aria-modal`, `aria-labelledby`, foco al título de cada paso,
+  foco atrapado, `Escape` cierra y devuelve el foco al botón de origen, fondo `inert`, barra de
+  progreso con `role="progressbar"`, objetivos ≥44 px, `prefers-reduced-motion`. Con teclado las
+  flechas no hacen avanzar de paso (solo el clic/toque en una tarjeta).
+- Se retiraron `MENSAJES`, el cableado de `[data-wa]`, el campo `wa` de `PLANES` y las clases
+  `.btn-wa`, `.btn-sm` y `.wa-float` (ya sin uso).
+
+### Eventos (para Meta/GA4)
+| Momento | Meta | GA4 | dataLayer |
+|---|---|---|---|
+| Abre el wizard | `Contact` (Pixel, solo con consentimiento) con `cta_id` | `abrir_wizard` (`cta_id`, `item_name`) | `abrir_wizard` (`cta_id`, `plan`) |
+| Envía el wizard | `Lead` por **Pixel + CAPI con el mismo `event_id`** (dedupe) | `generate_lead` | `enviar_wizard` |
+| Clic en «escribirnos directo» | `Lead` (Pixel + CAPI), `cta_id` = `<origen>-directo` | `generate_lead` | `clic_whatsapp` |
+
+`Lead` lleva `content_name` (plan o «Consulta general»), `content_category`, `value`/`currency`
+según `VALOR_CTA` (plan del CTA; si no hay, el plan que sugiere el rango de facturas; «No estoy
+seguro» = 0), `cta_id`, `plan_origen` (`cta` / `volumen` / `ninguno`), `tipo_negocio`,
+`rango_facturas`, `rol`, `tiene_sistema`, `medio_contacto` y `franja_horaria`.
+**Sin datos personales:** nombre, negocio, teléfono y los textos libres («Otro», «¿cuál sistema?»)
+nunca van a tracking; los campos personales llevan `data-hj-suppress` para Hotjar.
+El consentimiento se respeta igual que antes (`__consentGranted`, `sendCAPI`, `trackGA`).
+**Cambio de semántica:** antes `Lead` se contaba al hacer clic en un CTA de WhatsApp; ahora se
+cuenta al enviar el wizard. Es esperable ver menos `Lead` y más calificados; comparar contra
+`Contact` para medir la caída del embudo.
+
+### Cómo probar
+1. Servir `sites/factura-ia/public` (p. ej. `python -m http.server 8765`) y abrir `http://127.0.0.1:8765/`.
+2. En la consola, para no abrir WhatsApp: `window.open=function(u){console.log(decodeURIComponent(u));return {}}`.
+3. Abrir desde tres CTA distintos (hero, un plan de la tabla, barra fija móvil) y completar los 6
+   pasos; revisar el resumen que se imprime, `dataLayer` (`abrir_wizard`, `enviar_wizard`) y, con
+   cookies aceptadas, Meta → Probar eventos (`Contact` y `Lead` deduplicado).
+4. Probar en 375 px (pantalla completa, sin scroll horizontal) y con teclado (Tab, Escape).
+5. `smoke.sh` no se pudo correr aquí (no hay Docker); no cambia rutas de nginx.

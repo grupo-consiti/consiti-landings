@@ -26,7 +26,7 @@ Se creó la propiedad GA4 **"Factura IA"** (cuenta *Grupo Consiti*, zona horaria
 
 **Falta un solo paso (lo hacés vos en GA4):** marcar los eventos como **evento clave / conversión**:
 - En GA4 → **Administrar** → **Eventos clave** → **Crear evento clave** y escribí exactamente:
-  - `generate_lead` (clic en cualquier CTA de WhatsApp)
+  - `generate_lead` (se envía el wizard de contacto que abren los CTA «Contactar»)
   - `select_item` (cuando la calculadora devuelve un plan)
 - *(Si preferís, esperá a que aparezcan solos en la lista de Eventos tras las primeras visitas y ahí los marcás. Decime y también te lo puedo dejar creado.)*
 
@@ -50,7 +50,7 @@ Se creó la propiedad GA4 **"Factura IA"** (cuenta *Grupo Consiti*, zona horaria
 | `META_CAPI_TOKEN` | *(token NUEVO, en Secret Manager)* |
 | `META_TEST_EVENT_CODE` | *(opcional)* el código de "Probar eventos" |
 
-**Cómo verificar (tras desplegar):** Meta Events Manager → **Probar eventos**, abrir el sitio, **aceptar cookies**, clic en un CTA de WhatsApp → el evento `Lead` llega **por navegador (Pixel) y por servidor (CAPI)**, marcado como **deduplicado**.
+**Cómo verificar (tras desplegar):** Meta Events Manager → **Probar eventos**, abrir el sitio, **aceptar cookies**, clic en un CTA «Contactar» (llega `Contact`), completar y enviar el wizard → el evento `Lead` llega **por navegador (Pixel) y por servidor (CAPI)**, marcado como **deduplicado**.
 
 > Si no se configura el token, no pasa nada malo: `api/capi.js` responde "no-op" y el sitio sigue con el Pixel del navegador.
 

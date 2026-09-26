@@ -1,6 +1,6 @@
 # Despliegue en Google Cloud (GCP) — guía para Duvan
 
-**Objetivo:** publicar la landing de **Factura IA** en GCP con el dominio definitivo.
+**Objetivo:** publicar la landing de **FactuIA** en GCP con el dominio definitivo.
 **Estado del contenido:** listo (rediseño v2, cifras reales, legales, cookies, analítica, og:image). Falta solo el despliegue + el dominio.
 
 > Esta guía la hereda quien despliega (Duvan). El resto del contexto del proyecto está en el [`README.md`](../README.md); la config de analítica en [`GUIA-CONFIG-BRIANT.md`](GUIA-CONFIG-BRIANT.md).
@@ -12,7 +12,7 @@
 - **Sitio estático**, sin build ni dependencias. Solo HTML/CSS/JS.
   - `index.html` — la landing completa (CSS y JS embebidos).
   - `terminos.html` — Términos y Condiciones (incluye privacidad y cookies).
-  - `assets/` — imágenes, videos, `legal.css`, `legal.js`, `consent.js`, `og-facturaia.jpg`.
+  - `assets/` — imágenes, videos, `legal.css`, `legal.js`, `consent.js`, `og-factuia.jpg`.
 - **Una sola pieza dinámica y OPCIONAL:** `api/capi.js` — endpoint server-side para la **Conversions API de Meta**. El sitio **funciona perfecto sin ella**; solo se pierde la señal server-side (el Pixel del navegador sigue midiendo). Se puede dejar para una fase 2.
 
 **No hay base de datos, ni backend, ni sesión.** Es contenido estático + un endpoint que reenvía eventos a Meta.
@@ -110,7 +110,7 @@ Se configuran en el entorno de la función/servicio de CAPI (Cloud Functions/Clo
 
 | Variable | Valor | Notas |
 |---|---|---|
-| `META_PIXEL_ID` | `2238963863532324` | Público (es el pixel de Factura IA) |
+| `META_PIXEL_ID` | `2238963863532324` | Público (es el pixel de FactuIA) |
 | `META_CAPI_TOKEN` | *(token de Meta)* | 🔒 **Secreto** → usar **Secret Manager** |
 | `META_TEST_EVENT_CODE` | *(opcional)* | Solo para "Probar eventos" |
 
@@ -127,7 +127,7 @@ Se configuran en el entorno de la función/servicio de CAPI (Cloud Functions/Clo
 1. **Descomentar `canonical` y `og:url`** en `index.html` y `terminos.html` (hoy están comentados con el texto "PENDIENTE: dominio por validar") y poner la URL final.
 2. **GA4:** en Analytics → Administrar → Flujos de datos, actualizar la URL del flujo (hoy apunta al preview `odoo-factura-ia-landing.vercel.app`).
 3. **Meta:** agregar y **verificar el dominio** en el Administrador de eventos (para Aggregated Event Measurement de iOS).
-4. **og:image:** ya es relativa (`/assets/og-facturaia.jpg`), no hay que tocarla.
+4. **og:image:** ya es relativa (`/assets/og-factuia.jpg`), no hay que tocarla.
 
 ---
 

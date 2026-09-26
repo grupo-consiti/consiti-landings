@@ -1,6 +1,6 @@
-# Odoo Factura IA — Landing
+# FactuIA — Landing
 
-Sitio de marketing de **Factura IA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
+Sitio de marketing de **FactuIA** (Grupo Consiti S.A. de C.V.), facturación electrónica DTE para El Salvador.
 
 **Despliegue:** se publicará en **Google Cloud (GCP)**. La guía paso a paso para quien despliega está en **[`docs/DESPLIEGUE-GCP.md`](docs/DESPLIEGUE-GCP.md)**.
 **Preview privado (temporal):** https://odoo-factura-ia-landing.vercel.app — solo para revisar; **no** es el destino final.
@@ -29,7 +29,7 @@ Tipografías (Google Fonts): **Archivo** (títulos), **Instrument Sans** (texto)
 ├── terminos.html         # Términos y Condiciones (incluye privacidad y cookies)
 ├── assets/
 │   ├── favicon.svg           # Favicon de marca
-│   ├── factura-ia-logo.svg   # Logo (header/footer)
+│   ├── factuia-logo.svg   # Logo (header/footer)
 │   ├── firma.png             # Trazo animado del hero
 │   ├── consent.js            # Banner de cookies + carga del Pixel/GA solo con consentimiento
 │   ├── legal.css             # Estilos de la página legal
@@ -42,26 +42,32 @@ Tipografías (Google Fonts): **Archivo** (títulos), **Instrument Sans** (texto)
 
 ## Marca
 
-Morado `#5216E7` · tinta `#140A2E` · noche `#0A0616` · nube `#F6F4FF` · sello `#0E9F63`. Los CTA de WhatsApp usan verde `#25D366`. Todas las variables están en el `:root` del `<style>` de `index.html` y en `assets/legal.css`.
+Morado `#5216E7` · tinta `#140A2E` · noche `#0A0616` · nube `#F6F4FF` · sello `#0E9F63`. Los CTA «Contactar» (`.btn-cta`) usan verde WhatsApp `#25D366` con texto en tinta `#140A2E` (el blanco sobre ese verde no pasa AA); el color vive en `--cta-bg` / `--cta-bg-hover` / `--cta-ink` / `--cta-shadow`. Todas las variables están en el `:root` del `<style>` de `index.html` y en `assets/legal.css`.
 
-## CTAs a WhatsApp
+## CTAs «Contactar» → wizard de contacto
 
-Todo CTA lleva a WhatsApp. Cualquier elemento con **`data-wa="<id>"`** recibe el `href` por JS y dispara el evento `Lead`.
+Todos los CTA de conversión dicen **«Contactar»** y abren un **wizard de contacto para clientes** (modal de 6 pasos, basado en el de la landing de contadores). Cualquier elemento con **`data-contacto="<cta_id>"`** lo abre; si además trae **`data-plan="<Plan>"`**, el plan se muestra arriba, se preselecciona el rango de facturas y va en el resumen y en el `value` del `Lead`.
 
-El `id` selecciona el mensaje precargado en el objeto **`MENSAJES`** (al final de `index.html`), lo que permite saber desde qué parte de la página escribió la persona: `hero`, `contadores`, `dte20`, `migracion`, `plan-starter`…`plan-enterprise`, `cierre`, `footer`, `flotante`.
+`cta_id` en uso: `nav`, `menu-movil`, `hero`, `dte20`, `migracion`, `contadores`, `plan-starter`…`plan-enterprise` (tabla y tarjetas móviles), `wizard` (resultado de «Descubrir mi plan», con el plan recomendado), `cierre`, `footer`, `sticky` (barra fija móvil) y `flotante`.
+
+Pasos: tipo de negocio · facturas al mes (rangos = límites de los planes: 30 / 100 / 500 / 1,000 / sin límite, más «No estoy seguro») · quién es (dueño, contador, encargado que decide, otro) · sistema actual · medio (llamada, reunión virtual, WhatsApp) y franja horaria · nombre, negocio (opcional) y teléfono SV de 8 dígitos (acepta +503).
+
+Al enviar, arma un resumen legible (respuestas + plan + origen con su `cta_id`) y abre **WhatsApp al número `WA`** con el mensaje listo; muestra la pantalla de gracias con un botón «Abrir WhatsApp» por si el navegador bloqueó la ventana. Dentro del wizard queda un enlace pequeño «¿Prefiere escribirnos directo?» a WhatsApp.
+
+El botón es la clase **`.btn-cta`** (copia del `.btn` de contadores: Instrument Sans 700, pill, flecha `.go`); tamaños `.sm` y `.lg`.
 
 ## Cómo cambiar precios
 
 Los precios están en **dos lugares** de `index.html` y deben coincidir:
 
-1. **`PLANES`** — array del `<script>` final que alimenta la calculadora (`n`, `p`, `impl`, `d`, `wa`).
-2. **`VALOR_CTA`** — mapa que le pone `value` al evento `Lead` de Meta. Si no se actualiza, la optimización de campañas trabaja con valores viejos.
+1. **`PLANES`** — array del `<script>` final que alimenta la calculadora (`n`, `p`, `impl_num`, `d`).
+2. **`VALOR_CTA`** — mapa plan → precio que le pone `value` al evento `Lead` (lo usan la tabla, «Descubrir mi plan» y el plan sugerido por el rango de facturas del wizard). Si no se actualiza, la optimización de campañas trabaja con valores viejos. Si cambian los límites de facturas, actualizar también los rangos del paso 2 del wizard de contacto (`name="facturas"`, con su `data-plan`).
 
 Además está la tabla comparativa (sección `#tabla`, HTML plano) y el JSON-LD `Product` del `<head>` (`lowPrice` / `highPrice`).
 
 ## Configuración
 
-- **`WA`** — número destino de los CTA (formato internacional sin `+`). Está en el `<script>` final de `index.html`; en las legales va en los `href` directos.
+- **`WA`** — número destino del wizard de contacto y del enlace directo (formato internacional sin `+`). Está en el `<script>` final de `index.html`; en las legales va en los `href` directos.
 - **Pixel de Meta** — el ID `2238963863532324` va en `window.CONSENT_CFG.pixelId` del `<head>` (index y `/terminos`). **Ya no se carga al entrar:** lo carga `assets/consent.js` solo si la persona acepta las cookies (consentimiento previo).
 
 ## Consentimiento de cookies
@@ -77,7 +83,8 @@ Eventos que se disparan:
 | Evento | Cuándo |
 |--------|--------|
 | `PageView` | Carga de cualquier página (desde el `<head>`) |
-| `Lead` | Clic en cualquier CTA a WhatsApp, con `content_name`, `value` y `currency` |
+| `Contact` | Se abre el wizard de contacto (solo Pixel, con consentimiento), con `cta_id` |
+| `Lead` | Se **envía** el wizard (Pixel + CAPI con el mismo `event_id`), con `content_name`, `value`, `currency`, `cta_id`, `plan_origen`, `tipo_negocio`, `rango_facturas`, `rol`, `tiene_sistema`, `medio_contacto` y `franja_horaria`. **Nunca** nombre, negocio ni teléfono. También el enlace «escribirnos directo» (`cta_id` = `<origen>-directo`) |
 | `ViewContent` | Cuando la sección de precios entra en pantalla (30% visible, una sola vez) |
 
 Se activa con **variables de entorno en el entorno de despliegue** (en GCP: Cloud Functions/Cloud Run + **Secret Manager** para el token). **Nunca en el repo:**
@@ -103,11 +110,12 @@ Eventos que se envían a GA4:
 | Evento GA4 | Cuándo | Equivalente en Meta |
 |---|---|---|
 | `page_view` | Automático al cargar | `PageView` |
-| `generate_lead` | Clic en cualquier CTA a WhatsApp, con `cta_id`, `item_name`, `value` y `currency` | `Lead` |
+| `abrir_wizard` | Se abre el wizard de contacto, con `cta_id` e `item_name` (plan, si viene) | `Contact` |
+| `generate_lead` | Se envía el wizard (o clic en «escribirnos directo»), con `cta_id`, `item_name`, `value`, `currency` y las respuestas categóricas | `Lead` |
 | `view_item_list` | La sección de precios entra en pantalla | `ViewContent` |
 | `select_item` | La calculadora devuelve un plan | *(no tiene)* |
 
-Los `dataLayer.push` originales (`clic_whatsapp`, `calculadora_plan`) se mantienen: no estorban y sirven si algún día entra un contenedor de GTM.
+`dataLayer` (por si entra GTM): `abrir_wizard` (`cta_id`, `plan`), `enviar_wizard` (`cta_id`, `plan`, `plan_origen` y respuestas categóricas), `clic_whatsapp` (solo el enlace directo dentro del wizard) y `wizard_plan` (calculadora).
 
 `generate_lead` y `select_item` conviene marcarlos como **evento clave** en GA4 → Administrar → Eventos clave (se hace con la estrella una vez que llega el primer tráfico real).
 
@@ -150,5 +158,5 @@ un dato sin confirmar, se marca de nuevo antes de publicarlo como un hecho.
 - **Testimonios (assets 07, 08, 09)** — la sección **se retiró de la página** el 10/08/2026, aplicando la regla de publicación del brief: con cero testimonios firmados se borra completa. En `index.html` quedó un comentario con las instrucciones para reponerla, y los estilos `.tst` siguen intactos. Hace falta, por cada uno: foto real de 400×400 con la cara visible, nombre completo, cargo, empresa, municipio y **consentimiento por escrito**. El 07 —alguien que se cambió desde otro proveedor— es el que el deck marca como bloqueante de lanzamiento.
 - **Contenido legal incompleto** — 17 puntos sin resolver en privacidad, términos y SLA. Estaban escritos dentro de las páginas como recuadros visibles al público; se movieron a [`docs/PENDIENTES-LEGAL.md`](docs/PENDIENTES-LEGAL.md). **Bloquean la publicación en el dominio definitivo.**
 - `canonical` y `og:url` están comentados en las 4 páginas, a la espera de confirmar el dominio definitivo.
-- **Resuelto:** `assets/og-facturaia.jpg` (1200×630, ~67 KB) ya existe — imagen de marca con el mensaje raíz, para la vista previa al compartir.
+- **Resuelto:** `assets/og-factuia.jpg` (1200×630, ~82 KB) ya existe — imagen de marca con el mensaje raíz, para la vista previa al compartir.
 - **Asset 06** (selector multi-empresa) — **entregado:** `assets/multiempresa.webp`, colocado en la sección de contadores con nombres de empresa de ejemplo. Ya no hay placeholders de asset en la página.

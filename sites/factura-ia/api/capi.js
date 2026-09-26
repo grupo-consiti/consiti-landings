@@ -1,11 +1,11 @@
 // ============================================================
-//  Meta Conversions API (server-side) · Odoo Factura IA
+//  Meta Conversions API (server-side) · FactuIA
 // ============================================================
 //  Recibe eventos del navegador y los reenvía a Meta desde el
 //  servidor, con deduplicación por `event_id` contra el Pixel.
 //
 //  Credenciales por VARIABLE DE ENTORNO en Vercel (NUNCA en el repo):
-//    META_PIXEL_ID         2238963863532324 (pixel real de Factura IA)
+//    META_PIXEL_ID         2238963863532324 (pixel real de FactuIA)
 //    META_CAPI_TOKEN       token de acceso de Meta (secreto)
 //    META_TEST_EVENT_CODE  (opcional) código para "Probar eventos"
 //

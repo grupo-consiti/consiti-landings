@@ -1,5 +1,5 @@
 /* ============================================================
-   CONSENTIMIENTO DE COOKIES  ·  Factura IA de Grupo Consiti
+   CONSENTIMIENTO DE COOKIES  ·  FactuIA de Grupo Consiti
    (copia de sites/factura-ia/public/assets/consent.js; misma clave, mismo aviso)
 
    Objetivo: consentimiento PREVIO. El Meta Pixel y Google Analytics
@@ -92,7 +92,7 @@
       '<div class="ck-in">' +
       '<p class="ck-tx">Usamos cookies propias y de terceros para medir el uso del sitio y mejorar su experiencia. ' +
       'Puede aceptarlas o rechazarlas; si las rechaza, no se activan las cookies de Meta ni de Google Analytics. ' +
-      '<a href="https://facturaiasv.com/terminos#cookies" target="_blank" rel="noopener">Más información</a>.</p>' +
+      '<a href="https://factuiasv.com/terminos#cookies" target="_blank" rel="noopener">Más información</a>.</p>' +
       '<div class="ck-bt">' +
       '<button type="button" class="ck-b ck-no">Rechazar</button>' +
       '<button type="button" class="ck-b ck-yes">Aceptar</button>' +

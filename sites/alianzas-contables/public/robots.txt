@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://contadores.facturaiasv.com/sitemap.xml
+Sitemap: https://contadores.factuiasv.com/sitemap.xml

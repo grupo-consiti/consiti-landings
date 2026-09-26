@@ -61,7 +61,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -79,7 +79,20 @@
   --gris-2:#6E6786;
   --linea:rgba(20,10,46,.12);
   --linea-osc:rgba(255,255,255,.15);
+  /* Verde WhatsApp: mismos --wa y --wa-deep que la landing de contadores.
+     --wa-ink NO es el blanco de contadores: blanco sobre #25D366 da 1.98:1
+     (y 2.75:1 sobre el hover), por debajo del AA de 4.5:1 para texto de
+     botón. Con la tinta de la marca da 9.52:1 (6.86:1 en hover). */
   --wa:#25D366;
+  --wa-deep:#1eb355;
+  --wa-ink:#140A2E;
+  /* Color de los CTA "Contactar" (.btn-cta): decisión de Briant, verde tipo
+     WhatsApp con el estilo .btn-wa de contadores. Para cambiarlo, solo aquí. */
+  --cta-bg:var(--wa);
+  --cta-bg-hover:var(--wa-deep);
+  --cta-ink:var(--wa-ink);
+  --cta-shadow:0 10px 26px -8px rgba(37,211,102,.6);
+  --cta-shadow-hover:0 16px 34px -8px rgba(37,211,102,.7);
   --display:'Archivo',system-ui,sans-serif;
   --texto:'Instrument Sans',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
@@ -120,13 +133,30 @@ section{padding:82px 0}
 /* ============ BOTONES ============ */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--display);font-weight:700;font-size:.98rem;letter-spacing:-.01em;padding:15px 26px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
 .btn:active{transform:translateY(1px)}
-.btn-wa{background:var(--wa);color:#fff;box-shadow:0 8px 24px rgba(37,211,102,.3)}
 .btn-v{background:var(--violeta);color:#fff;box-shadow:0 8px 24px rgba(82,22,231,.26)}
 .btn-v:hover{background:#4712C7}
 .btn-ghost{background:transparent;color:var(--tinta);border-color:var(--linea)}
 .btn-ghost:hover{border-color:var(--violeta);color:var(--violeta)}
 .dark .btn-ghost{color:#fff;border-color:var(--linea-osc)}
-.btn-sm{padding:11px 19px;font-size:.88rem}
+/* ---- CTA "Contactar": copia exacta del .btn/.btn-purple de la landing de
+   contadores (sites/alianzas-contables). Se usa como "btn btn-cta" para
+   heredar las reglas de layout que apuntan a .btn (anchos en movil, etc.),
+   pero pisa toda la tipografia y el color. Tamanos: .lg y .sm. El color
+   vive en --cta-bg / --cta-bg-hover / --cta-ink / --cta-shadow (ver :root). ---- */
+.btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:'Instrument Sans',system-ui,sans-serif;
+  font-weight:700;font-size:1rem;letter-spacing:normal;line-height:1.25;text-decoration:none;border:0;cursor:pointer;border-radius:999px;
+  padding:15px 28px;white-space:nowrap;background:var(--cta-bg);color:var(--cta-ink);box-shadow:var(--cta-shadow);
+  transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,background .2s}
+.btn-cta:hover{background:var(--cta-bg-hover);transform:translateY(-2px);box-shadow:var(--cta-shadow-hover)}
+/* Botón "Siguiente"/"Cerrar" del wizard de contacto: morado como el .btn-purple
+   del wizard de contadores. El "Enviar" final queda en el verde del CTA. */
+.btn-cta.btn-paso{background:#5216E7;color:#fff;box-shadow:0 12px 30px -10px rgba(82,22,231,.65)}
+.btn-cta.btn-paso:hover{background:#3b0fb0;box-shadow:0 12px 30px -10px rgba(82,22,231,.65)}
+.btn-cta svg{width:20px;height:20px;flex-shrink:0}
+.btn-cta.lg{padding:18px 34px;font-size:1.08rem}
+.btn-cta.sm{padding:11px 20px;font-size:.92rem}
+.btn-cta .go{transition:transform .22s}
+.btn-cta:hover .go{transform:translateX(4px)}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--violeta-hi);outline-offset:3px;border-radius:6px}
 .horario{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--gris-2);margin-top:14px}
 .dark .horario{color:rgba(255,255,255,.55)}
@@ -537,21 +567,21 @@ footer a:hover{color:#fff}
 .foot-col h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:500;margin-bottom:9px}
 .legal{margin-top:40px;padding-top:20px;border-top:1px solid var(--linea-osc);font-size:.77rem;color:rgba(255,255,255,.45);line-height:1.7}
 
-/* ============ WA flotante ============ */
-.wa-float{position:fixed;bottom:20px;right:20px;z-index:80;display:flex;align-items:center;gap:10px;padding:13px 20px 13px 15px;border-radius:999px;background:var(--wa);color:#fff;font-family:var(--display);font-weight:700;font-size:.92rem;text-decoration:none;box-shadow:0 10px 30px rgba(37,211,102,.42)}
-@media(max-width:600px){.wa-float{padding:14px;gap:0}.wa-float span{display:none}}
+/* ============ Botón flotante "Contactar" (escritorio) ============
+   Antes era el flotante verde de WhatsApp; ahora abre el wizard de contacto. */
+.fab-contacto{position:fixed;bottom:20px;right:20px;z-index:80}
 /* Barra CTA fija en mobile: en una landing larga da acceso permanente a conversion
    y es menos invasiva que el flotante grande. Sustituye al flotante en <=820px. */
 .cta-movil{display:none}
 @media(max-width:820px){
-  .wa-float{display:none}
+  .fab-contacto{display:none}
   body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
   .cta-movil{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:82;align-items:center;justify-content:space-between;gap:14px;min-height:60px;padding:0 16px;padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(10,6,22,.97);border-top:1px solid var(--linea-osc);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .28s ease;will-change:transform}
   .cta-movil.oculta{transform:translateY(130%)}
   @media(prefers-reduced-motion:reduce){.cta-movil{transition:none}}
   .cta-movil-precio{font-family:var(--texto);font-size:.95rem;color:#fff;line-height:1.2}
   .cta-movil-precio b{font-family:var(--mono);font-weight:700}
-  .cta-movil-btn{display:inline-flex;align-items:center;gap:7px;background:var(--wa);color:#fff;font-family:var(--display);font-weight:700;font-size:.95rem;text-decoration:none;padding:11px 22px;border-radius:999px;flex:none}
+  .cta-movil-btn{flex:none;min-height:44px}
 }
 
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
@@ -648,6 +678,93 @@ footer a:hover{color:#fff}
 .wiz-restart{margin-top:18px;background:none;border:none;color:var(--gris);font-size:.86rem;cursor:pointer;text-decoration:underline;padding:8px 0}
 @media(max-width:640px){.wiz-launch{padding:24px 20px}.wiz-flow{padding:22px 18px}.wiz-launch .btn{width:100%}}
 @media(prefers-reduced-motion:reduce){.wiz-step{animation:none}.wiz-bar i{transition:none}}
+/* ============================================================
+   WIZARD DE CONTACTO PARA CLIENTES (CTA "Contactar")
+   Adaptado del wizard de la landing de contadores
+   (sites/alianzas-contables, "wizard de contacto"): misma estructura,
+   UX y accesibilidad, con los tokens y botones de esta landing.
+   Un paso por pantalla; en <640px ocupa toda la pantalla.
+   ============================================================ */
+footer .foot-btn{display:block;background:none;border:0;padding:8px 0;font:inherit;color:rgba(255,255,255,.75);cursor:pointer;text-align:left}
+footer .foot-btn:hover{color:#fff}
+@media(max-width:640px){footer .foot-btn{padding:12px 0}}
+.cw-overlay{position:fixed;inset:0;z-index:1000;background:rgba(10,6,22,.66);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+/* al abrir, visibility cambia de inmediato (0s) para poder mover el foco al diálogo */
+.cw-overlay.open{opacity:1;visibility:visible;transition:opacity .25s,visibility 0s}
+.cw{position:relative;display:flex;flex-direction:column;width:100%;max-width:620px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);margin:0;background:var(--papel);color:var(--tinta);border-radius:22px;box-shadow:0 30px 80px -20px rgba(10,6,22,.6);overflow:hidden;transform:translateY(16px);transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.cw-overlay.open .cw{transform:none}
+.cw-head{flex:none;padding:20px 24px 0}
+.cw-head-row{display:flex;align-items:center;gap:12px;padding-right:52px;min-height:44px}
+.cw-title{margin:0;font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--violeta)}
+.cw-count{margin-left:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-2);white-space:nowrap}
+.cw-x{position:absolute;top:14px;right:14px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:var(--nube);color:var(--tinta);font-size:1.6rem;line-height:1;cursor:pointer}
+.cw-x:hover{background:#ECE6FF;color:var(--violeta)}
+.cw-bar{height:6px;margin-top:10px;border-radius:999px;background:var(--nube);overflow:hidden}
+.cw-bar i{display:block;height:100%;width:16.7%;border-radius:999px;background:var(--violeta);transition:width .35s ease}
+.cw-plan{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:6px 12px;border-radius:999px;background:rgba(82,22,231,.08);color:var(--violeta);font-size:.84rem;font-weight:600;line-height:1.3}
+.cw-plan[hidden]{display:none}
+.cw-body{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:20px 24px 8px}
+.cw-step{display:none}
+.cw-step.on{display:block;animation:cwIn .3s ease both}
+@keyframes cwIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.cw-q{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(1.25rem,3.2vw,1.5rem);letter-spacing:-.02em;line-height:1.2}
+.cw-q:focus{outline:none}
+.cw-sub{margin-top:6px;color:var(--gris);font-size:.95rem;line-height:1.5}
+.cw-label{margin:24px 0 0;font-family:var(--display);font-weight:700;font-size:1.02rem}
+.cw-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.cw-opts.tres{grid-template-columns:repeat(3,1fr)}
+@media(max-width:520px){.cw-opts,.cw-opts.tres{grid-template-columns:1fr}}
+.cw-opt{position:relative;display:flex;align-items:center;gap:12px;min-height:60px;padding:12px 14px;border:1.5px solid var(--linea);border-radius:14px;background:var(--papel);cursor:pointer;transition:border-color .16s,background .16s,box-shadow .16s}
+.cw-opt:hover{border-color:var(--violeta-hi)}
+.cw-opt input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.cw-opt .oi{flex:none;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:11px;background:var(--nube);color:var(--violeta);transition:background .16s,color .16s}
+.cw-opt .oi svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cw-opt b{display:block;font-family:var(--display);font-weight:700;font-size:.98rem;line-height:1.25}
+.cw-opt small{display:block;margin-top:2px;color:var(--gris-2);font-size:.8rem;line-height:1.35}
+/* .sel lo pone el JS (no depende de :has, que falta en navegadores viejos) */
+.cw-opt.sel{border-color:var(--violeta);background:rgba(82,22,231,.06);box-shadow:0 0 0 3px rgba(82,22,231,.14)}
+.cw-opt.sel .oi{background:var(--violeta);color:#fff}
+.cw-opt:has(input:focus-visible){outline:3px solid var(--violeta-hi);outline-offset:2px}
+.cw-extra{margin-top:14px}
+.cw-extra[hidden]{display:none}
+.cw-field{margin-top:16px}
+.cw-extra .cw-field{margin-top:0}
+.cw-field label{display:block;margin-bottom:6px;font-size:.9rem;font-weight:600;color:var(--tinta)}
+.cw-field label span{font-weight:500;color:var(--gris-2)}
+.cw-field input,.cw-field select{width:100%;min-height:48px;padding:12px 14px;border:1.5px solid var(--linea);border-radius:12px;background:var(--papel);color:var(--tinta);font-family:var(--texto);font-size:16px}
+.cw-field input:focus,.cw-field select:focus{outline:none;border-color:var(--violeta);box-shadow:0 0 0 3px rgba(82,22,231,.16)}
+.cw-field input[aria-invalid="true"]{border-color:#B3261E}
+.cw-hint{margin-top:6px;font-size:.8rem;color:var(--gris-2);line-height:1.4}
+.cw-consent{margin-top:16px;font-size:.8rem;color:var(--gris-2);line-height:1.5}
+.cw-consent a{color:var(--violeta)}
+.cw-err{min-height:1.3em;margin:12px 0 0;color:#B3261E;font-size:.88rem;font-weight:600}
+.cw-directo{margin:10px 0 6px;font-size:.84rem;color:var(--gris)}
+.cw-directo[hidden]{display:none}
+.cw-directo a{display:inline-block;padding:10px 0;color:var(--violeta);font-weight:600}
+.cw-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 24px 18px;border-top:1px solid var(--linea);background:var(--papel)}
+.cw-back{min-height:44px;padding:0 6px;border:0;background:none;color:var(--gris);font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer}
+.cw-back:hover{color:var(--violeta)}
+.cw-back[hidden]{display:inline-block;visibility:hidden}
+.cw-foot .btn{min-height:48px;padding:12px 28px}
+.cw-done{padding:8px 0 4px;text-align:center}
+.cw-done .ok{width:64px;height:64px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--violeta);box-shadow:0 10px 28px rgba(82,22,231,.35)}
+.cw-done .ok svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.cw-done p{margin-top:10px;color:var(--gris);line-height:1.55}
+.cw-done p b{color:var(--tinta)}
+.cw-done .btn{margin-top:18px}
+.cw-bloqueo{padding:10px 14px;border-radius:12px;background:rgba(255,138,0,.1);border:1px solid rgba(255,138,0,.34)}
+.cw-bloqueo[hidden]{display:none}
+body.cw-lock{overflow:hidden}
+@media(max-width:639px){
+  .cw-overlay{padding:0;align-items:stretch}
+  .cw{max-width:none;max-height:none;height:100%;height:100dvh;border-radius:0}
+  .cw-head{padding:14px 16px 0}
+  .cw-x{top:10px;right:10px}
+  .cw-body{padding:18px 16px 8px}
+  .cw-foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+  .cw-foot .btn{flex:1}
+}
+@media(prefers-reduced-motion:reduce){.cw-overlay,.cw,.cw-bar i,.cw-opt{transition:none}.cw-step.on{animation:none}}
 </style>
 </head>
 <body>
@@ -663,7 +780,7 @@ footer a:hover{color:#fff}
       <a href="#cambiar">Cambiar de proveedor</a>
       <a href="#faq">Preguntas</a>
     </nav>
-    <a class="btn btn-wa btn-sm" data-wa="nav" href="#">Escríbanos</a>
+    <button type="button" class="btn btn-cta sm" data-contacto="nav" aria-haspopup="dialog">Contactar</button>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -675,7 +792,7 @@ footer a:hover{color:#fff}
     <a href="#contadores">Para contadores</a>
     <a href="#cambiar">Cambiar de proveedor</a>
     <a href="#faq">Preguntas</a>
-    <a class="btn btn-wa" data-wa="menu-movil" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Hablar por WhatsApp</a>
+    <button type="button" class="btn btn-cta" data-contacto="menu-movil" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   </div>
 </header>
 
@@ -700,10 +817,7 @@ footer a:hover{color:#fff}
 
       <div class="hero-cta">
         <a class="btn btn-v" href="#precio">Ver precios</a>
-        <a class="btn btn-wa" data-wa="hero" href="#">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
-          Hablar por WhatsApp
-        </a>
+        <button type="button" class="btn btn-cta" data-contacto="hero" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
       <p class="horario">Actualizaciones normativas incluidas en todos los planes · Soporte sin costo · Listo en menos de 24 horas</p>
     </div>
@@ -777,7 +891,7 @@ footer a:hover{color:#fff}
           </div>
         </details>
         <div class="hero-cta">
-          <a class="btn btn-wa" data-wa="dte20" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Quedar cubierto</a>
+          <button type="button" class="btn btn-cta" data-contacto="dte20" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
       </div>
 
@@ -890,7 +1004,7 @@ footer a:hover{color:#fff}
           <p class="res-primer" id="r-primer"></p>
           <p class="wiz-hint" id="r-aviso-starter" hidden>Con Starter no se generan anexos de IVA ni libros; si su contador se los pide, el plan es Professional.</p>
           <div class="res-cta">
-            <a class="btn btn-wa" id="r-cta" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Contratar</a>
+            <button type="button" class="btn btn-cta" data-contacto="wizard" id="r-cta" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             <a class="btn btn-ghost" href="#tabla">Ver todo lo que incluye</a>
           </div>
           <button class="wiz-restart" id="wiz-restart" type="button">Empezar de nuevo</button>
@@ -1153,7 +1267,7 @@ footer a:hover{color:#fff}
         <p class="micro-cifras"><b>215 migraciones</b> completadas desde otro proveedor · puesta en marcha en <b>8 h</b> (nuestro récord) · <b>0 días</b> sin facturar</p>
       </div>
       <div>
-        <a class="btn btn-wa" data-wa="migracion" href="#" style="width:100%"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Cambiarme a FactuIA</a>
+        <button type="button" class="btn btn-cta" data-contacto="migracion" style="width:100%" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <p style="font-size:.84rem;color:var(--gris);margin-top:13px;text-align:center;line-height:1.5">
           Cuéntenos con quién está y le decimos exactamente qué implica.
         </p>
@@ -1172,7 +1286,7 @@ footer a:hover{color:#fff}
       lo capacita y queda como su contacto.
     </p>
     <div class="pasos rv">
-      <div class="paso"><div class="num">PASO 01</div><h3>Nos escribe</h3><p>Por WhatsApp. Definimos juntos el plan según cuántas facturas hace.</p></div>
+      <div class="paso"><div class="num">PASO 01</div><h3>Nos contacta</h3><p>Deja sus datos y le contactamos por llamada, reunión virtual o WhatsApp. Definimos juntos el plan según cuántas facturas hace.</p></div>
       <div class="paso"><div class="num">PASO 02</div><h3>Lo dejamos listo</h3><p>En menos de 24 horas, con la gestión ante Hacienda incluida.</p></div>
       <div class="paso"><div class="num">PASO 03</div><h3>Lo capacitamos</h3><p>Capacitación en vivo sin costo y dos cursos grabados que le quedan.</p></div>
       <div class="paso"><div class="num">PASO 04</div><h3>Factura tranquilo</h3><p>Con soporte gratis y la normativa siempre al día de nuestro lado.</p></div>
@@ -1201,7 +1315,7 @@ footer a:hover{color:#fff}
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
             <span><b>La Normativa 2.0 la actualizamos nosotros</b>, en todas sus empresas a la vez.</span></li>
         </ul>
-        <a class="btn btn-wa btn-sm" data-wa="contadores" href="#" style="margin-top:24px"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Crear cuenta de despacho</a>
+        <button type="button" class="btn btn-cta sm" data-contacto="contadores" style="margin-top:24px" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
 
       <figure class="shot rv">
@@ -1355,11 +1469,11 @@ footer a:hover{color:#fff}
           </tr>
           <tr>
             <th></th>
-            <td><a class="btn btn-ghost btn-sm" data-wa="plan-starter" href="#">Contratar</a></td>
-            <td><a class="btn btn-ghost btn-sm" data-wa="plan-professional" href="#">Contratar</a></td>
-            <td class="reco"><a class="btn btn-v btn-sm" data-wa="plan-advanced" href="#">Contratar</a></td>
-            <td><a class="btn btn-ghost btn-sm" data-wa="plan-deluxe" href="#">Contratar</a></td>
-            <td><a class="btn btn-ghost btn-sm" data-wa="plan-enterprise" href="#">Hablemos</a></td>
+            <td><button type="button" class="btn btn-cta sm" data-contacto="plan-starter" data-plan="Starter" aria-haspopup="dialog">Contactar</button></td>
+            <td><button type="button" class="btn btn-cta sm" data-contacto="plan-professional" data-plan="Professional" aria-haspopup="dialog">Contactar</button></td>
+            <td class="reco"><button type="button" class="btn btn-cta sm" data-contacto="plan-advanced" data-plan="Advanced" aria-haspopup="dialog">Contactar</button></td>
+            <td><button type="button" class="btn btn-cta sm" data-contacto="plan-deluxe" data-plan="Deluxe" aria-haspopup="dialog">Contactar</button></td>
+            <td><button type="button" class="btn btn-cta sm" data-contacto="plan-enterprise" data-plan="Enterprise" aria-haspopup="dialog">Contactar</button></td>
           </tr>
         </tbody>
       </table>
@@ -1381,9 +1495,9 @@ footer a:hover{color:#fff}
 <section class="cierre dark">
   <div class="wrap">
     <h2 class="rv">Empiece a facturar en menos de 24 horas</h2>
-    <p class="lede rv">Escríbanos, vemos juntos qué plan le toca y el papeleo ante Hacienda queda de nuestro lado.</p>
+    <p class="lede rv">Déjenos sus datos, vemos juntos qué plan le toca y el papeleo ante Hacienda queda de nuestro lado.</p>
     <div class="cierre-cta rv">
-      <a class="btn btn-wa" data-wa="cierre" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Hablar por WhatsApp</a>
+      <button type="button" class="btn btn-cta" data-contacto="cierre" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       <a class="btn btn-ghost" href="#precio">Ver precios</a>
     </div>
     <p class="horario rv">Lunes a viernes, 8:00 a.m. a 5:00 p.m. · Respondemos el mismo día</p>
@@ -1410,7 +1524,7 @@ footer a:hover{color:#fff}
       </div>
       <div class="foot-col">
         <h4>Contacto</h4>
-        <a data-wa="footer" href="#">WhatsApp 7255-9059</a>
+        <button type="button" class="foot-btn" data-contacto="footer" aria-haspopup="dialog">Contactar a un asesor</button>
         <a href="mailto:facturacion@consiti.com">facturacion@consiti.com</a>
         <a href="#faq">Preguntas frecuentes</a>
       </div>
@@ -1430,15 +1544,148 @@ footer a:hover{color:#fff}
   </div>
 </footer>
 
-<a class="wa-float" data-wa="flotante" href="#" aria-label="Hablar por WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
-  <span>Escríbanos</span>
-</a>
+<button type="button" class="btn btn-cta fab-contacto" data-contacto="flotante" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span>Contactar</span>
+</button>
 
-<!-- Barra CTA fija en mobile: reemplaza al boton flotante en pantallas chicas -->
+<!-- Barra CTA fija en mobile: reemplaza al boton flotante en pantallas chicas. Abre el wizard de contacto. -->
 <div class="cta-movil">
   <span class="cta-movil-precio">Desde <b>$14.99</b> / mes</span>
-  <a class="cta-movil-btn" data-wa="sticky" href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg> Escribir</a>
+  <button type="button" class="btn btn-cta sm cta-movil-btn" data-contacto="sticky" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div>
+
+<!-- ==================================================================
+     WIZARD DE CONTACTO PARA CLIENTES (lo abren todos los CTA "Contactar")
+     Basado en el wizard de la landing de contadores. Seis pasos; al enviar
+     arma un resumen y abre WhatsApp al número de WA con el mensaje listo.
+     Los botones que lo abren llevan data-contacto="<cta_id>" y, si aplica,
+     data-plan="<Plan>". El JS está en el script final ("CTA Contactar").
+     ================================================================== -->
+<div class="cw-overlay" id="cw" aria-hidden="true">
+  <form class="cw" id="cw-form" role="dialog" aria-modal="true" aria-labelledby="cw-title" aria-describedby="cw-count" novalidate>
+    <button type="button" class="cw-x" data-cw-close aria-label="Cerrar">×</button>
+    <div class="cw-head">
+      <div class="cw-head-row">
+        <h2 class="cw-title" id="cw-title">Contactar a un asesor</h2>
+        <span class="cw-count" id="cw-count">Paso 1 de 6</span>
+      </div>
+      <div class="cw-bar" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1"><i id="cw-bar-i"></i></div>
+      <p class="cw-plan" id="cw-plan" hidden></p>
+    </div>
+
+    <div class="cw-body" id="cw-body">
+      <!-- 1. Tipo de negocio -->
+      <div class="cw-step on" data-step="1">
+        <h3 class="cw-q" id="cw-q1" tabindex="-1">¿Qué tipo de negocio tiene?</h3>
+        <p class="cw-sub">Así le asignamos un asesor que conoce su rubro.</p>
+        <div class="cw-opts" role="radiogroup" aria-labelledby="cw-q1">
+          <label class="cw-opt"><input type="radio" name="tipo" value="Comercio o tienda"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span><span><b>Comercio o tienda</b><small>Venta al público</small></span></label>
+          <label class="cw-opt"><input type="radio" name="tipo" value="Restaurante o comida"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg></span><span><b>Restaurante o comida</b><small>Restaurante, cafetería, pupusería</small></span></label>
+          <label class="cw-opt"><input type="radio" name="tipo" value="Servicios profesionales"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span><b>Servicios profesionales</b><small>Clínica, despacho, consultoría</small></span></label>
+          <label class="cw-opt"><input type="radio" name="tipo" value="Distribuidora o mayoreo"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><span><b>Distribuidora o mayoreo</b><small>Venta a otros negocios</small></span></label>
+          <label class="cw-opt"><input type="radio" name="tipo" value="Industria o manufactura"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20h20V9l-6 4V9l-6 4V4H2z"/></svg></span><span><b>Industria o manufactura</b><small>Fabrica o transforma productos</small></span></label>
+          <label class="cw-opt"><input type="radio" name="tipo" value="Otro"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></span><span><b>Otro</b><small>Cuéntenos a qué se dedica</small></span></label>
+        </div>
+        <div class="cw-extra" id="cw-tipo-extra" hidden>
+          <div class="cw-field"><label for="cw-tipo-otro">¿A qué se dedica su negocio?</label><input id="cw-tipo-otro" name="tipo_otro" type="text" maxlength="60" placeholder="Ej.: taller mecánico, colegio, farmacia" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <!-- 2. Facturas al mes: rangos = límites de los planes de la tabla (30 / 100 / 500 / 1,000 / sin límite) -->
+      <div class="cw-step" data-step="2">
+        <h3 class="cw-q" id="cw-q2" tabindex="-1">¿Cuántas facturas emite al mes, más o menos?</h3>
+        <p class="cw-sub">Cuente todas: consumidor final, crédito fiscal y notas. Con esto le sugerimos el plan.</p>
+        <div class="cw-opts" role="radiogroup" aria-labelledby="cw-q2">
+          <label class="cw-opt"><input type="radio" name="facturas" value="Hasta 30" data-plan="Starter"><span><b>Hasta 30</b><small>1 o 2 al día · plan Starter</small></span></label>
+          <label class="cw-opt"><input type="radio" name="facturas" value="De 31 a 100" data-plan="Professional"><span><b>De 31 a 100</b><small>3 a 5 al día · plan Professional</small></span></label>
+          <label class="cw-opt"><input type="radio" name="facturas" value="De 101 a 500" data-plan="Advanced"><span><b>De 101 a 500</b><small>Hasta 20 al día · plan Advanced</small></span></label>
+          <label class="cw-opt"><input type="radio" name="facturas" value="De 501 a 1,000" data-plan="Deluxe"><span><b>De 501 a 1,000</b><small>Hasta 40 al día · plan Deluxe</small></span></label>
+          <label class="cw-opt"><input type="radio" name="facturas" value="Más de 1,000" data-plan="Enterprise"><span><b>Más de 1,000</b><small>Sin límite · plan Enterprise</small></span></label>
+          <label class="cw-opt"><input type="radio" name="facturas" value="No estoy seguro" data-plan=""><span><b>No estoy seguro</b><small>Lo calculamos juntos</small></span></label>
+        </div>
+      </div>
+
+      <!-- 3. Rol: ¿es quien decide? -->
+      <div class="cw-step" data-step="3">
+        <h3 class="cw-q" id="cw-q3" tabindex="-1">¿Quién es usted en el negocio?</h3>
+        <p class="cw-sub">Así preparamos la conversación indicada.</p>
+        <div class="cw-opts" role="radiogroup" aria-labelledby="cw-q3">
+          <label class="cw-opt"><input type="radio" name="rol" value="Dueño(a) del negocio"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span><b>Dueño(a) del negocio</b><small>Usted decide la compra</small></span></label>
+          <label class="cw-opt"><input type="radio" name="rol" value="Contador(a)"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>Contador(a)</b><small>Lleva la contabilidad del negocio</small></span></label>
+          <label class="cw-opt"><input type="radio" name="rol" value="Encargado(a) que toma la decisión"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span><b>Encargado(a) que toma la decisión</b><small>Gerencia o administración</small></span></label>
+          <label class="cw-opt"><input type="radio" name="rol" value="Otro rol"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><b>Otro rol</b><small>Averigua para alguien más</small></span></label>
+        </div>
+      </div>
+
+      <!-- 4. Sistema actual -->
+      <div class="cw-step" data-step="4">
+        <h3 class="cw-q" id="cw-q4" tabindex="-1">¿Ya tiene sistema de facturación electrónica?</h3>
+        <p class="cw-sub">Si ya factura con otro proveedor, hacemos el cambio sin costo de migración.</p>
+        <div class="cw-opts" role="radiogroup" aria-labelledby="cw-q4">
+          <label class="cw-opt"><input type="radio" name="sistema" value="No, empiezo desde cero"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span><b>No, empiezo desde cero</b><small>Es mi primera vez con DTE</small></span></label>
+          <label class="cw-opt"><input type="radio" name="sistema" value="Sí, uso otro sistema"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg></span><span><b>Sí, uso otro sistema</b><small>Quiero cambiarme o comparar</small></span></label>
+          <label class="cw-opt"><input type="radio" name="sistema" value="Uso el portal gratuito de Hacienda"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span><b>Uso el portal gratuito de Hacienda</b><small>El facturador del Ministerio</small></span></label>
+          <label class="cw-opt"><input type="radio" name="sistema" value="No estoy seguro"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg></span><span><b>No estoy seguro</b><small>Lo revisamos juntos</small></span></label>
+        </div>
+        <div class="cw-extra" id="cw-sis-extra" hidden>
+          <div class="cw-field"><label for="cw-sis-cual">¿Cuál sistema usa? <span>(opcional)</span></label><input id="cw-sis-cual" name="sistema_cual" type="text" maxlength="60" placeholder="Nombre del sistema o proveedor" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <!-- 5. Medio y franja horaria -->
+      <div class="cw-step" data-step="5">
+        <h3 class="cw-q" id="cw-q5" tabindex="-1">¿Cómo prefiere que le contactemos?</h3>
+        <div class="cw-opts tres" role="radiogroup" aria-labelledby="cw-q5">
+          <label class="cw-opt"><input type="radio" name="medio" value="Llamada"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><span><b>Llamada</b><small>Le llamamos</small></span></label>
+          <label class="cw-opt"><input type="radio" name="medio" value="Reunión virtual"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span><span><b>Reunión virtual</b><small>Le mostramos el sistema</small></span></label>
+          <label class="cw-opt"><input type="radio" name="medio" value="WhatsApp"><span class="oi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span><b>WhatsApp</b><small>Le escribimos</small></span></label>
+        </div>
+        <p class="cw-label" id="cw-q5b">¿A qué hora le queda mejor?</p>
+        <div class="cw-opts tres" role="radiogroup" aria-labelledby="cw-q5b">
+          <label class="cw-opt"><input type="radio" name="franja" value="Mañana (8:00 a 12:00)"><span><b>Mañana</b><small>8:00 a 12:00</small></span></label>
+          <label class="cw-opt"><input type="radio" name="franja" value="Tarde (12:00 a 5:00 p. m.)"><span><b>Tarde</b><small>12:00 a 5:00 p. m.</small></span></label>
+          <label class="cw-opt"><input type="radio" name="franja" value="Después de las 5:00 p. m."><span><b>Después de las 5</b><small>Desde las 5:00 p. m.</small></span></label>
+        </div>
+        <div class="cw-extra" id="cw-dia-extra" hidden>
+          <div class="cw-field"><label for="cw-dia">Día preferido para la reunión <span>(opcional)</span></label>
+            <select id="cw-dia" name="dia"><option value="">Cualquier día</option><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Datos -->
+      <div class="cw-step" data-step="6">
+        <h3 class="cw-q" id="cw-q6" tabindex="-1">¿A quién contactamos?</h3>
+        <p class="cw-sub">Solo usamos estos datos para contactarle.</p>
+        <div class="cw-field"><label for="cw-nombre">Su nombre</label><input id="cw-nombre" name="nombre" type="text" maxlength="80" placeholder="Nombre y apellido" autocomplete="name" data-hj-suppress></div>
+        <div class="cw-field"><label for="cw-negocio">Nombre del negocio <span>(opcional)</span></label><input id="cw-negocio" name="negocio" type="text" maxlength="80" placeholder="Como lo conocen sus clientes" autocomplete="organization" data-hj-suppress></div>
+        <div class="cw-field"><label for="cw-tel">Teléfono o WhatsApp</label><input id="cw-tel" name="telefono" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel" aria-describedby="cw-tel-hint" data-hj-suppress>
+          <p class="cw-hint" id="cw-tel-hint">8 dígitos de El Salvador; puede incluir +503.</p></div>
+        <p class="cw-consent">Al enviar sus datos, usted autoriza a FactuIA a contactarle para brindarle información sobre el servicio. Más detalle en <a href="/terminos#s9" target="_blank" rel="noopener">Privacidad y datos</a>.</p>
+      </div>
+
+      <!-- Gracias -->
+      <div class="cw-step" data-step="done">
+        <div class="cw-done">
+          <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3 class="cw-q" id="cw-qdone" tabindex="-1">¡Gracias! Ya casi está</h3>
+          <p id="cw-done-msg"></p>
+          <p>Se abrió WhatsApp con su solicitud lista. <b>Presione enviar en WhatsApp</b> para que nos llegue.</p>
+          <p class="cw-bloqueo" id="cw-bloqueo" hidden>Su navegador no dejó abrir WhatsApp. Presione el botón para abrirlo.</p>
+          <a class="btn btn-cta" id="cw-wa-link" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        </div>
+      </div>
+
+      <p class="cw-err" id="cw-err" role="alert"></p>
+      <p class="cw-directo" id="cw-directo">¿Prefiere escribirnos directo? <a id="cw-wa-directo" href="#" target="_blank" rel="noopener">WhatsApp 7255-9059</a></p>
+    </div>
+
+    <div class="cw-foot">
+      <button type="button" class="cw-back" id="cw-back" hidden>← Atrás</button>
+      <button type="submit" class="btn btn-cta btn-paso" id="cw-next">Siguiente</button>
+    </div>
+  </form>
 </div>
 
 <script type="application/ld+json">
@@ -1486,33 +1733,13 @@ var VALOR_CTA = {
   "plan-enterprise":   {plan:"Enterprise",   valor:150}
 };
 
-/* ============ WhatsApp con mensaje distinto por CTA (atribución) ============ */
+/* ============ WhatsApp de gestión (destino del wizard de contacto) ============ */
 var WA = "50372559059";
-/* Mensajes precargados: los envia el cliente, no Consiti, por eso van en
-   neutro (no en usted). Llevan el plan y el volumen adentro para que el
-   prospecto no tenga que volver a explicar lo que ya eligio en la pagina. */
-var MENSAJES = {
-  nav:"Hola, vengo de la página de FactuIA y quiero información sobre los planes.",
-  "menu-movil":"Hola, vengo de la página de FactuIA y quiero información sobre los planes.",
-  hero:"Hola, vengo de la página de FactuIA y quiero empezar a facturar electrónicamente. ¿Me pueden dar más información?",
-  contadores:"Hola, manejo la contabilidad de varias empresas y quiero información sobre la cuenta para despachos.",
-  dte20:"Hola, quiero quedar cubierto para la Normativa DTE 2.0 antes del 1 de diciembre.",
-  migracion:"Hola, actualmente uso otro sistema de facturación y quiero conocer el proceso para cambiarme a FactuIA.",
-  "plan-starter":"Hola, emito unas 30 facturas al mes y quiero contratar el plan Starter de $14.99 + IVA.",
-  "plan-professional":"Hola, emito unas 100 facturas al mes y quiero contratar el plan Professional de $24.99 + IVA.",
-  "plan-advanced":"Hola, emito unas 500 facturas al mes y quiero contratar el plan Advanced de $34.99 + IVA.",
-  "plan-deluxe":"Hola, emito unas 1,000 facturas al mes y quiero contratar el plan Deluxe de $59.99 + IVA.",
-  "plan-enterprise":"Hola, emito más de 1,000 facturas al mes y quiero conocer el plan Enterprise.",
-  cierre:"Hola, quiero empezar a facturar con FactuIA.",
-  footer:"Hola, quiero información sobre FactuIA para empezar a facturar electrónicamente.",
-  sticky:"Hola, vengo de la página de FactuIA y quiero empezar a facturar electrónicamente. ¿Me pueden dar más información?",
-  flotante:"Hola, vengo de la página de FactuIA y quiero información para empezar a facturar electrónicamente."
-};
 function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
 /* ============ Tabla de planes -> tarjetas en mobile ============
-   Genera una tarjeta por plan a partir de la tabla comparativa. Corre ANTES
-   del cableado de [data-wa] de abajo, para que los botones Contratar clonados
-   queden con su enlace de WhatsApp y su medicion igual que los de la tabla. */
+   Genera una tarjeta por plan a partir de la tabla comparativa. Los botones
+   "Contactar" se clonan tal cual (con su data-contacto y data-plan); como el
+   wizard escucha los clics por delegación, los clones funcionan igual. */
 (function(){
   var tabla=document.querySelector(".tabla-wrap table");
   var cont=document.querySelector(".planes-cards");
@@ -1528,7 +1755,7 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
     var e=lbl(f).toLowerCase();
     if(e.indexOf("precio al mes")===0) fPrecio=f;
     else if(e.indexOf("facturas incluidas")===0) fFacturas=f;
-    if(f.querySelector("a[data-wa]")) fCta=f;
+    if(f.querySelector("[data-contacto]")) fCta=f;
   });
   planes.forEach(function(pl){
     var art=document.createElement("article");
@@ -1542,7 +1769,7 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
     filas.forEach(function(f){
       if(n>=4||f===fPrecio||f===fFacturas||f===fCta) return;
       var cel=td(f,pl.i);
-      if(cel&&cel.classList.contains("si")){ prev+='<li><span class="si" aria-hidden="true">\u2713</span> '+lbl(f)+"</li>"; n++; }
+      if(cel&&cel.classList.contains("si")){ prev+='<li><span class="si" aria-hidden="true">✓</span> '+lbl(f)+"</li>"; n++; }
     });
     if(prev) h+='<ul class="pc-preview">'+prev+"</ul>";
     var full="";
@@ -1551,42 +1778,298 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
       var e=lbl(f); if(!e) return;
       var cel=td(f,pl.i); if(!cel) return;
       var v;
-      if(cel.classList.contains("si")) v='<b class="si" aria-hidden="true">\u2713</b>';
-      else if(cel.classList.contains("no")) v='<b class="no" aria-hidden="true">\u2014</b>';
+      if(cel.classList.contains("si")) v='<b class="si" aria-hidden="true">✓</b>';
+      else if(cel.classList.contains("no")) v='<b class="no" aria-hidden="true">—</b>';
       else v="<b>"+cel.textContent.trim().replace(/\s+/g," ").replace("+ IVA"," + IVA")+"</b>";
       full+="<li>"+e+v+"</li>";
     });
     h+='<details class="pc-todo"><summary>Ver todas las características</summary><ul class="pc-full">'+full+"</ul></details>";
     art.innerHTML=h;
-    if(fCta){ var a=td(fCta,pl.i).querySelector("a[data-wa]"); if(a) art.appendChild(a.cloneNode(true)); }
+    if(fCta){ var a=td(fCta,pl.i).querySelector("[data-contacto]"); if(a) art.appendChild(a.cloneNode(true)); }
     cont.appendChild(art);
   });
   var wrap=cont.closest(".wrap"); if(wrap) wrap.classList.add("cards-ok");
 })();
-document.querySelectorAll("[data-wa]").forEach(function(a){
-  var id=a.getAttribute("data-wa");
-  a.href=waURL(MENSAJES[id]||MENSAJES.nav); a.target="_blank"; a.rel="noopener";
-  a.addEventListener("click",function(){
-    var p = VALOR_CTA[id];
-    trackLead({
-      content_name: p ? p.plan : "Consulta general",
-      content_category: p ? "Plan Facturación" : "Consulta",
-      value: p ? p.valor : 0,
-      currency: "USD",
-      cta_id: id
-    });
-    /* GA4: generate_lead es el evento recomendado para esto. Mismos
-       datos que van al Pixel, para poder cruzar las dos fuentes. */
-    trackGA("generate_lead", {
-      cta_id: id,
-      item_name: p ? p.plan : "Consulta general",
-      value: p ? p.valor : 0,
-      currency: "USD"
-    });
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:"clic_whatsapp",cta_id:id});
+
+/* ============ CTA "Contactar" -> wizard de contacto para clientes ============
+   Todo botón con data-contacto="<cta_id>" abre el wizard (delegación de
+   eventos, así también sirven los clones de las tarjetas de planes). Si el
+   botón trae data-plan (tabla de planes o resultado de "Descubrir mi plan"),
+   el plan se muestra arriba, se preselecciona el rango de facturas y va en el
+   resumen y en el value del Lead.
+
+   Medición (todo respeta el consentimiento, igual que antes):
+   - Al abrir:  Contact (Pixel, solo con consentimiento) · GA4 abrir_wizard ·
+                dataLayer {event:"abrir_wizard", cta_id, plan}
+   - Al enviar: Lead por Pixel + CAPI con el MISMO eventID (trackLead, dedupe) ·
+                GA4 generate_lead · dataLayer {event:"enviar_wizard", ...}
+                Solo respuestas categóricas: nunca nombre, negocio ni teléfono.
+   - Enlace "escribirnos directo": Lead + generate_lead + clic_whatsapp con
+                cta_id "<origen>-directo" (mismo criterio que los CTA viejos). */
+(function(){
+  var ov=document.getElementById("cw"), f=document.getElementById("cw-form");
+  if(!ov||!f) return;
+  var steps=[].slice.call(f.querySelectorAll(".cw-step")), TOTAL=6, cur=1, lastFocus=null, porPuntero=false;
+  var err=document.getElementById("cw-err"), next=document.getElementById("cw-next"), back=document.getElementById("cw-back");
+  var chip=document.getElementById("cw-plan"), body=document.getElementById("cw-body");
+  var barra=f.querySelector(".cw-bar"), barI=document.getElementById("cw-bar-i");
+  var directo=document.getElementById("cw-directo"), waDirecto=document.getElementById("cw-wa-directo");
+  var ctx={cta:"general", plan:null};   /* plan: {plan, valor} de VALOR_CTA */
+  var inertes=[];
+
+  /* Legible para el asesor que recibe el WhatsApp; el cta_id va igual entre paréntesis */
+  var ORIGEN={
+    nav:"menú superior", "menu-movil":"menú del celular", hero:"inicio de la página",
+    dte20:"sección Normativa DTE 2.0", migracion:"sección Cambiar de proveedor",
+    contadores:"sección Para contadores", cierre:"cierre de la página", footer:"pie de página",
+    sticky:"barra fija del celular", flotante:"botón flotante", wizard:"resultado de «Descubrir mi plan»",
+    "plan-starter":"tabla de planes", "plan-professional":"tabla de planes", "plan-advanced":"tabla de planes",
+    "plan-deluxe":"tabla de planes", "plan-enterprise":"tabla de planes"
+  };
+  var MEDIO_TXT={"Llamada":"llamada", "Reunión virtual":"reunión virtual", "WhatsApp":"WhatsApp"};
+  var FRANJA_TXT={
+    "Mañana (8:00 a 12:00)":"en la franja de la mañana (8:00 a 12:00)",
+    "Tarde (12:00 a 5:00 p. m.)":"en la franja de la tarde (12:00 a 5:00 p. m.)",
+    "Después de las 5:00 p. m.":"después de las 5:00 p. m."
+  };
+  /* cierra la frase sin duplicar el punto de "p. m." */
+  function punto(t){ return /\.$/.test(t)?t:t+"."; }
+
+  function trackMeta(ev,data){ try{ if(window.__consentGranted&&window.fbq) window.fbq("track",ev,data||{}); }catch(e){} }
+  function dl(o){ window.dataLayer=window.dataLayer||[]; window.dataLayer.push(o); }
+  function val(n){ var el=f.elements[n]; return el?String(el.value||"").trim():""; }
+  function radio(n){ return f.querySelector('input[name="'+n+'"]:checked'); }
+  function planPorNombre(n){ for(var k in VALOR_CTA){ if(VALOR_CTA[k].plan===n) return VALOR_CTA[k]; } return null; }
+  function precio(v){ return "$"+(v%1===0?v:v.toFixed(2)); }
+  function telDig(v){ var d=String(v).replace(/\D/g,""); if(d.length===11&&d.indexOf("503")===0) d=d.slice(3); return d; }
+  function telOk(v){ return /^[267]\d{7}$/.test(telDig(v)); }
+  function telFmt(v){ var d=telDig(v); return d.slice(0,4)+"-"+d.slice(4); }
+  /* Plan del lead: el del CTA (tabla o "Descubrir mi plan"); si no hay, el que sugiere el rango de facturas */
+  function planRango(){ var r=radio("facturas"); return r&&r.getAttribute("data-plan")?planPorNombre(r.getAttribute("data-plan")):null; }
+  function planFinal(){ return ctx.plan||planRango(); }
+
+  function marcar(name){
+    [].forEach.call(f.querySelectorAll('input[name="'+name+'"]'),function(i){ i.closest(".cw-opt").classList.toggle("sel",i.checked); });
+  }
+  function extras(){
+    var tipoOtro=val("tipo")==="Otro", sisOtro=val("sistema")==="Sí, uso otro sistema", reunion=val("medio")==="Reunión virtual";
+    document.getElementById("cw-tipo-extra").hidden=!tipoOtro;
+    document.getElementById("cw-sis-extra").hidden=!sisOtro;
+    document.getElementById("cw-dia-extra").hidden=!reunion;
+  }
+  function limpiarError(){ err.textContent=""; [].forEach.call(f.querySelectorAll('[aria-invalid="true"]'),function(x){ x.removeAttribute("aria-invalid"); }); }
+  function error(msg,campo){
+    err.textContent=msg;
+    if(campo){ if(campo.tagName!=="INPUT"||campo.type!=="radio") campo.setAttribute("aria-invalid","true"); try{ campo.focus({preventScroll:false}); }catch(e){} }
+  }
+
+  function show(n,sinFoco){
+    cur=n; limpiarError();
+    steps.forEach(function(s){ s.classList.toggle("on", s.getAttribute("data-step")===String(n)); });
+    var done=n==="done";
+    document.getElementById("cw-count").textContent=done?"Listo":"Paso "+n+" de "+TOTAL;
+    barI.style.width=(done?100:n/TOTAL*100)+"%";
+    barra.setAttribute("aria-valuenow", done?TOTAL:n);
+    back.hidden=done||n===1;
+    next.textContent=done?"Cerrar":(n===TOTAL?"Enviar":"Siguiente");
+    next.classList.toggle("btn-paso", n!==TOTAL);   /* "Enviar" en verde; el resto morado */
+    directo.hidden=done;
+    extras();
+    body.scrollTop=0;
+    if(!sinFoco){
+      var h=f.querySelector(".cw-step.on .cw-q");
+      if(h) setTimeout(function(){ try{ h.focus({preventScroll:true}); }catch(e){} },60);
+    }
+  }
+
+  /* Devuelve [mensaje, campo a enfocar] o null */
+  function check(n){
+    if(n===1){
+      if(!val("tipo")) return ["Elija el tipo de negocio para continuar.", f.querySelector('input[name="tipo"]')];
+      if(val("tipo")==="Otro"&&val("tipo_otro").length<3) return ["Cuéntenos en pocas palabras a qué se dedica su negocio.", document.getElementById("cw-tipo-otro")];
+    }
+    if(n===2&&!val("facturas")) return ["Elija un rango de facturas (o «No estoy seguro»).", f.querySelector('input[name="facturas"]')];
+    if(n===3&&!val("rol")) return ["Elija la opción que mejor le describe.", f.querySelector('input[name="rol"]')];
+    if(n===4&&!val("sistema")) return ["Elija una opción para continuar.", f.querySelector('input[name="sistema"]')];
+    if(n===5){
+      if(!val("medio")) return ["Elija cómo prefiere que le contactemos.", f.querySelector('input[name="medio"]')];
+      if(!val("franja")) return ["Elija la hora que le queda mejor.", f.querySelector('input[name="franja"]')];
+    }
+    if(n===6){
+      if(val("nombre").length<3) return ["Escriba su nombre.", document.getElementById("cw-nombre")];
+      if(!telOk(val("telefono"))) return ["Escriba un teléfono de El Salvador de 8 dígitos (por ejemplo 7000-0000).", document.getElementById("cw-tel")];
+    }
+    return null;
+  }
+
+  function datos(){
+    var medio=val("medio");
+    return {
+      cta:ctx.cta, planCta:ctx.plan, plan:planFinal(),
+      tipo:val("tipo"), tipoOtro:val("tipo")==="Otro"?val("tipo_otro"):"",
+      facturas:val("facturas"), rol:val("rol"),
+      sistema:val("sistema"), sistemaCual:val("sistema")==="Sí, uso otro sistema"?val("sistema_cual"):"",
+      medio:medio, franja:val("franja"), dia:medio==="Reunión virtual"?val("dia"):"",
+      nombre:val("nombre"), negocio:val("negocio"), tel:telFmt(val("telefono"))
+    };
+  }
+
+  /* Mensaje que la persona envía al WhatsApp de gestión, en su propia voz */
+  function resumen(o){
+    var l=["Hola, quiero que un asesor de FactuIA me contacte.",""];
+    l.push("Nombre: "+o.nombre);
+    if(o.negocio) l.push("Negocio: "+o.negocio);
+    l.push("Teléfono / WhatsApp: "+o.tel,"");
+    l.push("Tipo de negocio: "+(o.tipoOtro?"Otro ("+o.tipoOtro+")":o.tipo));
+    l.push("Facturas al mes: "+o.facturas);
+    l.push("Quién soy: "+o.rol);
+    l.push("Sistema actual: "+o.sistema+(o.sistemaCual?" ("+o.sistemaCual+")":""));
+    if(o.planCta) l.push("Plan de interés: "+o.planCta.plan+" ("+precio(o.planCta.valor)+" + IVA al mes)");
+    else if(o.plan) l.push("Plan sugerido por volumen: "+o.plan.plan+" ("+precio(o.plan.valor)+" + IVA al mes)");
+    l.push("");
+    l.push(punto("Prefiero que me contacten por: "+o.medio+", "+(FRANJA_TXT[o.franja]||o.franja)+(o.dia?", de preferencia el "+o.dia.toLowerCase():"")));
+    l.push("","Origen: "+(ORIGEN[o.cta]||"página de FactuIA")+" (ref: "+o.cta+")");
+    return l.join("\n");
+  }
+
+  /* Sin "noopener" en las features: con él, window.open devuelve null siempre
+     y no se podría saber si el navegador bloqueó la ventana. */
+  function abrirWA(url){
+    var w=null;
+    try{ w=window.open(url,"_blank"); }catch(e){}
+    if(w){ try{ w.opener=null; }catch(e){} }
+    return !!w;
+  }
+
+  function fijarInert(on){
+    if(on){
+      inertes=[].filter.call(document.body.children,function(el){
+        return el!==ov && el.tagName!=="SCRIPT" && !/(^|\s)ck-/.test(el.className||"") && !el.inert;
+      });
+      inertes.forEach(function(el){ el.inert=true; });
+    } else { inertes.forEach(function(el){ el.inert=false; }); inertes=[]; }
+  }
+
+  function reiniciar(){
+    f.reset();
+    [].forEach.call(f.querySelectorAll(".cw-opt.sel"),function(x){ x.classList.remove("sel"); });
+    show(1,true);
+  }
+
+  function abrir(cta, planNombre, origen){
+    lastFocus=origen||document.activeElement;
+    if(cur==="done") reiniciar();
+    ctx.cta=cta||"general";
+    ctx.plan=(planNombre&&planPorNombre(planNombre))||VALOR_CTA[ctx.cta]||null;
+    if(ctx.plan){
+      chip.textContent="Plan de interés: "+ctx.plan.plan+" · "+precio(ctx.plan.valor)+" + IVA al mes";
+      chip.hidden=false;
+      if(!val("facturas")){
+        var r=f.querySelector('input[name="facturas"][data-plan="'+ctx.plan.plan+'"]');
+        if(r){ r.checked=true; marcar("facturas"); }
+      }
+    } else { chip.hidden=true; chip.textContent=""; }
+    /* cierra el menú móvil si el CTA venía de ahí */
+    var dr=document.getElementById("drawer"), bu=document.getElementById("burger");
+    if(dr&&dr.classList.contains("abierto")){ dr.classList.remove("abierto"); if(bu) bu.setAttribute("aria-expanded","false"); }
+    ov.classList.add("open"); ov.setAttribute("aria-hidden","false");
+    document.body.classList.add("cw-lock"); fijarInert(true);
+    show(cur);
+    trackMeta("Contact",{content_name:"Wizard de contacto clientes", cta_id:ctx.cta});
+    trackGA("abrir_wizard",{cta_id:ctx.cta, item_name:ctx.plan?ctx.plan.plan:""});
+    dl({event:"abrir_wizard", cta_id:ctx.cta, plan:ctx.plan?ctx.plan.plan:""});
+  }
+  function cerrar(){
+    ov.classList.remove("open"); ov.setAttribute("aria-hidden","true");
+    document.body.classList.remove("cw-lock"); fijarInert(false);
+    var dest=lastFocus;
+    if(!dest||!document.contains(dest)||dest.offsetParent===null) dest=document.getElementById("burger");
+    if(dest&&dest.focus){ try{ dest.focus({preventScroll:true}); }catch(e){} }
+  }
+
+  function avanzar(){
+    var m=check(cur); if(m){ error(m[0],m[1]); return; }
+    if(cur<TOTAL) show(cur+1);
+  }
+
+  /* Apertura: cualquier [data-contacto], incluidos los clones de las tarjetas */
+  document.addEventListener("click",function(e){
+    var b=e.target.closest?e.target.closest("[data-contacto]"):null;
+    if(!b) return;
+    e.preventDefault();
+    abrir(b.getAttribute("data-contacto"), b.getAttribute("data-plan"), b);
   });
-});
+  ov.addEventListener("click",function(e){ if(e.target===ov) cerrar(); });
+  f.querySelector("[data-cw-close]").addEventListener("click",cerrar);
+  document.addEventListener("keydown",function(e){
+    if(!ov.classList.contains("open")) return;
+    if(e.key==="Escape"){ e.preventDefault(); cerrar(); return; }
+    if(e.key==="Tab"){ /* foco atrapado dentro del wizard */
+      var fo=[].slice.call(f.querySelectorAll("button,input,select,a[href]")).filter(function(x){
+        if(x.disabled||x.offsetParent===null) return false;
+        if(x.type==="radio"&&!x.checked){ var g=f.querySelector('input[name="'+x.name+'"]:checked'); if(g) return false; }
+        return true;
+      });
+      if(!fo.length) return;
+      var a=fo[0], z=fo[fo.length-1];
+      if(e.shiftKey&&(document.activeElement===a||!f.contains(document.activeElement))){ e.preventDefault(); z.focus(); }
+      else if(!e.shiftKey&&(document.activeElement===z||!f.contains(document.activeElement))){ e.preventDefault(); a.focus(); }
+    }
+  });
+  back.addEventListener("click",function(){ if(typeof cur==="number"&&cur>1) show(cur-1); });
+
+  /* Una tarjeta elegida con el mouse o el dedo avanza sola. Con teclado NO:
+     las flechas cambian la selección de un radio en cada pulsación y el
+     wizard saltaría de paso mientras la persona recorre las opciones. */
+  f.addEventListener("pointerdown",function(e){ porPuntero=!!(e.target.closest&&e.target.closest(".cw-opt")); });
+  f.addEventListener("keydown",function(){ porPuntero=false; });
+  f.addEventListener("change",function(e){
+    var t=e.target; if(t.type!=="radio") return;
+    limpiarError(); marcar(t.name); extras();
+    if(t.name==="tipo"&&t.value==="Otro"){ setTimeout(function(){ document.getElementById("cw-tipo-otro").focus(); },50); return; }
+    if(t.name==="sistema"&&t.value==="Sí, uso otro sistema"){ setTimeout(function(){ document.getElementById("cw-sis-cual").focus(); },50); return; }
+    if(!porPuntero||cur===5) return;   /* el paso 5 tiene dos preguntas: se avanza con "Siguiente" */
+    var paso=t.closest(".cw-step").getAttribute("data-step");
+    setTimeout(function(){ if(String(cur)===paso) avanzar(); },260);
+  });
+
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(cur==="done"){ cerrar(); return; }
+    if(cur<TOTAL){ avanzar(); return; }
+    var m=check(cur); if(m){ error(m[0],m[1]); return; }
+    var o=datos(), p=o.plan;
+    /* Solo respuestas categóricas; nada de nombre, negocio ni teléfono */
+    var cd={
+      content_name: p?p.plan:"Consulta general",
+      content_category: p?"Plan Facturación":"Consulta",
+      value: p?p.valor:0, currency:"USD", cta_id:o.cta,
+      plan_origen: o.planCta?"cta":(p?"volumen":"ninguno"),
+      tipo_negocio:o.tipo, rango_facturas:o.facturas, rol:o.rol,
+      tiene_sistema:o.sistema, medio_contacto:o.medio, franja_horaria:o.franja
+    };
+    trackLead(cd);
+    trackGA("generate_lead",{cta_id:o.cta, item_name:cd.content_name, value:cd.value, currency:"USD",
+      tipo_negocio:o.tipo, rango_facturas:o.facturas, rol:o.rol, tiene_sistema:o.sistema, medio_contacto:o.medio});
+    dl({event:"enviar_wizard", cta_id:o.cta, plan:p?p.plan:"", plan_origen:cd.plan_origen,
+      tipo_negocio:o.tipo, rango_facturas:o.facturas, rol:o.rol, tiene_sistema:o.sistema, medio_contacto:o.medio, franja_horaria:o.franja});
+    var url=waURL(resumen(o));
+    document.getElementById("cw-wa-link").href=url;
+    var abierta=abrirWA(url);
+    document.getElementById("cw-bloqueo").hidden=abierta;
+    document.getElementById("cw-done-msg").textContent=punto("Un asesor le contactará por "+(MEDIO_TXT[o.medio]||o.medio)+" "+(FRANJA_TXT[o.franja]||o.franja)+(o.dia?", de preferencia el "+o.dia.toLowerCase():""));
+    show("done");
+  });
+
+  /* Alternativa pequeña: escribir directo por WhatsApp sin completar el wizard */
+  waDirecto.href=waURL("Hola, vengo de la página de FactuIA y quiero información para empezar a facturar electrónicamente.");
+  waDirecto.addEventListener("click",function(){
+    var id=ctx.cta+"-directo", p=ctx.plan;
+    trackLead({content_name:p?p.plan:"Consulta general", content_category:"WhatsApp directo", value:p?p.valor:0, currency:"USD", cta_id:id});
+    trackGA("generate_lead",{cta_id:id, item_name:p?p.plan:"Consulta general", value:p?p.valor:0, currency:"USD"});
+    dl({event:"clic_whatsapp", cta_id:id});
+  });
+})();
 
 /* ============ Menú móvil ============ */
 (function(){
@@ -1603,11 +2086,11 @@ document.querySelectorAll("[data-wa]").forEach(function(a){
 
 /* ============ Calculadora de plan ============ */
 var PLANES=[
-  {n:"Starter",p:"$14.99",impl_num:40,d:"Hasta 30 facturas al mes. Consumidor final, crédito fiscal y notas de crédito y débito.",wa:"Hola, según la calculadora, mi plan es Starter (unas 30 facturas al mes). Quiero información para contratarlo."},
-  {n:"Professional",p:"$24.99",impl_num:50,d:"Hasta 100 facturas al mes. Agrega los anexos de IVA y los libros en PDF y Excel, su logo en la factura, exportación, sujeto excluido y retención.",wa:"Hola, según la calculadora, mi plan es Professional (unas 100 facturas al mes). Quiero información para contratarlo."},
-  {n:"Advanced",p:"$34.99",impl_num:60,d:"Hasta 500 facturas al mes. Incluye la carga automática de sus facturas de compra, que le ahorra la digitación.",wa:"Hola, según la calculadora, mi plan es Advanced (unas 500 facturas al mes). Quiero información para contratarlo."},
-  {n:"Deluxe",p:"$59.99",impl_num:70,d:"Hasta 1,000 facturas al mes y un módulo del ERP a elección: punto de venta, inventario, compras, cotizaciones o CRM.",wa:"Hola, según la calculadora, mi plan es Deluxe (unas 1,000 facturas al mes). Quiero información para contratarlo."},
-  {n:"Enterprise",p:"$150",impl_num:100,d:"Facturas sin límite y una persona de nuestro equipo asignada a su sistema, disponible en horario de oficina.",wa:"Hola, según la calculadora, mi plan es Enterprise (más de 1,000 facturas al mes). Quiero información para contratarlo."}
+  {n:"Starter",p:"$14.99",impl_num:40,d:"Hasta 30 facturas al mes. Consumidor final, crédito fiscal y notas de crédito y débito."},
+  {n:"Professional",p:"$24.99",impl_num:50,d:"Hasta 100 facturas al mes. Agrega los anexos de IVA y los libros en PDF y Excel, su logo en la factura, exportación, sujeto excluido y retención."},
+  {n:"Advanced",p:"$34.99",impl_num:60,d:"Hasta 500 facturas al mes. Incluye la carga automática de sus facturas de compra, que le ahorra la digitación."},
+  {n:"Deluxe",p:"$59.99",impl_num:70,d:"Hasta 1,000 facturas al mes y un módulo del ERP a elección: punto de venta, inventario, compras, cotizaciones o CRM."},
+  {n:"Enterprise",p:"$150",impl_num:100,d:"Facturas sin límite y una persona de nuestro equipo asignada a su sistema, disponible en horario de oficina."}
 ];
 (function(){
   var wiz=document.getElementById("wiz"); if(!wiz) return;
@@ -1638,9 +2121,8 @@ var PLANES=[
     var fmt=function(v){ return "$"+(v%1===0?v:v.toFixed(2)); };
     document.getElementById("r-primer").innerHTML="<b>Primer mes:</b> "+pl.p+" + $"+pl.impl_num+" de implementación (un solo pago) = "+fmt(total)+" + IVA. Desde el segundo mes, "+pl.p+" + IVA.";
     document.getElementById("r-aviso-starter").hidden = (pl.n!=="Starter");
-    var cta=document.getElementById("r-cta");
-    cta.href=waURL(pl.wa); cta.target="_blank"; cta.rel="noopener";
-    cta.setAttribute("data-plan-calc", pl.n);
+    /* El CTA "Contactar" del resultado abre el wizard de contacto con este plan */
+    document.getElementById("r-cta").setAttribute("data-plan", pl.n);
     return pl;
   }
   function resultado(){
@@ -1676,15 +2158,8 @@ var PLANES=[
     Array.prototype.forEach.call(flow.querySelectorAll("button.on"), function(x){ x.classList.remove("on"); });
     show(1);
   });
-  /* El CTA del resultado es un Lead, con el plan que salió en el wizard */
-  var ctaRes=document.getElementById("r-cta");
-  if(ctaRes) ctaRes.addEventListener("click", function(){
-    var n=ctaRes.getAttribute("data-plan-calc"), p=null;
-    for(var i=0;i<PLANES.length;i++){ if(PLANES[i].n===n){ p=PLANES[i]; break; } }
-    var valor=p?Number(String(p.p).replace(/[^0-9.]/g,""))||0:0;
-    trackLead({ content_name:n||"Wizard", content_category:"Plan Facturación", value:valor, currency:"USD", cta_id:"wizard" });
-    trackGA("generate_lead", { cta_id:"wizard", item_name:n||"Wizard", value:valor, currency:"USD" });
-  });
+  /* El Lead del CTA del resultado ya no se dispara al hacer clic: lo dispara el
+     wizard de contacto al enviar, con cta_id "wizard" y el plan recomendado. */
 })();
 
 /* ============ ViewContent al ver la sección de precios ============ */

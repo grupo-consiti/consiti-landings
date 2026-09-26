@@ -27,4 +27,13 @@ chk /assets/factura-ia-logo.svg 200
 chk /docs/DESPLIEGUE-GCP.md  404
 chk /README.md               404
 chk /vercel.json             404
+# Rebrand Factu IA: 301 del dominio viejo. Solo en local (contra run.app el
+# frontend de Google no respeta un Host ajeno).
+case "$B" in http://127.0.0.1*|http://localhost*)
+  for h in facturaiasv.com www.facturaiasv.com www.factuiasv.com; do
+    r=$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' -H "Host: $h" "$B/terminos?x=1")
+    if [ "$r" = "301 https://factuiasv.com/terminos?x=1" ]; then echo "ok   Host:$h -> $r"
+    else echo "FAIL Host:$h -> $r  (esperaba 301 https://factuiasv.com/terminos?x=1)"; fail=1; fi
+  done;;
+esac
 exit $fail

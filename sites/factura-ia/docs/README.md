@@ -6,6 +6,7 @@ Todo lo que no es código de la landing vive acá.
 
 | Archivo | Qué es |
 |---|---|
+| [`HANDOFF-REBRAND-FACTU-IA.md`](HANDOFF-REBRAND-FACTU-IA.md) | **Rebrand Factura IA → Factu IA (para Duvan).** Dominio factuiasv.com, DNS/Cloud Run, 301, Search Console, Meta, Ads, logos pendientes |
 | [`DESPLIEGUE-GCP.md`](DESPLIEGUE-GCP.md) | **Guía de despliegue en GCP (para Duvan).** Cómo publicar el sitio, rutas/redirects, el endpoint de CAPI, secretos y dominio |
 | [`GUIA-CONFIG-BRIANT.md`](GUIA-CONFIG-BRIANT.md) | Puesta en marcha de la analítica: Pixel, GA4, CAPI y og:image. Qué está hecho y qué falta |
 | [`BORRADORES-LEGAL.md`](BORRADORES-LEGAL.md) | Texto propuesto para los puntos legales (fundamento para un abogado). Complementa a `PENDIENTES-LEGAL.md` |

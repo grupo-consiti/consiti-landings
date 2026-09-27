@@ -500,7 +500,7 @@ footer ul a:hover{color:var(--amber-soft)}
           </a>
           <a href="#beneficios" class="btn btn-ghost lg">Conocer todos los beneficios</a>
         </div>
-        <p class="hero-note">Planes desde $90 anuales. Y con 5 clientes activos referidos, la facturación electrónica de su propio despacho es gratis.</p>
+        <p class="hero-note">Planes desde $14.99 al mes. Y con 5 clientes activos referidos, la facturación electrónica de su propio despacho es gratis.</p>
       </div>
       <div class="hv reveal">
         <div class="hv-photo"><img src="fotos/contador_02.jpg" alt="Contador aliado de FactuIA" loading="eager" fetchpriority="high" decoding="async" /></div>
@@ -523,21 +523,9 @@ footer ul a:hover{color:var(--amber-soft)}
     <div class="head center reveal">
       <span class="eyebrow">Planes disponibles</span>
       <h2 class="title">Primero, lo que su cliente recibe</h2>
-      <p class="lead">Seis planes según el volumen de emisión. Todos cumplen la normativa DTE e incluyen capacitación y soporte. La implementación tiene un <strong style="color:var(--ink)">precio oficial por plan</strong> — y ese ingreso es 100 % para usted.</p>
+      <p class="lead">Cinco planes según el volumen de emisión. Todos cumplen la normativa DTE e incluyen capacitación y soporte. La implementación tiene un <strong style="color:var(--ink)">precio oficial por plan</strong> — y ese ingreso es 100 % para usted.</p>
     </div>
     <div class="grid g3 stagger">
-      <div class="card plan">
-        <h4>Básico anual</h4>
-        <div class="plan-price">$90<small>/año + IVA</small></div>
-        <div class="plan-dte">15 DTEs mensuales</div>
-        <ul class="checks">
-          <li>Consumidor final y crédito fiscal</li>
-          <li>Normativa DTE incluida</li>
-          <li>Capacitación y cursos grabados</li>
-          <li>Un solo pago al año</li>
-        </ul>
-        <div class="plan-impl">Implementación <b>$30</b> · 100 % para usted</div>
-      </div>
       <div class="card plan">
         <h4>Starter</h4>
         <div class="plan-price">$14.99<small>/mes + IVA</small></div>
@@ -588,14 +576,14 @@ footer ul a:hover{color:var(--amber-soft)}
       </div>
       <div class="card plan">
         <h4>Empresarial</h4>
-        <div class="plan-price">A la medida</div>
+        <div class="plan-price">$150<small>/mes + IVA</small></div>
         <div class="plan-dte">DTEs ilimitados</div>
         <ul class="checks">
           <li>Todo lo del plan Deluxe</li>
           <li>Una persona asignada a su sistema</li>
           <li>Soluciones a la medida</li>
         </ul>
-        <div class="plan-impl">Implementación <b>a convenir</b></div>
+        <div class="plan-impl">Implementación <b>$100</b> · 100 % para usted</div>
       </div>
     </div>
   </div>
@@ -642,7 +630,7 @@ footer ul a:hover{color:var(--amber-soft)}
           </div>
           <!-- rows injected by JS -->
           <div id="calc-rows"></div>
-          <p style="color:var(--ink-mute);font-size:.78rem;margin-top:14px">El plan Empresarial se cotiza a la medida y no se incluye en la calculadora. Cifras redondeadas.</p>
+          <p style="color:var(--ink-mute);font-size:.78rem;margin-top:14px">Cifras redondeadas.</p>
         </div>
         <div class="calc-side">
           <div>
@@ -790,7 +778,7 @@ footer ul a:hover{color:var(--amber-soft)}
       <h2 class="title">Lo que todo contador pregunta</h2>
     </div>
     <div class="faq reveal">
-      <details class="q"><summary>¿Quién cobra la implementación y cuánto?<span class="pl"></span></summary><div class="a">Usted. El programa define un precio oficial por plan — de $30 a $70 — y ese ingreso queda 100 % para usted.</div></details>
+      <details class="q"><summary>¿Quién cobra la implementación y cuánto?<span class="pl"></span></summary><div class="a">Usted. El programa define un precio oficial por plan — de $40 a $100 — y ese ingreso queda 100 % para usted.</div></details>
       <details class="q"><summary>¿FactuIA cobra por implementar?<span class="pl"></span></summary><div class="a">No. FactuIA recibe únicamente la suscripción del plan contratado.</div></details>
       <details class="q"><summary>¿Cómo gano el 20 % de la mensualidad?<span class="pl"></span></summary><div class="a">Cada cliente activo le genera un ingreso mensual equivalente al 20 % de su plan, mientras permanezca en el programa. El detalle operativo se lo explicamos al aplicar.</div></details>
       <details class="q"><summary>¿Cuándo es gratis la facturación de mi despacho?<span class="pl"></span></summary><div class="a">Cuando usted mantiene 5 o más clientes activos referidos, la facturación electrónica de su propio despacho no tiene costo.</div></details>
@@ -967,7 +955,7 @@ footer ul a:hover{color:var(--amber-soft)}
 </div>
 
 <script>
-var WA="https://wa.me/50372559059?text=Hola,%20deseo%20recibir%20informaci%C3%B3n%20sobre%20el%20Programa%20de%20Alianzas%20Contables%20de%20Factura%20IA.";
+var WA="https://wa.me/50372559059?text=Hola,%20deseo%20recibir%20informaci%C3%B3n%20sobre%20el%20Programa%20de%20Alianzas%20Contables%20de%20FactuIA.";
 document.querySelectorAll('a.wa').forEach(function(a){a.setAttribute('href',WA);a.setAttribute('target','_blank');a.setAttribute('rel','noopener');});
 
 /* header scroll */
@@ -985,11 +973,11 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
 /* ===== CALCULADORA ===== */
 (function(){
   var PLANS=[
-    {k:'basico',n:'Básico anual',s:'$90/año · impl. $30',mo:7.5,impl:30,c:0},
     {k:'starter',n:'Starter',s:'$14.99/mes · impl. $40',mo:14.99,impl:40,c:5},
     {k:'pro',n:'Professional',s:'$24.99/mes · impl. $50',mo:24.99,impl:50,c:0},
     {k:'adv',n:'Advanced',s:'$34.99/mes · impl. $60',mo:34.99,impl:60,c:0},
-    {k:'deluxe',n:'Deluxe',s:'$59.99/mes · impl. $70',mo:59.99,impl:70,c:0}
+    {k:'deluxe',n:'Deluxe',s:'$59.99/mes · impl. $70',mo:59.99,impl:70,c:0},
+    {k:'emp',n:'Empresarial',s:'$150/mes · impl. $100',mo:150,impl:100,c:0}
   ];
   var DEF=JSON.parse(JSON.stringify(PLANS));
   var wrap=document.getElementById('calc-rows');

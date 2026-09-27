@@ -32,10 +32,10 @@
 <link rel="preload" as="image" href="fotos/logo-factuia-color-dark.png" fetchpriority="high" />
 <style>
 :root{
-  --ink:#140A2E; --ink-soft:#655d7d; --ink-mute:#938ca8;
+  --ink:#140A2E; --ink-soft:#655d7d; --ink-mute:#6E6786; /* ink-mute oscurecido: #938ca8 daba 3.2:1 en texto chico (AA pide 4.5) */
   --purple:#5216E7; --purple-deep:#3b0fb0; --purple-soft:#8b6cff;
   --amber:#FF8A00; --amber-soft:#ffb454;
-  --wa:#25D366; --wa-deep:#1eb355; --wa-ink:#FFFFFF;
+  --wa:#25D366; --wa-deep:#1eb355; --wa-ink:#140A2E; /* blanco sobre #25D366 daba 1.98:1; igual que factura-ia */
   --paper:#FFFFFF; --lilac:#F6F4FF; --lilac-2:#EDE8FF; --night:#0A0616;
   --line:#E9E5F7; --line-soft:#F0EDFB;
   --sh-sm:0 1px 2px rgba(20,10,46,.05);
@@ -235,7 +235,10 @@ header.scrolled .nav{padding:9px 0}
 .plan h4{font-size:1.2rem;margin-bottom:2px}
 .plan .plan-price{font-family:'Archivo';font-weight:900;font-size:1.55rem;letter-spacing:-.02em;color:var(--purple)}
 .plan .plan-price small{font-family:'JetBrains Mono';font-weight:500;font-size:.72rem;color:var(--ink-mute);margin-left:5px;letter-spacing:0}
-.plan .plan-dte{font-family:'JetBrains Mono';font-size:.73rem;color:var(--ink-mute);margin:4px 0 16px;text-transform:uppercase;letter-spacing:.04em}
+.plan .plan-dte{font-family:'JetBrains Mono';font-size:.73rem;color:var(--ink-mute);margin:4px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+.plan .plan-extra{font-size:.8rem;color:var(--ink-soft);margin:0 0 16px}
+.plan .plan-extra b{font-family:'JetBrains Mono';color:var(--ink)}
+.plan-note{max-width:820px;margin:26px auto 0;text-align:center;font-size:.92rem;color:var(--ink-soft)}
 .plan .checks{gap:9px;margin-bottom:18px}
 .plan .checks li{font-size:.9rem}
 .plan .plan-impl{margin-top:auto;border-top:1px dashed var(--line);padding-top:13px;font-size:.87rem;color:var(--ink-soft)}
@@ -312,6 +315,10 @@ form.lead-form{background:#fff;border:1px solid var(--line);border-radius:var(--
 .wz-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.wz-row{grid-template-columns:1fr}}
 .wz-note{background:var(--lilac);border:1px dashed #d9d0f7;border-radius:12px;padding:12px 14px;font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+.wz .field input[aria-invalid="true"],.wz .field select[aria-invalid="true"]{border-color:#b3261e}
+.wz-bloqueo{background:rgba(255,138,0,.1);border:1px solid rgba(255,138,0,.34);border-radius:12px;padding:10px 14px;font-size:.9rem;color:var(--ink)}
+.wz-bloqueo[hidden]{display:none}
+.wz h3:focus{outline:none}
 .wz-err{color:#b3261e;font-size:.86rem;font-weight:600;margin-top:10px;min-height:1.2em}
 .wz-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px}
 .wz-nav .btn{padding:13px 26px}
@@ -480,7 +487,7 @@ footer ul a:hover{color:var(--amber-soft)}
       <a class="l" href="#calculadora">Calculadora</a>
       <a class="l" href="#beneficios">Beneficios</a>
       <a class="l" href="#faq">Preguntas</a>
-      <a class="btn btn-purple sm js-contact" href="#contactar">Contactar</a>
+      <a class="btn btn-purple sm js-contact" aria-haspopup="dialog" href="#contactar">Contactar</a>
     </nav>
   </div>
 </header>
@@ -494,7 +501,7 @@ footer ul a:hover{color:var(--amber-soft)}
         <h1>Convierta la facturación electrónica en <span class="g">ingresos para su despacho</span></h1>
         <p class="lead">Refiera a sus clientes y gane de dos formas: el pago de cada implementación queda <strong style="color:#fff">100 % para usted</strong>, y sus clientes activos le generan un ingreso mensual.</p>
         <div class="cta-row">
-          <a href="#contactar" class="btn btn-purple lg js-contact">
+          <a href="#contactar" class="btn btn-purple lg js-contact" aria-haspopup="dialog">
             Contactar
             <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -530,6 +537,7 @@ footer ul a:hover{color:var(--amber-soft)}
         <h4>Starter</h4>
         <div class="plan-price">$14.99<small>/mes + IVA</small></div>
         <div class="plan-dte">30 DTEs mensuales</div>
+        <div class="plan-extra">Factura adicional / excedente: <b>$0.25</b> + IVA c/u</div>
         <ul class="checks">
           <li>Consumidor final y crédito fiscal</li>
           <li>Notas de crédito y débito</li>
@@ -543,6 +551,7 @@ footer ul a:hover{color:var(--amber-soft)}
         <h4>Professional</h4>
         <div class="plan-price">$24.99<small>/mes + IVA</small></div>
         <div class="plan-dte">100 DTEs mensuales</div>
+        <div class="plan-extra">Factura adicional / excedente: <b>$0.15</b> + IVA c/u</div>
         <ul class="checks">
           <li>Todo lo del plan Starter</li>
           <li>Anexos de IVA y libros en PDF y Excel</li>
@@ -556,6 +565,7 @@ footer ul a:hover{color:var(--amber-soft)}
         <h4>Advanced</h4>
         <div class="plan-price">$34.99<small>/mes + IVA</small></div>
         <div class="plan-dte">500 DTEs mensuales</div>
+        <div class="plan-extra">Factura adicional / excedente: <b>$0.10</b> + IVA c/u</div>
         <ul class="checks">
           <li>Todo lo del plan Professional</li>
           <li>Carga automática de facturas de compra</li>
@@ -567,6 +577,7 @@ footer ul a:hover{color:var(--amber-soft)}
         <h4>Deluxe</h4>
         <div class="plan-price">$59.99<small>/mes + IVA</small></div>
         <div class="plan-dte">1,000 DTEs mensuales</div>
+        <div class="plan-extra">Factura adicional / excedente: <b>$0.05</b> + IVA c/u</div>
         <ul class="checks">
           <li>Todo lo del plan Advanced</li>
           <li>Un módulo del ERP a elección</li>
@@ -575,9 +586,10 @@ footer ul a:hover{color:var(--amber-soft)}
         <div class="plan-impl">Implementación <b>$70</b> · 100 % para usted</div>
       </div>
       <div class="card plan">
-        <h4>Empresarial</h4>
+        <h4>Enterprise</h4>
         <div class="plan-price">$150<small>/mes + IVA</small></div>
         <div class="plan-dte">DTEs ilimitados</div>
+        <div class="plan-extra">Factura adicional / excedente: <b>Sin excedente</b></div>
         <ul class="checks">
           <li>Todo lo del plan Deluxe</li>
           <li>Una persona asignada a su sistema</li>
@@ -586,6 +598,7 @@ footer ul a:hover{color:var(--amber-soft)}
         <div class="plan-impl">Implementación <b>$100</b> · 100 % para usted</div>
       </div>
     </div>
+    <p class="plan-note reveal">Si su cliente se pasa de las facturas incluidas, no se le suspende: cada factura extra se cobra según su plan, desde $0.25 en Starter hasta $0.05 en Deluxe. <b>Todos los precios son + IVA</b> y generan crédito fiscal.</p>
   </div>
 </section>
 
@@ -630,7 +643,7 @@ footer ul a:hover{color:var(--amber-soft)}
           </div>
           <!-- rows injected by JS -->
           <div id="calc-rows"></div>
-          <p style="color:var(--ink-mute);font-size:.78rem;margin-top:14px">Cifras redondeadas.</p>
+          <p style="color:var(--ink-mute);font-size:.78rem;margin-top:14px">Cifras redondeadas al dólar. Máximo 999 clientes por plan.</p>
         </div>
         <div class="calc-side">
           <div>
@@ -646,12 +659,12 @@ footer ul a:hover{color:var(--amber-soft)}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
             ¡Con 5+ clientes activos, su facturación electrónica es gratis!
           </div>
-          <a href="#contactar" class="btn btn-purple js-contact">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#contactar" class="btn btn-purple js-contact" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <button class="calc-reset" id="calc-reset" type="button">Reiniciar valores</button>
         </div>
       </div>
     </div>
-    <p style="text-align:center;color:var(--ink-mute);font-size:.85rem;margin-top:16px">Las metodologías son independientes: compare y elija la que mejor se adapte a su despacho. Las proyecciones asumen clientes activos durante todo el año.</p>
+    <p style="text-align:center;color:var(--ink-mute);font-size:.85rem;margin-top:16px;max-width:760px;margin-left:auto;margin-right:auto">Las metodologías no se suman para un mismo cliente: compare ambas. Puede tener unos clientes en la Metodología 1 y otros en la 2. La Metodología 2 aplica según las condiciones del programa, que le explicamos al aplicar. El plan Enterprise no se incluye en la calculadora. Las proyecciones asumen clientes activos durante todo el año; precios sin IVA.</p>
   </div>
 </section>
 
@@ -692,7 +705,7 @@ footer ul a:hover{color:var(--amber-soft)}
       </div>
     </div>
     <p class="kicker center reveal" style="margin:34px auto 0;max-width:62ch">Usted genera ingresos y recupera horas de trabajo operativo: más tiempo para atender y conseguir nuevos clientes.</p>
-    <div class="center reveal" style="margin-top:24px"><a href="#contactar" class="btn btn-purple js-contact">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="center reveal" style="margin-top:24px"><a href="#contactar" class="btn btn-purple js-contact" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
 <div class="wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,56 480,56 720,28 C960,0 1200,0 1440,28 L1440,56 L0,56 Z" fill="#fff"/></svg></div>
 </section>
@@ -730,7 +743,7 @@ footer ul a:hover{color:var(--amber-soft)}
           <li>Se mantiene mientras conserve 5 clientes activos</li>
           <li>Su despacho también cumple la normativa DTE, sin costo</li>
         </ul>
-        <a href="#contactar" class="btn btn-purple js-contact" style="margin-top:22px">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#contactar" class="btn btn-purple js-contact" aria-haspopup="dialog" style="margin-top:22px">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </div>
@@ -811,7 +824,7 @@ footer ul a:hover{color:var(--amber-soft)}
           <li><span>Díganos <b>en qué departamento</b> reside.</span></li>
           <li><span>Elija <b>llamada, WhatsApp o videollamada</b> con uno de nuestros asesores.</span></li>
         </ol>
-        <a href="#contactar" class="btn btn-purple js-contact" style="width:100%">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#contactar" class="btn btn-purple js-contact" aria-haspopup="dialog" style="width:100%">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <p class="consent">Toma menos de un minuto. Al enviar sus datos, usted autoriza a FactuIA a contactarle para brindarle información sobre el programa.</p>
       </div>
     </div>
@@ -854,32 +867,32 @@ footer ul a:hover{color:var(--amber-soft)}
 </footer>
 
 <!-- 24. FLOATING WHATSAPP -->
-<a class="fab js-contact" href="#contactar" aria-label="Contactar">
+<a class="fab js-contact" aria-haspopup="dialog" href="#contactar" aria-label="Contactar">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   <span class="lab">Contactar</span>
 </a>
 
 <!-- WIZARD DE CONTACTO: pre-filtrado de leads -->
-<div class="wz-overlay" id="wz" aria-hidden="true">
-  <form class="wz" id="wzForm" role="dialog" aria-modal="true" aria-labelledby="wz-count" novalidate>
+<div class="wz-overlay" id="wz" aria-hidden="true" inert>
+  <form class="wz" id="wzForm" role="dialog" aria-modal="true" aria-label="Contactar a un asesor del Programa de Alianzas Contables" aria-describedby="wz-count" novalidate>
     <button type="button" class="wz-x" data-wz-close aria-label="Cerrar">×</button>
     <div class="wz-top"><span class="wz-count" id="wz-count">Paso 1 de 5</span></div>
-    <div class="wz-bar"><i id="wz-bar"></i></div>
+    <div class="wz-bar" id="wz-barra" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><i id="wz-bar"></i></div>
 
     <div class="wz-step on" data-step="1">
-      <h3>¿Cómo ejerce la contaduría?</h3>
+      <h3 tabindex="-1">¿Cómo ejerce la contaduría?</h3>
       <p class="wz-sub">Así le asignamos al asesor indicado.</p>
       <div class="wz-opts">
         <label class="wz-opt"><input type="radio" name="perfil" value="Contador independiente"><span class="oi"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span><b>Contador independiente</b><small>Atiende a sus clientes por cuenta propia</small></span></label>
         <label class="wz-opt"><input type="radio" name="perfil" value="Despacho contable"><span class="oi"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><b>Despacho contable</b><small>Firma o despacho con equipo de trabajo</small></span></label>
       </div>
       <div class="wz-fields" id="wz-desp" hidden>
-        <div class="field"><label for="wz-despacho">Nombre del despacho <span style="color:var(--ink-mute);font-weight:500">(opcional)</span></label><input id="wz-despacho" name="despacho" type="text" placeholder="Su despacho o firma" autocomplete="organization"></div>
+        <div class="field"><label for="wz-despacho">Nombre del despacho <span style="color:var(--ink-mute);font-weight:500">(opcional)</span></label><input id="wz-despacho" name="despacho" type="text" maxlength="80" placeholder="Su despacho o firma" autocomplete="organization"></div>
       </div>
     </div>
 
     <div class="wz-step" data-step="2">
-      <h3>¿A cuántos clientes les lleva la declaración cada mes?</h3>
+      <h3 tabindex="-1">¿A cuántos clientes les lleva la declaración cada mes?</h3>
       <p class="wz-sub">Cuente solo a los clientes a los que usted les presenta la declaración mensual.</p>
       <div class="wz-opts">
         <label class="wz-opt"><input type="radio" name="clientes" value="1 a 5"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>De 1 a 5 clientes</b><small>Una cartera que empieza a crecer</small></span></label>
@@ -889,18 +902,18 @@ footer ul a:hover{color:var(--amber-soft)}
     </div>
 
     <div class="wz-step" data-step="3">
-      <h3>¿En qué zona reside?</h3>
+      <h3 tabindex="-1">¿En qué zona reside?</h3>
       <p class="wz-sub">Le conectamos con el asesor de su zona.</p>
       <div class="wz-fields">
         <div class="field"><label for="wz-dep">Departamento</label>
           <select id="wz-dep" name="departamento"><option value="">Seleccione su departamento…</option><option>San Salvador</option><option>La Libertad</option><option>Santa Ana</option><option>San Miguel</option><option>Sonsonate</option><option>La Paz</option><option>Usulután</option><option>Ahuachapán</option><option>Cuscatlán</option><option>La Unión</option><option>Chalatenango</option><option>Morazán</option><option>San Vicente</option><option>Cabañas</option></select>
         </div>
-        <div class="field"><label for="wz-mun">Municipio <span style="color:var(--ink-mute);font-weight:500">(opcional)</span></label><input id="wz-mun" name="municipio" type="text" placeholder="Ej.: Santa Tecla" autocomplete="address-level2"></div>
+        <div class="field"><label for="wz-mun">Municipio <span style="color:var(--ink-mute);font-weight:500">(opcional)</span></label><input id="wz-mun" name="municipio" type="text" maxlength="60" placeholder="Ej.: Santa Tecla" autocomplete="address-level2"></div>
       </div>
     </div>
 
     <div class="wz-step" data-step="4">
-      <h3>¿Cómo desea que le contactemos?</h3>
+      <h3 tabindex="-1">¿Cómo desea que le contactemos?</h3>
       <p class="wz-sub">Elija el medio que le quede más cómodo.</p>
       <div class="wz-opts">
         <label class="wz-opt"><input type="radio" name="medio" value="Llamada telefónica"><span class="oi"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><span><b>Llamada telefónica</b><small>Un asesor le llama en el horario que usted elija</small></span></label>
@@ -910,24 +923,24 @@ footer ul a:hover{color:var(--amber-soft)}
     </div>
 
     <div class="wz-step" data-step="5">
-      <h3>Sus datos de contacto</h3>
+      <h3 tabindex="-1">Sus datos de contacto</h3>
       <p class="wz-sub" id="wz-s5">Complete sus datos para que el asesor le contacte.</p>
       <div class="wz-fields">
-        <div class="field"><label for="wz-nom">Nombre completo</label><input id="wz-nom" name="nombre" type="text" placeholder="Su nombre" autocomplete="name"></div>
+        <div class="field"><label for="wz-nom">Nombre completo</label><input id="wz-nom" name="nombre" type="text" maxlength="80" placeholder="Su nombre" autocomplete="name"></div>
       </div>
       <div class="wz-fields" data-medio="Llamada telefónica" hidden>
         <div class="wz-row">
-          <div class="field"><label for="wz-tel">Teléfono</label><input id="wz-tel" name="telefono" type="tel" inputmode="numeric" placeholder="7000-0000" autocomplete="tel-national"></div>
+          <div class="field"><label for="wz-tel">Teléfono</label><input id="wz-tel" name="telefono" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel"></div>
           <div class="field"><label for="wz-hor">Horario para llamarle</label>
             <select id="wz-hor" name="horario"><option value="">Seleccione…</option><option>Mañana (8:00 a 12:00)</option><option>Mediodía (12:00 a 2:00)</option><option>Tarde (2:00 a 5:00)</option></select>
           </div>
         </div>
       </div>
       <div class="wz-fields" data-medio="WhatsApp" hidden>
-        <div class="field"><label for="wz-wa">Número de WhatsApp</label><input id="wz-wa" name="whatsapp" type="tel" inputmode="numeric" placeholder="7000-0000" autocomplete="tel-national"></div>
+        <div class="field"><label for="wz-wa">Número de WhatsApp</label><input id="wz-wa" name="whatsapp" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel"></div>
       </div>
       <div class="wz-fields" data-medio="Videollamada" hidden>
-        <div class="field"><label for="wz-mail">Correo electrónico</label><input id="wz-mail" name="correo" type="email" placeholder="usted@despacho.com" autocomplete="email"></div>
+        <div class="field"><label for="wz-mail">Correo electrónico</label><input id="wz-mail" name="correo" type="email" maxlength="120" placeholder="usted@despacho.com" autocomplete="email"></div>
         <div class="wz-row">
           <div class="field"><label for="wz-dia">Día disponible</label><input id="wz-dia" name="dia" type="date"></div>
           <div class="field"><label for="wz-hora">Hora</label><select id="wz-hora" name="hora"><option value="">Seleccione…</option><option>8:00 a. m.</option><option>9:00 a. m.</option><option>10:00 a. m.</option><option>11:00 a. m.</option><option>2:00 p. m.</option><option>3:00 p. m.</option><option>4:00 p. m.</option></select></div>
@@ -939,8 +952,9 @@ footer ul a:hover{color:var(--amber-soft)}
     <div class="wz-step" data-step="done">
       <div class="wz-done">
         <div class="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <h3>¡Ya casi! Envíe su solicitud por WhatsApp</h3>
-        <p>Se abrió WhatsApp con sus datos listos. <strong style="color:var(--ink)">Presione enviar</strong> para completar su solicitud.</p>
+        <h3 tabindex="-1">¡Ya casi! Envíe su solicitud por WhatsApp</h3>
+        <p id="wz-abierto">Se abrió WhatsApp con sus datos listos. <strong style="color:var(--ink)">Presione enviar</strong> para completar su solicitud.</p>
+        <p class="wz-bloqueo" id="wz-bloqueo" hidden>Su navegador no dejó abrir WhatsApp. Presione el botón para abrirlo.</p>
         <a class="btn btn-wa" id="wz-wa-link" href="#" target="_blank" rel="noopener" style="margin-top:16px">Abrir WhatsApp</a>
         <p id="wz-done-msg"></p>
       </div>
@@ -970,52 +984,64 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
   els.forEach(function(e){o.observe(e)});
 })();
 
-/* ===== CALCULADORA ===== */
+/* ===== CALCULADORA =====
+   Fuente: Plan de Referidos oficial (SMB/01-FactuIA/Alianzas-Contables/03-Plan-de-Referidos/01-Plan-de-Referidos-Oficial.md),
+   "Tabla maestra de precios". M1 = implementación, 100 % del aliado (pago único).
+   M2 = diferencia entre precio de lista y CCF de socio (−20 %): $3 / $5 / $7 / $12 al mes por cliente.
+   El plan Enterprise NO va en la calculadora (lo dice el documento oficial).
+   Las metodologías no se suman para un mismo cliente: se muestran lado a lado para comparar. */
 (function(){
+  var MAX=999;
   var PLANS=[
-    {k:'starter',n:'Starter',s:'$14.99/mes · impl. $40',mo:14.99,impl:40,c:5},
-    {k:'pro',n:'Professional',s:'$24.99/mes · impl. $50',mo:24.99,impl:50,c:0},
-    {k:'adv',n:'Advanced',s:'$34.99/mes · impl. $60',mo:34.99,impl:60,c:0},
-    {k:'deluxe',n:'Deluxe',s:'$59.99/mes · impl. $70',mo:59.99,impl:70,c:0},
-    {k:'emp',n:'Empresarial',s:'$150/mes · impl. $100',mo:150,impl:100,c:0}
+    {k:'starter',n:'Starter',s:'$14.99/mes · impl. $40',impl:40,m2:3,c:5},
+    {k:'pro',n:'Professional',s:'$24.99/mes · impl. $50',impl:50,m2:5,c:0},
+    {k:'adv',n:'Advanced',s:'$34.99/mes · impl. $60',impl:60,m2:7,c:0},
+    {k:'deluxe',n:'Deluxe',s:'$59.99/mes · impl. $70',impl:70,m2:12,c:0}
   ];
   var DEF=JSON.parse(JSON.stringify(PLANS));
   var wrap=document.getElementById('calc-rows');
-  function money(v){return '$'+v.toLocaleString('en-US',{maximumFractionDigits:0});}
+  function money(v){return '$'+Math.round(v).toLocaleString('en-US');}
+  /* entero entre 0 y MAX; vacío, texto, negativos o NaN => 0 */
+  function clean(v){var n=Math.floor(Number(v));if(!isFinite(n)||n<0)return 0;return Math.min(n,MAX);}
   function render(){
     wrap.innerHTML='';
     PLANS.forEach(function(p,i){
       var row=document.createElement('div');row.className='calc-row';
       row.innerHTML=
         '<div class="pcell"><div class="pname">'+p.n+'</div><div class="psub">'+p.s+'</div></div>'+
-        '<div><div class="m-lab">Clientes</div><div class="stepper"><button type="button" data-a="dec" data-i="'+i+'" aria-label="menos">−</button>'+
-          '<input type="number" min="0" value="'+p.c+'" data-c="'+i+'" aria-label="Clientes '+p.n+'"><button type="button" data-a="inc" data-i="'+i+'" aria-label="más">+</button></div></div>'+
-        '<div><div class="m-lab">Pago único</div><div class="sub-t" data-t="'+i+'">'+money(p.c*p.impl)+'</div></div>'+
-        '<div><div class="m-lab">20 % mensual</div><div class="sub-t" data-p="'+i+'">'+money(p.c*p.mo*.2)+'</div></div>';
+        '<div><div class="m-lab">Clientes</div><div class="stepper"><button type="button" data-a="dec" data-i="'+i+'" aria-label="Quitar un cliente '+p.n+'">−</button>'+
+          '<input type="number" min="0" max="'+MAX+'" step="1" inputmode="numeric" value="'+p.c+'" data-c="'+i+'" aria-label="Clientes '+p.n+'"><button type="button" data-a="inc" data-i="'+i+'" aria-label="Agregar un cliente '+p.n+'">+</button></div></div>'+
+        '<div><div class="m-lab">Pago único</div><div class="sub-t" data-t="'+i+'"></div></div>'+
+        '<div><div class="m-lab">20 % mensual</div><div class="sub-t" data-p="'+i+'"></div></div>';
       wrap.appendChild(row);
     });
     calc();
   }
   function calc(){
-    var impl=0,clients=0,m20=0;
+    var impl=0,clients=0,m2=0;
     PLANS.forEach(function(p,i){
-      var st=p.c*p.impl,s20=p.c*p.mo*.2;impl+=st;clients+=p.c;m20+=s20;
+      var st=p.c*p.impl,sm=p.c*p.m2;impl+=st;clients+=p.c;m2+=sm;
       var c1=wrap.querySelector('[data-t="'+i+'"]');if(c1)c1.textContent=money(st);
-      var c2=wrap.querySelector('[data-p="'+i+'"]');if(c2)c2.textContent=money(s20);
+      var c2=wrap.querySelector('[data-p="'+i+'"]');if(c2)c2.textContent=money(sm);
     });
     document.getElementById('res-total').textContent=money(impl);
-    document.getElementById('res-clients').textContent='Con '+clients+' cliente'+(clients===1?'':'s')+' referido'+(clients===1?'':'s')+' · se cobra una sola vez';
-    document.getElementById('res-sub').textContent=money(m20)+'/mes';
-    document.getElementById('res-year').textContent=money(m20*12)+'/año';
+    document.getElementById('res-clients').textContent='Con '+clients.toLocaleString('en-US')+' cliente'+(clients===1?'':'s')+' referido'+(clients===1?'':'s')+' · se cobra una sola vez';
+    document.getElementById('res-sub').textContent=money(m2)+'/mes';
+    document.getElementById('res-year').textContent=money(m2*12)+'/año';
     document.getElementById('tag5').classList.toggle('show',clients>=5);
   }
   wrap.addEventListener('input',function(e){
-    var t=e.target;
-    if(t.dataset.c!==undefined){PLANS[+t.dataset.c].c=Math.max(0,parseInt(t.value||0));calc();}
+    var t=e.target;if(t.dataset.c===undefined)return;
+    PLANS[+t.dataset.c].c=clean(t.value);calc();
+  });
+  /* al salir del campo se muestra el valor que realmente se usa (p. ej. "-3" => 0, "2.7" => 2, "5000" => 999) */
+  wrap.addEventListener('change',function(e){
+    var t=e.target;if(t.dataset.c===undefined)return;
+    t.value=PLANS[+t.dataset.c].c;
   });
   wrap.addEventListener('click',function(e){
     var b=e.target.closest('button[data-a]');if(!b)return;
-    var i=+b.dataset.i;PLANS[i].c=Math.max(0,PLANS[i].c+(b.dataset.a==='inc'?1:-1));
+    var i=+b.dataset.i;PLANS[i].c=clean(PLANS[i].c+(b.dataset.a==='inc'?1:-1));
     var inp=wrap.querySelector('[data-c="'+i+'"]');if(inp)inp.value=PLANS[i].c;calc();
   });
   document.getElementById('calc-reset').addEventListener('click',function(){
@@ -1025,70 +1051,90 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
 })();
 
 /* ===== WIZARD DE CONTACTO (pre-filtrado de leads) =====
-   Cada solicitud llega al WhatsApp de gestión 7255-9059 con los datos del contador. */
+   Cada solicitud llega al WhatsApp de gestión 7255-9059 con los datos del contador.
+   Mejoras traídas del wizard de clientes (sites/factura-ia): foco en la pregunta de cada paso,
+   fondo inert mientras está abierto, Escape, avance automático solo con mouse/dedo (no con
+   flechas), foco y aria-invalid en el campo con error, y aviso si el navegador bloquea WhatsApp. */
 (function(){
   var WA_NUM='50372559059';
   /* Meta Pixel: solo dispara si la persona aceptó cookies (consent.js carga fbq) */
   function trackMeta(ev,data){try{if(window.__consentGranted&&window.fbq)window.fbq('track',ev,data||{});}catch(e){}}
   var ov=document.getElementById('wz'),f=document.getElementById('wzForm');
-  var steps=[].slice.call(f.querySelectorAll('.wz-step')),TOTAL=5,cur=1,lastFocus=null;
+  var steps=[].slice.call(f.querySelectorAll('.wz-step')),TOTAL=5,cur=1,lastFocus=null,porPuntero=false,inertes=[];
   var err=document.getElementById('wz-err'),next=document.getElementById('wz-next'),back=document.getElementById('wz-back');
+  var barra=document.getElementById('wz-barra');
 
-  function val(n){var el=f.elements[n];if(!el)return'';if(el.length&&el[0]&&el[0].type==='radio'){var c=f.querySelector('input[name="'+n+'"]:checked');return c?c.value:'';}return (el.value||'').trim();}
-  function telOk(v){var d=v.replace(/\D/g,'');if(d.length===11&&d.indexOf('503')===0)d=d.slice(3);return /^[267]\d{7}$/.test(d);}
-  function telFmt(v){var d=v.replace(/\D/g,'');if(d.length===11&&d.indexOf('503')===0)d=d.slice(3);return d.slice(0,4)+'-'+d.slice(4);}
+  function el(id){return document.getElementById(id);}
+  function val(n){var x=f.elements[n];if(!x)return'';if(x.length&&x[0]&&x[0].type==='radio'){var c=f.querySelector('input[name="'+n+'"]:checked');return c?c.value:'';}return (x.value||'').trim();}
+  function telDig(v){var d=String(v).replace(/\D/g,'');if(d.length===11&&d.indexOf('503')===0)d=d.slice(3);return d;}
+  function telOk(v){return /^[267]\d{7}$/.test(telDig(v));}
+  function telFmt(v){var d=telDig(v);return d.slice(0,4)+'-'+d.slice(4);}
   function fechaLarga(iso){var p=iso.split('-');var d=new Date(+p[0],+p[1]-1,+p[2]);return d.toLocaleDateString('es-SV',{weekday:'long',day:'numeric',month:'long'});}
 
   /* día mínimo para videollamada: mañana */
-  var dia=document.getElementById('wz-dia');
+  var dia=el('wz-dia');
   (function(){var t=new Date();t.setDate(t.getDate()+1);dia.min=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');})();
 
-  function show(n){
-    cur=n;err.textContent='';
+  function limpiarError(){err.textContent='';[].forEach.call(f.querySelectorAll('[aria-invalid="true"]'),function(x){x.removeAttribute('aria-invalid');});}
+  function error(msg,campo){
+    err.textContent=msg;
+    if(campo){if(campo.type!=='radio')campo.setAttribute('aria-invalid','true');try{campo.focus({preventScroll:false});}catch(e){}}
+  }
+
+  function show(n,sinFoco){
+    cur=n;limpiarError();
     steps.forEach(function(s){s.classList.toggle('on',s.dataset.step===String(n));});
     var done=n==='done';
-    document.getElementById('wz-count').textContent=done?'Último paso':'Paso '+n+' de '+TOTAL;
-    document.getElementById('wz-bar').style.width=(done?100:n/TOTAL*100)+'%';
+    el('wz-count').textContent=done?'Último paso':'Paso '+n+' de '+TOTAL;
+    el('wz-bar').style.width=(done?100:n/TOTAL*100)+'%';
+    barra.setAttribute('aria-valuenow',done?TOTAL:n);
     back.hidden=done||n===1;
     next.textContent=done?'Cerrar':(n===TOTAL?'Enviar solicitud':'Siguiente');
     if(n===5){
       var m=val('medio');
       f.querySelectorAll('[data-medio]').forEach(function(b){b.hidden=b.dataset.medio!==m;});
-      document.getElementById('wz-s5').textContent=
+      el('wz-s5').textContent=
         m==='Llamada telefónica'?'Déjenos su teléfono y el horario en que le conviene recibir la llamada.':
         m==='WhatsApp'?'Déjenos su número de WhatsApp y un asesor le escribirá.':
         'Elija el día y la hora. Uno de nuestros asesores le enviará la invitación a su correo.';
     }
-    var first=f.querySelector('.wz-step.on input:not([type=hidden]),.wz-step.on select');
-    if(first&&!done&&n!==1)setTimeout(function(){first.focus({preventScroll:true});},50);
+    f.scrollTop=0;
+    if(!sinFoco){
+      var h=f.querySelector('.wz-step.on h3');
+      if(h)setTimeout(function(){try{h.focus({preventScroll:true});}catch(e){}},60);
+    }
   }
 
+  /* Devuelve [mensaje, campo a enfocar] o null */
   function check(n){
-    if(n===1&&!val('perfil'))return 'Elija una opción para continuar.';
-    if(n===2&&!val('clientes'))return 'Elija la cantidad de clientes.';
-    if(n===3&&!val('departamento'))return 'Seleccione su departamento.';
-    if(n===4&&!val('medio'))return 'Elija cómo desea que le contactemos.';
+    function q(sel){return f.querySelector(sel);}
+    if(n===1&&!val('perfil'))return ['Elija una opción para continuar.',q('input[name="perfil"]')];
+    if(n===2&&!val('clientes'))return ['Elija la cantidad de clientes.',q('input[name="clientes"]')];
+    if(n===3&&!val('departamento'))return ['Seleccione su departamento.',el('wz-dep')];
+    if(n===4&&!val('medio'))return ['Elija cómo desea que le contactemos.',q('input[name="medio"]')];
     if(n===5){
-      if(val('nombre').length<3)return 'Escriba su nombre completo.';
+      if(val('nombre').length<3)return ['Escriba su nombre completo.',el('wz-nom')];
       var m=val('medio');
-      if(m==='Llamada telefónica'){if(!telOk(val('telefono')))return 'Escriba un teléfono válido de 8 dígitos.';if(!val('horario'))return 'Elija el horario para llamarle.';}
-      if(m==='WhatsApp'&&!telOk(val('whatsapp')))return 'Escriba un número de WhatsApp válido de 8 dígitos.';
+      if(m==='Llamada telefónica'){
+        if(!telOk(val('telefono')))return ['Escriba un teléfono de El Salvador de 8 dígitos (por ejemplo 7000-0000).',el('wz-tel')];
+        if(!val('horario'))return ['Elija el horario para llamarle.',el('wz-hor')];
+      }
+      if(m==='WhatsApp'&&!telOk(val('whatsapp')))return ['Escriba un número de WhatsApp de El Salvador de 8 dígitos (por ejemplo 7000-0000).',el('wz-wa')];
       if(m==='Videollamada'){
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('correo')))return 'Escriba un correo válido para enviarle la invitación.';
-        var d=val('dia');if(!d)return 'Elija el día para la videollamada.';
-        if(d<dia.min)return 'Elija un día a partir de mañana.';
-        var wd=new Date(d+'T12:00').getDay();if(wd===0||wd===6)return 'Elija un día de lunes a viernes.';
-        if(!val('hora'))return 'Elija la hora de la videollamada.';
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('correo')))return ['Escriba un correo válido para enviarle la invitación.',el('wz-mail')];
+        var d=val('dia');if(!d)return ['Elija el día para la videollamada.',dia];
+        if(d<dia.min)return ['Elija un día a partir de mañana.',dia];
+        var wd=new Date(d+'T12:00').getDay();if(wd===0||wd===6)return ['Elija un día de lunes a viernes.',dia];
+        if(!val('hora'))return ['Elija la hora de la videollamada.',el('wz-hora')];
       }
     }
-    return '';
+    return null;
   }
 
   function lead(){
     var m=val('medio'),o={
-      perfil:val('perfil'),despacho:val('despacho'),clientes:val('clientes'),
-      departamento:val('departamento'),municipio:val('municipio'),medio:m,nombre:val('nombre'),
-      origen:'Landing Alianzas Contables',fecha:new Date().toISOString()
+      perfil:val('perfil'),despacho:val('perfil')==='Despacho contable'?val('despacho'):'',clientes:val('clientes'),
+      departamento:val('departamento'),municipio:val('municipio'),medio:m,nombre:val('nombre')
     };
     if(m==='Llamada telefónica'){o.telefono=telFmt(val('telefono'));o.horario=val('horario');}
     if(m==='WhatsApp'){o.whatsapp=telFmt(val('whatsapp'));}
@@ -1106,30 +1152,55 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
       'Perfil: '+o.perfil+(o.despacho?' ('+o.despacho+')':''),
       'Clientes a los que les llevo la declaración mensual: '+o.clientes,
       'Zona: '+o.departamento+(o.municipio?', '+o.municipio:''),'',
-      'Prefiero que me contacten por: '+pref+'.'].join('\n');
+      'Prefiero que me contacten por: '+pref+'.','',
+      'Origen: contadores.factuiasv.com'].join('\n');
+  }
+
+  /* Sin "noopener" en las features: con él, window.open devuelve null siempre
+     y no se podría saber si el navegador bloqueó la ventana. */
+  function abrirWA(url){
+    var w=null;
+    try{w=window.open(url,'_blank');}catch(e){}
+    if(w){try{w.opener=null;}catch(e){}}
+    return !!w;
   }
 
   function enviar(o){
     var url='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(resumen(o));
-    document.getElementById('wz-wa-link').href=url;
-    window.open(url,'_blank','noopener');
-    document.getElementById('wz-done-msg').textContent=
+    el('wz-wa-link').href=url;
+    var abierta=abrirWA(url);
+    el('wz-bloqueo').hidden=abierta;el('wz-abierto').hidden=!abierta;
+    el('wz-done-msg').textContent=
       o.medio==='Llamada telefónica'?'Un asesor le llamará al '+o.telefono+' en el horario que eligió: '+o.horario+'.':
       o.medio==='WhatsApp'?'Un asesor le escribirá a su WhatsApp '+o.whatsapp+'.':
       'Un asesor le estará enviando la invitación a '+o.correo+' para el '+fechaLarga(o.dia)+' a las '+o.hora.replace(/\.$/,'')+'.';
   }
 
+  /* fondo inerte mientras el wizard está abierto (el aviso de cookies .ck-* queda usable) */
+  function fijarInert(on){
+    if(on){
+      inertes=[].filter.call(document.body.children,function(x){
+        return x!==ov&&x.tagName!=='SCRIPT'&&!/(^|\s)ck-/.test(x.className||'')&&!x.inert;
+      });
+      inertes.forEach(function(x){x.inert=true;});
+    }else{inertes.forEach(function(x){x.inert=false;});inertes=[];}
+  }
+
+  function reiniciar(){f.reset();el('wz-desp').hidden=true;show(1,true);}
+
   function open(e){
     if(e)e.preventDefault();
-    lastFocus=document.activeElement;
+    lastFocus=e&&e.currentTarget?e.currentTarget:document.activeElement;
+    if(cur==='done')reiniciar();
+    ov.inert=false;ov.classList.add('open');ov.setAttribute('aria-hidden','false');
+    document.body.classList.add('wz-lock');fijarInert(true);
+    show(cur);
     trackMeta('Contact',{content_name:'Wizard Alianzas Contables'});
-    if(cur==='done'){f.reset();document.getElementById('wz-desp').hidden=true;show(1);}
-    ov.classList.add('open');ov.setAttribute('aria-hidden','false');document.body.classList.add('wz-lock');
-    setTimeout(function(){var el=f.querySelector('.wz-step.on input');if(el)el.focus({preventScroll:true});},60);
   }
   function close(){
-    ov.classList.remove('open');ov.setAttribute('aria-hidden','true');document.body.classList.remove('wz-lock');
-    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
+    ov.classList.remove('open');ov.setAttribute('aria-hidden','true');ov.inert=true;
+    document.body.classList.remove('wz-lock');fijarInert(false);
+    if(lastFocus&&lastFocus.focus&&document.contains(lastFocus)){try{lastFocus.focus({preventScroll:true});}catch(e){}}
   }
 
   document.querySelectorAll('.js-contact').forEach(function(a){a.addEventListener('click',open);});
@@ -1137,30 +1208,39 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
   f.querySelector('[data-wz-close]').addEventListener('click',close);
   document.addEventListener('keydown',function(e){
     if(!ov.classList.contains('open'))return;
-    if(e.key==='Escape')close();
+    if(e.key==='Escape'){e.preventDefault();close();return;}
     if(e.key==='Tab'){ /* mantener el foco dentro del wizard */
-      var fo=[].slice.call(f.querySelectorAll('button,input,select,a[href]')).filter(function(x){return x.offsetParent!==null&&!x.disabled;});
+      var fo=[].slice.call(f.querySelectorAll('button,input,select,a[href]')).filter(function(x){
+        if(x.disabled||x.offsetParent===null)return false;
+        if(x.type==='radio'&&!x.checked){var g=f.querySelector('input[name="'+x.name+'"]:checked');if(g)return false;}
+        return true;
+      });
       if(!fo.length)return;var a=fo[0],z=fo[fo.length-1];
-      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
-      else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}
+      if(e.shiftKey&&(document.activeElement===a||!f.contains(document.activeElement))){e.preventDefault();z.focus();}
+      else if(!e.shiftKey&&(document.activeElement===z||!f.contains(document.activeElement))){e.preventDefault();a.focus();}
     }
   });
   back.addEventListener('click',function(){if(typeof cur==='number'&&cur>1)show(cur-1);});
 
-  /* elegir una tarjeta avanza sola (salvo despacho, que pide el nombre) */
+  /* Una tarjeta elegida con el mouse o el dedo avanza sola (salvo despacho, que pide el nombre).
+     Con teclado NO: las flechas cambian la selección en cada pulsación y el wizard saltaría de paso. */
+  f.addEventListener('pointerdown',function(e){porPuntero=!!(e.target.closest&&e.target.closest('.wz-opt'));});
+  f.addEventListener('keydown',function(){porPuntero=false;});
   f.addEventListener('change',function(e){
-    var t=e.target;if(t.type!=='radio')return;err.textContent='';
-    if(t.name==='perfil'){var d=t.value==='Despacho contable';document.getElementById('wz-desp').hidden=!d;if(d){setTimeout(function(){document.getElementById('wz-despacho').focus();},50);return;}}
-    setTimeout(function(){if(String(cur)===t.closest('.wz-step').dataset.step)show(cur+1);},260);
+    var t=e.target;if(t.type!=='radio')return;limpiarError();
+    if(t.name==='perfil'){var d=t.value==='Despacho contable';el('wz-desp').hidden=!d;if(d){setTimeout(function(){el('wz-despacho').focus();},50);return;}}
+    if(!porPuntero)return;
+    var paso=t.closest('.wz-step').dataset.step;
+    setTimeout(function(){if(String(cur)===paso&&!check(cur))show(cur+1);},260);
   });
 
   f.addEventListener('submit',function(e){
     e.preventDefault();
     if(cur==='done'){close();return;}
-    var m=check(cur);if(m){err.textContent=m;return;}
+    var m=check(cur);if(m){error(m[0],m[1]);return;}
     if(cur<TOTAL){show(cur+1);return;}
     var o=lead();
-    /* sin datos personales: solo el perfil del contador para segmentar campañas */
+    /* sin datos personales: solo respuestas categóricas del contador para segmentar campañas */
     trackMeta('Lead',{content_name:'Alianzas Contables',content_category:o.perfil,
       clientes:o.clientes,departamento:o.departamento,medio:o.medio});
     enviar(o);show('done');

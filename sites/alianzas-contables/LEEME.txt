@@ -34,6 +34,19 @@ clientes con declaracion mensual, departamento, medio de contacto y datos).
 Al final se abre WhatsApp con el resumen listo para el 7255-9059 (Briant).
 No hay backend, formulario ni base de datos: no necesita secretos ni
 variables de entorno.
+Si el navegador bloquea la ventana de WhatsApp, el paso final lo avisa y
+deja el boton "Abrir WhatsApp" con el mismo mensaje.
+
+
+CALCULADORA
+-----------
+
+Sigue la "Tabla maestra de precios" del Plan de Referidos oficial
+(SMB/01-FactuIA/Alianzas-Contables/03-Plan-de-Referidos/01-Plan-de-Referidos-Oficial.md):
+Metodologia 1 = implementacion ($40 / $50 / $60 / $70), 100 % del aliado.
+Metodologia 2 = ingreso del aliado por cliente al mes ($3 / $5 / $7 / $12).
+Enterprise NO va en la calculadora (lo dice el documento oficial). Las dos
+metodologias se muestran lado a lado para comparar; no se suman.
 
 
 MEDICION (META PIXEL)

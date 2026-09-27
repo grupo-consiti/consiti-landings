@@ -55,7 +55,7 @@ El PR ya cambia el texto visible, `<title>`, meta description, Open Graph, JSON-
 ## Checklist
 
 ### (a) Dominio
-- [ ] **Briant** compra `factuiasv.com` (hoy está disponible en Hostinger).
+- [ ] **Duvan** compra `factuiasv.com` (el 26-sep-2026 estaba disponible) y lo apunta a Cloud Run. Subdominios a crear: `www`, `contadores`, `ayuda` y `academy` (este último para Vercel del Academy).
 - [ ] Averiguar quién tiene `facturaiasv.com`. **No está en la cuenta de Hostinger de Briant.**
       Hay que saber quién lo controla para mantenerlo vivo, renovarlo y apuntarlo al 301.
       Revisar el registrador con WHOIS.

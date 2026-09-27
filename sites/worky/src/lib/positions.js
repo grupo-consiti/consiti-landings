@@ -11,8 +11,9 @@
 // 2. Nada de requisitos de edad, sexo, estado civil ni apariencia: además de alejar
 //    buenos candidatos, generan riesgo legal en un anuncio de empleo.
 // 3. No se nombran clientes ni proveedores de Consiti, ni cifras internas de operación.
-// 4. El título de la plaza de contador se publica como "Contador General", sin
-//    variantes tipo "analista financiero" (acuerdo de la reunión del 16-sep-2026).
+// 4. La plaza de contabilidad se publica como "Encargado Contable" (ficha de RR. HH.
+//    del 27-sep-2026, que reemplaza a "Contador General"), sin variantes tipo
+//    "analista financiero".
 //
 // Cada vacante tiene:
 //   `requirements`: lo indispensable, en líneas cortas para leer de un vistazo.
@@ -171,41 +172,42 @@ export const departments = [
     blurb: "El orden de la casa: contabilidad, cumplimiento tributario y control.",
     vacancies: [
       {
-        id: "contador-general",
-        role: "Contador General",
-        initials: "CG",
-        modality: "Presencial", modalityTag: "onsite", type: "Tiempo completo",
+        id: "encargado-contable",
+        // Reemplaza a "Contador General" (27-sep-2026). El enlace viejo de la pauta
+        // (?plaza=contador-general) sigue abriendo esta plaza.
+        aliases: ["contador-general"],
+        role: "Encargado Contable",
+        initials: "EC",
+        modality: "Presencial", modalityTag: "onsite", type: "Tiempo completo · Lunes a viernes",
         location: "San Salvador",
         highlight: "Prestaciones de ley",
-        desc: "Lleva la contabilidad completa de Grupo Consiti: facturación electrónica (DTE), cierre mensual, estados financieros y cumplimiento tributario. Trabajo directo con Dirección: los números que produces se usan para decidir.",
-        tags: ["Contabilidad completa", "Facturación electrónica (DTE)", "Cierre mensual"],
+        desc: "Emite y controla la facturación electrónica (DTE), ejecuta el cierre mensual, prepara estados financieros y lleva el cumplimiento tributario de Grupo Consiti. Una plaza junior a semi sénior con trabajo directo con Dirección y experiencia práctica en ERP.",
+        tags: ["Facturación electrónica (DTE)", "Cierre mensual", "Cumplimiento tributario"],
         requirements: [
-          "Licenciatura en Contaduría Pública, o últimos años con sello",
-          "2 años llevando contabilidad completa",
-          "Inscripción vigente en el CVPCPA",
+          "Egresado o estudiante avanzado de Contaduría Pública, o bachiller técnico vocacional contador con experiencia acreditada",
+          "1 a 2 años en procesos contables, registros, conciliaciones o apoyo en despacho contable",
+          "Registro y sello vigente ante el CVPCPA (contador mercantil, técnico o licenciado)",
           "Facturación electrónica (DTE) en El Salvador",
-          "ERP contable, idealmente Odoo",
-          "Excel avanzado",
-          "Residir en San Salvador o alrededores",
+          "Cierre mensual, conciliaciones bancarias y cumplimiento tributario",
+          "ERP contable y Excel avanzado",
         ],
-        note: "Plaza presencial, de lunes a viernes. Los primeros 3 meses son por servicios profesionales; después, contrato por tiempo indefinido con prestaciones de ley.",
+        note: "Tiempo completo, lunes a viernes, 44 horas semanales, en nuestras oficinas de San Salvador. Contratación formal con prestaciones de ley. Suma si manejas Odoo.",
         extraFields: [
           {
-            name: "formacion", label: "Tu formación en Contaduría Pública", type: "select",
+            name: "formacion", label: "Tu formación", type: "select",
             options: [
-              "Licenciado/a graduado/a",
-              "Estudiante de los últimos años, con sello",
-              "Estudiante sin sello",
-              "Otra carrera",
+              "Egresado/a de Licenciatura en Contaduría Pública",
+              "Estudiante avanzado/a de Licenciatura en Contaduría Pública",
+              "Bachiller técnico vocacional contador, con experiencia acreditada",
+              "Otra",
             ],
             required: true,
           },
-          { name: "cvpcpa", label: "¿Inscripción vigente en el CVPCPA?", type: "select", options: ["Sí, vigente", "En trámite", "No"], required: true },
-          { name: "experiencia", label: "Años llevando contabilidad completa", type: "number", required: true },
+          { name: "cvpcpa", label: "¿Registro y sello vigente ante el CVPCPA?", type: "select", options: ["Sí, vigente", "En trámite", "No"], required: true },
+          { name: "experiencia", label: "Años de experiencia en procesos contables", type: "number", required: true },
           { name: "dte", label: "¿Has operado facturación electrónica (DTE) en El Salvador?", type: "select", options: ["Sí", "No"], required: true },
           { name: "erp", label: "ERP contable que manejas", type: "text", placeholder: "Odoo, SAP, QuickBooks, Mónica…", required: true },
           { name: "excel", label: "Nivel de Excel", type: "select", options: ["Básico", "Intermedio", "Avanzado"], required: true },
-          { name: "residencia", label: "¿Vives en San Salvador o alrededores?", type: "select", options: ["Sí", "No"], required: true },
         ],
       },
     ],

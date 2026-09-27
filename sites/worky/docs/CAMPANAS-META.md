@@ -40,11 +40,14 @@ https://worky.consiti.com/?plaza=practicante-infra-cloud&utm_source=facebook&utm
 > Canal único Facebook y **cierre el viernes 9 de octubre de 2026**. Al cerrar, bajá la
 > plaza de `src/lib/positions.js` o el anuncio caerá en una convocatoria vencida.
 
-### 3. Contador General
+### 3. Encargado Contable (reemplaza a Contador General)
 
 ```
-https://worky.consiti.com/?plaza=contador-general&utm_source=facebook&utm_medium=paid&utm_campaign=contador-sep2026&utm_content={{ad.name}}
+https://worky.consiti.com/?plaza=encargado-contable&utm_source=facebook&utm_medium=paid&utm_campaign=contador-sep2026&utm_content={{ad.name}}
 ```
+
+> El enlace viejo `?plaza=contador-general` sigue abriendo esta plaza, así que los
+> anuncios ya publicados no se rompen.
 
 > El arte actual dice "Envía tu CV a administracion@consiti.com". Si el anuncio se pauta
 > con esta URL, conviene actualizar el arte: dos vías de entrada es justo lo que Dirección

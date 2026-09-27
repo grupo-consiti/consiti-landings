@@ -44,7 +44,7 @@ export default function Hero() {
 
             <MatchRow color="#5216E7" initials="QA" name="Practicante de QA con IA" role="Híbrido o remoto · 3 meses" score="94%" />
             <MatchRow color="#12B886" initials="VF" name="Vendedor/a Freelance B2B" role="Remoto · Toda Latinoamérica" score="92%" />
-            <MatchRow color="#350E96" initials="CG" name="Contador General" role="San Salvador · Presencial" score="89%" />
+            <MatchRow color="#350E96" initials="EC" name="Encargado Contable" role="San Salvador · Presencial" score="89%" />
 
             <div className="appcard__foot">
               <Target size={15} /> Worky comparó tu perfil con cada plaza abierta.

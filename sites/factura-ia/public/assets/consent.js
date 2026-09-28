@@ -1,5 +1,5 @@
 /* ============================================================
-   CONSENTIMIENTO DE COOKIES  ·  Factura IA de Grupo Consiti
+   CONSENTIMIENTO DE COOKIES  ·  FactuIA de Grupo Consiti
 
    Objetivo: consentimiento PREVIO. El Meta Pixel y Google Analytics
    NO se cargan al entrar; solo se cargan si la persona ACEPTA. Con eso

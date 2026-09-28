@@ -34,7 +34,7 @@ interfaz se alineó a ese mismo morado: ya no existe un "violeta Worky" aparte.
 - Deformar, rotar o aplicar efectos al monograma GC.
 - Usar el monograma GC por debajo de 32 px, o el logotipo horizontal por debajo de
   100 px de ancho. Nunca sin su zona de protección.
-- Usar amarillo `#FFDD00` (es exclusivo de la submarca Odoo Factura IA).
+- Usar amarillo `#FFDD00` (es exclusivo de la submarca FactuIA).
 - Presentar Worky como marca ajena a Consiti, ni cobrarle al candidato.
 
 **Consentimiento y datos:** los textos legales nombran a **Grupo Consiti S.A. de C.V.**

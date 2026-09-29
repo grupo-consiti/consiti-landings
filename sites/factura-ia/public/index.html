@@ -777,7 +777,7 @@ footer .foot-btn:hover{color:#fff}
 .cw-done{padding:8px 0 4px;text-align:center}
 .cw-done .ok{width:64px;height:64px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--violeta);box-shadow:0 10px 28px rgba(82,22,231,.35)}
 .cw-done .ok svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.cw-done p{margin-top:10px;color:var(--gris);line-height:1.55}
+.cw-done p{margin-top:10px;color:var(--gris);line-height:1.55;max-width:44ch;margin-left:auto;margin-right:auto;text-wrap:pretty}
 .cw-done p b{color:var(--tinta)}
 .cw-done .btn{margin-top:18px}
 .cw-bloqueo{padding:10px 14px;border-radius:12px;background:rgba(255,138,0,.1);border:1px solid rgba(255,138,0,.34)}
@@ -1687,8 +1687,7 @@ body.cw-lock{overflow:hidden}
         <p class="cw-sub">Solo usamos estos datos para contactarle.</p>
         <div class="cw-field"><label for="cw-nombre">Su nombre</label><input id="cw-nombre" name="nombre" type="text" maxlength="80" placeholder="Nombre y apellido" autocomplete="name" data-hj-suppress></div>
         <div class="cw-field"><label for="cw-negocio">Nombre del negocio <span>(opcional)</span></label><input id="cw-negocio" name="negocio" type="text" maxlength="80" placeholder="Como lo conocen sus clientes" autocomplete="organization" data-hj-suppress></div>
-        <div class="cw-field"><label for="cw-tel">Teléfono o WhatsApp</label><input id="cw-tel" name="telefono" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel" aria-describedby="cw-tel-hint" data-hj-suppress>
-          <p class="cw-hint" id="cw-tel-hint">8 dígitos de El Salvador; puede incluir +503.</p></div>
+        <div class="cw-field"><label for="cw-tel">Teléfono o WhatsApp</label><input id="cw-tel" name="telefono" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel" data-hj-suppress></div>
         <p class="cw-consent">Al enviar sus datos, usted autoriza a FactuIA a contactarle para brindarle información sobre el servicio. Más detalle en <a href="/terminos#s9" target="_blank" rel="noopener">Privacidad y datos</a>.</p>
       </div>
 
@@ -1744,11 +1743,13 @@ function sendCAPI(eventName, eventId, customData){
         fbp:getCookie('_fbp'), fbc:getCookie('_fbc'), custom_data:customData||{} }) }).catch(function(){});
   }catch(e){}
 }
-/* Dispara el mismo evento al Pixel y a CAPI con un event_id compartido */
+/* Dispara el mismo evento al Pixel y a CAPI con un event_id compartido.
+   Devuelve el eventID para dedupear con el hit que se envía en /thankyou.html. */
 function trackLead(customData){
   var id = newEventId();
   try{ fbq('track','Lead', customData, { eventID:id }); }catch(e){}
   sendCAPI('Lead', id, customData);
+  return id;
 }
 
 /* Precio por CTA de plan, para que el evento Lead lleve value/currency */
@@ -1854,9 +1855,11 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
     "plan-deluxe":"tabla de planes", "plan-enterprise":"tabla de planes"
   };
   var MEDIO_TXT={"Llamada":"llamada", "Reunión virtual":"reunión virtual", "WhatsApp":"WhatsApp"};
+  /* Los NBSP ( ) impiden que el navegador rompa por dentro de "p. m." o
+     de los rangos horarios en el mensaje de gracias. */
   var FRANJA_TXT={
-    "Mañana (8:00 a 12:00)":"en la franja de la mañana (8:00 a 12:00)",
-    "Tarde (12:00 a 5:00 p. m.)":"en la franja de la tarde (12:00 a 5:00 p. m.)"
+    "Mañana (8:00 a 12:00)":"en la franja de la mañana (8:00 a 12:00)",
+    "Tarde (12:00 a 5:00 p. m.)":"en la franja de la tarde (12:00 a 5:00 p. m.)"
   };
   /* cierra la frase sin duplicar el punto de "p. m." */
   function punto(t){ return /\.$/.test(t)?t:t+"."; }
@@ -2008,10 +2011,26 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
   function cerrar(){
     ov.classList.remove("open"); ov.setAttribute("aria-hidden","true");
     document.body.classList.remove("cw-lock"); fijarInert(false);
+    /* Si el submit había cambiado la URL a /gracias con pushState, la volvemos
+       a la URL original de la landing para que la navegación quede coherente. */
+    try {
+      if (history.state && history.state.fx === 'gracias') {
+        var prev = history.state.prev || '/';
+        history.replaceState({}, '', prev);
+      }
+    } catch(e){}
     var dest=lastFocus;
     if(!dest||!document.contains(dest)||dest.offsetParent===null) dest=document.getElementById("burger");
     if(dest&&dest.focus){ try{ dest.focus({preventScroll:true}); }catch(e){} }
   }
+  /* Si el usuario da atrás después del submit exitoso, cerramos el modal
+     (que ya está mostrando "done") sin volver a llamar pushState. */
+  window.addEventListener('popstate', function(){
+    if (ov.classList.contains('open')) {
+      ov.classList.remove('open'); ov.setAttribute('aria-hidden','true');
+      document.body.classList.remove('cw-lock'); fijarInert(false);
+    }
+  });
 
   function avanzar(){
     var m=check(cur); if(m){ error(m[0],m[1]); return; }
@@ -2059,6 +2078,17 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
     setTimeout(function(){ if(String(cur)===paso) avanzar(); },260);
   });
 
+  /* Autoformato del teléfono: mientras escriben, inserta el guion tras los
+     primeros 4 dígitos (7000-0000). telDig se encarga del +503 si lo pegan. */
+  (function(){
+    var tel=document.getElementById("cw-tel"); if(!tel) return;
+    tel.addEventListener("input",function(){
+      var d=telDig(tel.value);
+      if(d.length>8) d=d.slice(0,8);
+      tel.value = d.length>4 ? d.slice(0,4)+"-"+d.slice(4) : d;
+    });
+  })();
+
   f.addEventListener("submit",function(e){
     e.preventDefault();
     if(cur==="done"){ cerrar(); return; }
@@ -2074,17 +2104,62 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
       tipo_negocio:o.tipo, rango_facturas:o.facturas, rol:o.rol,
       tiene_sistema:o.sistema, medio_contacto:o.medio, franja_horaria:o.franja
     };
-    trackLead(cd);
+    var leadId = trackLead(cd);
     trackGA("generate_lead",{cta_id:o.cta, item_name:cd.content_name, value:cd.value, currency:"USD",
       tipo_negocio:o.tipo, rango_facturas:o.facturas, rol:o.rol, tiene_sistema:o.sistema, medio_contacto:o.medio});
     dl({event:"enviar_wizard", cta_id:o.cta, plan:p?p.plan:"", plan_origen:cd.plan_origen,
       tipo_negocio:o.tipo, rango_facturas:o.facturas, rol:o.rol, tiene_sistema:o.sistema, medio_contacto:o.medio, franja_horaria:o.franja});
+    /* Enviamos el lead al backend (POST /api/lead). El proxy Node lo reenvía
+       a Odoo (landing_crm_api). No bloquea el flujo: keepalive:true completa
+       el envío aunque el usuario cambie de pestaña, y un fallo no rompe la
+       navegación (los datos también se mandan al asesor por WhatsApp). */
+    try {
+      var utmSource = new URLSearchParams(location.search).get('utm_source') || '';
+      fetch('/api/lead', {
+        method:'POST', keepalive:true, headers:{'content-type':'application/json'},
+        body: JSON.stringify({
+          nombre: val('nombre'),
+          negocio: val('negocio'),
+          numero: telFmt(val('telefono')),
+          medio: utmSource || 'factuia-landing',
+          cta_origen: o.cta || '',
+          tipo_negocio: (o.tipo === 'Otro' ? ('Otro: ' + (val('tipo_otro')||'')) : o.tipo) || '',
+          rango_facturas: o.facturas || '',
+          rol: o.rol || '',
+          usa_otro_sistema: o.sistema || '',
+          sistema_actual: (o.sistema === 'Sí, uso otro sistema' ? (val('sis_cual')||'') : ''),
+          medio_contacto: o.medio || '',
+          franja_horaria: o.franja || '',
+          dia_preferido: o.dia || '',
+          plan_interesado: p ? p.plan : '',
+          plan_origen: cd.plan_origen || '',
+          lead_event_id: leadId || '',
+        })
+      }).catch(function(){});
+    } catch(err){}
     var url=waURL(resumen(o));
     document.getElementById("cw-wa-link").href=url;
     var abierta=abrirWA(url);
     document.getElementById("cw-bloqueo").hidden=abierta;
     document.getElementById("cw-done-msg").textContent=punto("Un asesor le contactará por "+(MEDIO_TXT[o.medio]||o.medio)+" "+(FRANJA_TXT[o.franja]||o.franja)+(o.dia?", de preferencia el "+o.dia.toLowerCase():""));
     show("done");
+    /* Cambiamos la URL a /gracias con pushState (sin recargar) para que
+       Google Ads y Meta cuenten el envío del formulario como pageview de esa
+       página. La landing sigue visible detrás del modal; cerrar el modal
+       restaura la URL original (ver cerrar()). */
+    try {
+      if (location.pathname !== '/gracias') {
+        history.pushState({fx:'gracias', prev: location.pathname + location.search + location.hash}, 'Gracias · FactuIA', '/gracias');
+      }
+      if (window.gtag) {
+        gtag('event','page_view',{ page_location: location.origin + '/gracias', page_path:'/gracias', page_title:'Gracias · FactuIA' });
+        /* TODO Daniela: pegar el "send_to" real cuando cree la conversion en Google Ads. */
+        // gtag('event','conversion',{ send_to:'AW-18436887021/XXXXXXXXX', transaction_id: leadId });
+        gtag('event','conversion_lead',{ cta_id:o.cta, plan:p?p.plan:'', medio:o.medio, transaction_id: leadId });
+      }
+      if (window.fbq) { fbq('track','PageView'); }
+      dl({ event:'thankyou_view', cta_id:o.cta, plan:p?p.plan:'', medio:o.medio });
+    } catch(err){}
   });
 
   /* Alternativa pequeña: escribir directo por WhatsApp sin completar el wizard */

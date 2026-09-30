@@ -80,7 +80,13 @@ async function forwardToOdoo(payload) {
   try {
     const r = await fetch(ODOO_URL + '/api/crm/lead', {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'X-API-Key': API_KEY },
+      headers: {
+        'content-type': 'application/json',
+        'X-API-Key': API_KEY,
+        // El nginx de Odoo bloquea con 403 los User-Agent vacíos (map $blocked_agent);
+        // el fetch de Node no manda UA por defecto, así que lo fijamos explícito.
+        'user-agent': 'factuia-landing/1.0 (+https://factuiasv.com)',
+      },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });

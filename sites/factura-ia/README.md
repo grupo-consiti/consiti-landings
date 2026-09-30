@@ -52,7 +52,7 @@ Todos los CTA de conversión dicen **«Contactar»** y abren un **wizard de cont
 
 Pasos: tipo de negocio · facturas al mes (rangos = límites de los planes: 30 / 100 / 500 / 1,000 / sin límite, más «No estoy seguro») · quién es (dueño, contador, encargado que decide, otro) · sistema actual · medio (llamada, reunión virtual, WhatsApp) y franja horaria · nombre, negocio (opcional) y teléfono SV de 8 dígitos (acepta +503).
 
-Al enviar, arma un resumen legible (respuestas + plan + origen con su `cta_id`) y abre **WhatsApp al número `WA`** con el mensaje listo; muestra la pantalla de gracias con un botón «Abrir WhatsApp» por si el navegador bloqueó la ventana. Dentro del wizard queda un enlace pequeño «¿Prefiere escribirnos directo?» a WhatsApp.
+Al enviar, arma un resumen legible (respuestas + plan + origen con su `cta_id`) y abre **WhatsApp al número `WA`** con el mensaje listo; muestra la pantalla de gracias con un botón «Abrir WhatsApp» por si el navegador bloqueó la ventana. El wizard no tiene salida directa a WhatsApp: para escribir hay que completarlo.
 
 El botón es la clase **`.btn-cta`** (copia del `.btn` de contadores: Instrument Sans 700, pill, flecha `.go`); tamaños `.sm` y `.lg`.
 
@@ -67,7 +67,7 @@ Además está la tabla comparativa (sección `#tabla`, HTML plano) y el JSON-LD 
 
 ## Configuración
 
-- **`WA`** — número destino del wizard de contacto y del enlace directo (formato internacional sin `+`). Está en el `<script>` final de `index.html`; en las legales va en los `href` directos.
+- **`WA`** — número destino del wizard de contacto (formato internacional sin `+`). Está en el `<script>` final de `index.html`; en las legales va en los `href` directos.
 - **Pixel de Meta** — el ID `2238963863532324` va en `window.CONSENT_CFG.pixelId` del `<head>` (index y `/terminos`). **Ya no se carga al entrar:** lo carga `assets/consent.js` solo si la persona acepta las cookies (consentimiento previo).
 
 ## Consentimiento de cookies
@@ -84,7 +84,7 @@ Eventos que se disparan:
 |--------|--------|
 | `PageView` | Carga de cualquier página (desde el `<head>`) |
 | `Contact` | Se abre el wizard de contacto (solo Pixel, con consentimiento), con `cta_id` |
-| `Lead` | Se **envía** el wizard (Pixel + CAPI con el mismo `event_id`), con `content_name`, `value`, `currency`, `cta_id`, `plan_origen`, `tipo_negocio`, `rango_facturas`, `rol`, `tiene_sistema`, `medio_contacto` y `franja_horaria`. **Nunca** nombre, negocio ni teléfono. También el enlace «escribirnos directo» (`cta_id` = `<origen>-directo`) |
+| `Lead` | Se **envía** el wizard (Pixel + CAPI con el mismo `event_id`), con `content_name`, `value`, `currency`, `cta_id`, `plan_origen`, `tipo_negocio`, `rango_facturas`, `rol`, `tiene_sistema`, `medio_contacto` y `franja_horaria`. **Nunca** nombre, negocio ni teléfono |
 | `ViewContent` | Cuando la sección de precios entra en pantalla (30% visible, una sola vez) |
 
 Se activa con **variables de entorno en el entorno de despliegue** (en GCP: Cloud Functions/Cloud Run + **Secret Manager** para el token). **Nunca en el repo:**
@@ -111,11 +111,11 @@ Eventos que se envían a GA4:
 |---|---|---|
 | `page_view` | Automático al cargar | `PageView` |
 | `abrir_wizard` | Se abre el wizard de contacto, con `cta_id` e `item_name` (plan, si viene) | `Contact` |
-| `generate_lead` | Se envía el wizard (o clic en «escribirnos directo»), con `cta_id`, `item_name`, `value`, `currency` y las respuestas categóricas | `Lead` |
+| `generate_lead` | Se envía el wizard, con `cta_id`, `item_name`, `value`, `currency` y las respuestas categóricas | `Lead` |
 | `view_item_list` | La sección de precios entra en pantalla | `ViewContent` |
 | `select_item` | La calculadora devuelve un plan | *(no tiene)* |
 
-`dataLayer` (por si entra GTM): `abrir_wizard` (`cta_id`, `plan`), `enviar_wizard` (`cta_id`, `plan`, `plan_origen` y respuestas categóricas), `clic_whatsapp` (solo el enlace directo dentro del wizard) y `wizard_plan` (calculadora).
+`dataLayer` (por si entra GTM): `abrir_wizard` (`cta_id`, `plan`), `enviar_wizard` (`cta_id`, `plan`, `plan_origen` y respuestas categóricas) y `wizard_plan` (calculadora).
 
 `generate_lead` y `select_item` conviene marcarlos como **evento clave** en GA4 → Administrar → Eventos clave (se hace con la estrella una vez que llega el primer tráfico real).
 

@@ -21,14 +21,36 @@
 <meta name="twitter:title" content="Programa de Alianzas Contables · FactuIA" />
 <meta name="twitter:description" content="Por cada cliente, gane el 100 % de la implementación y el 20 % de su mensualidad cada mes." />
 <meta name="twitter:image" content="https://contadores.factuiasv.com/fotos/og-contadores-factuia.jpg" />
-<!-- ============================================================
-     META PIXEL CON CONSENTIMIENTO PREVIO
-     El Pixel NO se carga al entrar: lo carga assets/consent.js SOLO si la
-     persona acepta las cookies (mismo aviso y misma clave que factuiasv.com).
-     - pixelId: conjunto de datos de FactuIA en Meta.
-     - Eventos: PageView (al aceptar), Contact (abre el wizard) y
-       Lead (envia la solicitud). Ver trackMeta() en el script del final.
-     ============================================================ -->
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2238963863532324');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2238963863532324&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18436887021"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18436887021');
+</script>
+
+<!-- consent.js sigue disponible para eventos server-side gateados; el Pixel
+     base ya se inicializo arriba (misma linea que factuiasv.com). -->
 <script>
   window.CONSENT_CFG = { pixelId: "2238963863532324", ga4Id: "" };
 </script>
@@ -962,11 +984,16 @@ footer ul a:hover{color:var(--amber-soft)}
     <div class="wz-step" data-step="done">
       <div class="wz-done">
         <div class="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <h3 tabindex="-1">¡Ya casi! Envíe su solicitud por WhatsApp</h3>
+        <h3 tabindex="-1">¡Gracias! Ya casi está</h3>
+        <p id="wz-done-msg"></p>
+        <!-- CTA a WhatsApp deshabilitado (decisión: solo thankyou page).
+             Para reactivar: descomentar este bloque y las líneas de enviar()
+             cerca de `var url='https://wa.me/...'`. -->
+        <!--
         <p id="wz-abierto">Se abrió WhatsApp con sus datos listos. <strong style="color:var(--ink)">Presione enviar</strong> para completar su solicitud.</p>
         <p class="wz-bloqueo" id="wz-bloqueo" hidden>Su navegador no dejó abrir WhatsApp. Presione el botón para abrirlo.</p>
         <a class="btn btn-wa" id="wz-wa-link" href="#" target="_blank" rel="noopener" style="margin-top:16px">Abrir WhatsApp</a>
-        <p id="wz-done-msg"></p>
+        -->
       </div>
     </div>
 
@@ -1174,10 +1201,13 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
   }
 
   function enviar(o){
-    var url='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(resumen(o));
-    el('wz-wa-link').href=url;
-    var abierta=abrirWA(url);
-    el('wz-bloqueo').hidden=abierta;el('wz-abierto').hidden=!abierta;
+    /* CTA a WhatsApp deshabilitado: el lead ya se creó en Odoo por /api/lead
+       (ver submit) y el asesor lo contactará por el medio y horario elegidos.
+       Se mantiene comentado por si se decide reactivar. */
+    // var url='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(resumen(o));
+    // el('wz-wa-link').href=url;
+    // var abierta=abrirWA(url);
+    // el('wz-bloqueo').hidden=abierta;el('wz-abierto').hidden=!abierta;
     el('wz-done-msg').textContent=
       o.medio==='Llamada telefónica'?'Un asesor le llamará al '+o.telefono+' en el horario que eligió: '+o.horario+'.':
       o.medio==='WhatsApp'?'Un asesor le escribirá a su WhatsApp '+o.whatsapp+'.':
@@ -1208,8 +1238,24 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
   function close(){
     ov.classList.remove('open');ov.setAttribute('aria-hidden','true');ov.inert=true;
     document.body.classList.remove('wz-lock');fijarInert(false);
+    /* Si el submit habia cambiado la URL a /gracias con pushState, la volvemos
+       a la URL original de la landing para que la navegacion quede coherente. */
+    try {
+      if (history.state && history.state.fx === 'gracias') {
+        var prev = history.state.prev || '/';
+        history.replaceState({}, '', prev);
+      }
+    } catch(e){}
     if(lastFocus&&lastFocus.focus&&document.contains(lastFocus)){try{lastFocus.focus({preventScroll:true});}catch(e){}}
   }
+  /* Si el usuario da atras despues del submit, cerramos el modal (que ya
+     muestra "done") sin volver a llamar pushState. */
+  window.addEventListener('popstate', function(){
+    if (ov.classList.contains('open')) {
+      ov.classList.remove('open'); ov.setAttribute('aria-hidden','true'); ov.inert=true;
+      document.body.classList.remove('wz-lock'); fijarInert(false);
+    }
+  });
 
   document.querySelectorAll('.js-contact').forEach(function(a){a.addEventListener('click',open);});
   ov.addEventListener('click',function(e){if(e.target===ov)close();});
@@ -1248,10 +1294,58 @@ addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);
     var m=check(cur);if(m){error(m[0],m[1]);return;}
     if(cur<TOTAL){show(cur+1);return;}
     var o=lead();
-    /* sin datos personales: solo respuestas categóricas del contador para segmentar campañas */
-    trackMeta('Lead',{content_name:'Alianzas Contables',content_category:o.perfil,
-      clientes:o.clientes,departamento:o.departamento,medio:o.medio});
-    enviar(o);show('done');
+    /* eventId compartido entre el Pixel del navegador y la thank-you page
+       (dedupea si Meta CAPI se agrega despues). */
+    var leadId=''; try{ leadId=crypto.randomUUID(); }catch(err){ leadId='ev-'+Date.now(); }
+    var cd={content_name:'Alianzas Contables',content_category:o.perfil,
+      clientes:o.clientes,departamento:o.departamento,medio:o.medio};
+    try{ if(window.fbq) fbq('track','Lead',cd,{eventID:leadId}); }catch(err){}
+    /* POST al backend Odoo (landing_crm_api). Los datos categoricos van al
+       campo Medio ("landing-contables"); el nombre + numero/correo caen a
+       campos nativos y el resto va a la descripcion del lead. Con keepalive
+       se completa aunque el usuario cambie de pestana. */
+    try {
+      var numero = o.telefono || o.whatsapp || '';
+      var correo = o.correo || '';
+      fetch('/api/lead',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},
+        body: JSON.stringify({
+          nombre: o.nombre,
+          numero: numero,
+          correo: correo,
+          medio: 'landing-contables',
+          perfil: o.perfil||'',
+          despacho: o.despacho||'',
+          clientes: o.clientes||'',
+          departamento: o.departamento||'',
+          municipio: o.municipio||'',
+          medio_contacto: o.medio||'',
+          horario: o.horario||'',
+          dia: o.dia||'',
+          hora: o.hora||'',
+          cta_origen: 'wizard-contadores',
+          lead_event_id: leadId
+        })
+      }).catch(function(){});
+    } catch(err){}
+    enviar(o);
+    show('done');
+    /* Cambia la URL a /gracias con pushState para que Google Ads y Meta cuenten
+       el envio como pageview. La landing queda detras del modal; cerrar
+       restaura la URL original (ver close() y popstate). */
+    try {
+      if (location.pathname !== '/gracias') {
+        history.pushState({fx:'gracias', prev: location.pathname + location.search + location.hash}, 'Gracias · Alianzas Contables', '/gracias');
+      }
+      if (window.gtag) {
+        gtag('event','page_view',{ page_location: location.origin + '/gracias', page_path:'/gracias', page_title:'Gracias · Alianzas Contables' });
+        /* TODO Daniela: pegar el "send_to" cuando cree la conversion en Google Ads. */
+        // gtag('event','conversion',{ send_to:'AW-18436887021/XXXXXXXXX', transaction_id: leadId });
+        gtag('event','conversion_lead_contables',{ perfil:o.perfil, medio:o.medio, transaction_id: leadId });
+      }
+      if (window.fbq) { fbq('track','PageView'); }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event:'thankyou_view', landing:'contables', perfil:o.perfil, medio:o.medio });
+    } catch(err){}
   });
 })();
 </script>

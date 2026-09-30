@@ -1694,9 +1694,15 @@ body.cw-lock{overflow:hidden}
           <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
           <h3 class="cw-q" id="cw-qdone" tabindex="-1">¡Gracias! Ya casi está</h3>
           <p id="cw-done-msg"></p>
+          <!-- CTA a WhatsApp deshabilitado (decisión: dejar solo la thank-you page).
+               El JS que abría WhatsApp también quedó comentado en el submit. Para
+               reactivar: descomentar este bloque y los 4 renglones marcados en
+               index.html cerca de `var url=waURL(resumen(o))`. -->
+          <!--
           <p>Se abrió WhatsApp con su solicitud lista. <b>Presione enviar en WhatsApp</b> para que nos llegue.</p>
           <p class="cw-bloqueo" id="cw-bloqueo" hidden>Su navegador no dejó abrir WhatsApp. Presione el botón para abrirlo.</p>
           <a class="btn btn-cta" id="cw-wa-link" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+          -->
         </div>
       </div>
 
@@ -2129,10 +2135,15 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
         })
       }).catch(function(){});
     } catch(err){}
-    var url=waURL(resumen(o));
-    document.getElementById("cw-wa-link").href=url;
-    var abierta=abrirWA(url);
-    document.getElementById("cw-bloqueo").hidden=abierta;
+    /* CTA a WhatsApp deshabilitado: el lead ya se creó en Odoo por /api/lead
+       y el asesor lo contactará por el medio y franja indicados en el paso 6.
+       Se mantiene comentado por si se decide reactivar; para hacerlo, quitar
+       los comentarios de las 3 líneas de abajo y también los del bloque
+       WhatsApp del paso "done" (index.html:1700-1702). */
+    // var url=waURL(resumen(o));
+    // document.getElementById("cw-wa-link").href=url;
+    // var abierta=abrirWA(url);
+    // document.getElementById("cw-bloqueo").hidden=abierta;
     document.getElementById("cw-done-msg").textContent=punto("Un asesor le contactará por "+(MEDIO_TXT[o.medio]||o.medio)+" "+(FRANJA_TXT[o.franja]||o.franja)+(o.dia?", de preferencia el "+o.dia.toLowerCase():""));
     show("done");
     /* Cambiamos la URL a /gracias con pushState (sin recargar) para que

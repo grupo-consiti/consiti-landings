@@ -766,9 +766,6 @@ footer .foot-btn:hover{color:#fff}
 .cw-consent{margin-top:16px;font-size:.8rem;color:var(--gris-2);line-height:1.5}
 .cw-consent a{color:var(--violeta)}
 .cw-err{min-height:1.3em;margin:12px 0 0;color:#B3261E;font-size:.88rem;font-weight:600}
-.cw-directo{margin:10px 0 6px;font-size:.84rem;color:var(--gris)}
-.cw-directo[hidden]{display:none}
-.cw-directo a{display:inline-block;padding:10px 0;color:var(--violeta);font-weight:600}
 .cw-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 24px 18px;border-top:1px solid var(--linea);background:var(--papel)}
 .cw-back{min-height:44px;padding:0 6px;border:0;background:none;color:var(--gris);font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer}
 .cw-back:hover{color:var(--violeta)}
@@ -1704,7 +1701,6 @@ body.cw-lock{overflow:hidden}
       </div>
 
       <p class="cw-err" id="cw-err" role="alert"></p>
-      <p class="cw-directo" id="cw-directo">¿Prefiere escribirnos directo? <a id="cw-wa-directo" href="#" target="_blank" rel="noopener">WhatsApp 7255-9059</a></p>
     </div>
 
     <div class="cw-foot">
@@ -1831,9 +1827,7 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
                 dataLayer {event:"abrir_wizard", cta_id, plan}
    - Al enviar: Lead por Pixel + CAPI con el MISMO eventID (trackLead, dedupe) ·
                 GA4 generate_lead · dataLayer {event:"enviar_wizard", ...}
-                Solo respuestas categóricas: nunca nombre, negocio ni teléfono.
-   - Enlace "escribirnos directo": Lead + generate_lead + clic_whatsapp con
-                cta_id "<origen>-directo" (mismo criterio que los CTA viejos). */
+                Solo respuestas categóricas: nunca nombre, negocio ni teléfono. */
 (function(){
   var ov=document.getElementById("cw"), f=document.getElementById("cw-form");
   if(!ov||!f) return;
@@ -1841,7 +1835,6 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
   var err=document.getElementById("cw-err"), next=document.getElementById("cw-next"), back=document.getElementById("cw-back");
   var chip=document.getElementById("cw-plan"), body=document.getElementById("cw-body");
   var barra=f.querySelector(".cw-bar"), barI=document.getElementById("cw-bar-i");
-  var directo=document.getElementById("cw-directo"), waDirecto=document.getElementById("cw-wa-directo");
   var ctx={cta:"general", plan:null};   /* plan: {plan, valor} de VALOR_CTA */
   var inertes=[];
 
@@ -1902,7 +1895,6 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
     back.hidden=done||n===1;
     next.textContent=done?"Cerrar":(n===TOTAL?"Enviar":"Siguiente");
     next.classList.toggle("btn-paso", n!==TOTAL);   /* "Enviar" en verde; el resto morado */
-    directo.hidden=done;
     extras();
     body.scrollTop=0;
     if(!sinFoco){
@@ -2160,15 +2152,6 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
       if (window.fbq) { fbq('track','PageView'); }
       dl({ event:'thankyou_view', cta_id:o.cta, plan:p?p.plan:'', medio:o.medio });
     } catch(err){}
-  });
-
-  /* Alternativa pequeña: escribir directo por WhatsApp sin completar el wizard */
-  waDirecto.href=waURL("Hola, vengo de la página de FactuIA y quiero información para empezar a facturar electrónicamente.");
-  waDirecto.addEventListener("click",function(){
-    var id=ctx.cta+"-directo", p=ctx.plan;
-    trackLead({content_name:p?p.plan:"Consulta general", content_category:"WhatsApp directo", value:p?p.valor:0, currency:"USD", cta_id:id});
-    trackGA("generate_lead",{cta_id:id, item_name:p?p.plan:"Consulta general", value:p?p.valor:0, currency:"USD"});
-    dl({event:"clic_whatsapp", cta_id:id});
   });
 })();
 

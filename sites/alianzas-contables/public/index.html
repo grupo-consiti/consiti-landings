@@ -862,7 +862,7 @@ footer ul a:hover{color:var(--amber-soft)}
       <div>
         <h5>Contacto</h5>
         <ul>
-          <li><a href="#" class="wa">WhatsApp: 7255-9059</a></li>
+          <li><a href="#contactar" class="js-contact" aria-haspopup="dialog">Contactar a un asesor</a></li>
           <li><a href="https://factuiasv.com" target="_blank" rel="noopener">factuiasv.com</a></li>
           <li><a href="https://factuiasv.com/terminos" target="_blank" rel="noopener">Términos y privacidad</a></li>
           <li><a href="#" onclick="if(window.openCookiePrefs){openCookiePrefs();}return false;">Preferencias de cookies</a></li>
@@ -979,9 +979,6 @@ footer ul a:hover{color:var(--amber-soft)}
 </div>
 
 <script>
-var WA="https://wa.me/50372559059?text=Hola,%20deseo%20recibir%20informaci%C3%B3n%20sobre%20el%20Programa%20de%20Alianzas%20Contables%20de%20FactuIA.";
-document.querySelectorAll('a.wa').forEach(function(a){a.setAttribute('href',WA);a.setAttribute('target','_blank');a.setAttribute('rel','noopener');});
-
 /* header scroll */
 var hd=document.getElementById('hd');
 addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>10);},{passive:true});

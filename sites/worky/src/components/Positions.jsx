@@ -14,13 +14,14 @@ export default function Positions() {
   const [active, setActive] = useState("all");
   const [selected, setSelected] = useState(null); // { vacancy, departamento }
 
-  // Enlace directo desde la pauta: /?plaza=contador-general abre esa plaza.
+  // Enlace directo desde la pauta: /?plaza=encargado-contable abre esa plaza.
   // Así cada anuncio de Meta lleva a su vacante y no a la página entera.
+  // `aliases` mantiene vivos los enlaces de una plaza que cambió de nombre.
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get("plaza");
     if (!id) return;
     for (const dept of departments) {
-      const vacancy = dept.vacancies.find((v) => v.id === id);
+      const vacancy = dept.vacancies.find((v) => v.id === id || v.aliases?.includes(id));
       if (vacancy) {
         setActive(dept.id);
         setSelected({ vacancy, departamento: dept.name });

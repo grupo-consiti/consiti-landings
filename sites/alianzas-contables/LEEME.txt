@@ -52,8 +52,9 @@ metodologias se muestran lado a lado para comparar; no se suman.
 MEDICION (META PIXEL)
 ---------------------
 
-Conjunto de datos de FactuIA: 2238963863532324 (el mismo de
-factuiasv.com). Va en window.CONSENT_CFG, en el <head>.
+Conjunto de datos de Alianzas Contables: 1668315054764658 (pixel propio,
+distinto del de factuiasv.com). Va en el bloque Meta Pixel del <head> y
+en window.CONSENT_CFG.
 Eventos: PageView al aceptar cookies, Contact al abrir el wizard y Lead al
 enviar la solicitud (con perfil, clientes, departamento y medio; sin datos
 personales). No hay CAPI: el sitio es nginx estatico.

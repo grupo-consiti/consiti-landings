@@ -246,8 +246,10 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
    Mismo remedio que ya usaba .cierre. */
 .hero .btn-ghost{color:#fff;border-color:rgba(255,255,255,.45)}
 .hero .btn-ghost:hover{color:#fff;border-color:#fff;background:rgba(255,255,255,.08)}
-.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
-@media(max-width:1000px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:start}
+.hero-grid > div:first-child{align-self:center}
+.hero .shot video{width:100%;height:auto;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 30px 70px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);background:#0f0820}
+@media(max-width:1000px){.hero-grid{grid-template-columns:1fr;gap:36px}.hero-grid > div:first-child{align-self:auto}}
 /* .social / .avatares / .social-txt se retiraron con el rediseno v2 del hero:
    la prueba social ("+500 empresas") ahora vive en el eyebrow. */
 .hero h1{margin-top:22px}
@@ -261,8 +263,15 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
   animation:draw .85s cubic-bezier(.22,1,.36,1) .5s forwards;
 }
 @keyframes draw{to{transform:scaleX(1)}}
-.hero-sub{color:rgba(255,255,255,.8);font-size:1.12rem;max-width:50ch;margin-top:20px}
+.hero-sub{color:rgba(255,255,255,.82);font-size:1.12rem;max-width:52ch;margin-top:20px;text-wrap:pretty}
 .hero-sub b{color:#fff;font-weight:600}
+/* Chips del hero: prueba social + precio inicial + soporte. Siempre visibles
+   arriba del fold (ver criterios del brief: "Precio inicial y prueba social
+   deben verse sin hacer scroll"). */
+.hero-chips{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;gap:9px}
+.hero-chips li{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.04em;color:rgba(255,255,255,.92);white-space:nowrap}
+.hero-chips li svg{width:14px;height:14px;color:var(--violeta-hi);flex-shrink:0}
+@media(max-width:420px){.hero-chips li{font-size:.66rem;padding:6px 11px}}
 /* .precio-ancla y .plazo-hero se retiraron con el rediseno v2: el precio paso
    al CTA "Ver planes desde $14.99" y el plazo a la franja de campana. */
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
@@ -446,14 +455,103 @@ header.nav{position:sticky;top:0;z-index:70;background:rgba(10,6,22,.9);backdrop
 .norma{background:var(--noche);color:#fff;position:relative;overflow:hidden}
 .norma:before{content:"";position:absolute;inset:0;background:radial-gradient(700px 400px at 85% 10%,rgba(255,138,0,.13),transparent 65%);pointer-events:none}
 .norma .wrap{position:relative;z-index:2}
+/* .chip queda disponible por si otro bloque lo usa; en #normativa fue
+   reemplazado por el eyebrow principal (brief punto 2). */
 .chip{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(255,138,0,.13);border:1px solid rgba(255,138,0,.38);font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--alerta-vivo)}
+/* ============ Normativa DTE 2.0 - cabecera reordenada (brief) ============
+   Jerarquia: QUE CAMBIA Y CUANDO -> CONSECUENCIA -> ALIVIO. */
+.norma-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 24px;margin-bottom:14px}
+.norma-eyebrow{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.1rem,1.9vw,1.45rem);letter-spacing:-.01em;line-height:1.25;color:#fff;max-width:60ch}
+.norma-eyebrow b{color:var(--alerta-vivo);font-weight:700}
+.norma-consecuencia{margin:0 0 28px;font-size:clamp(1rem,1.5vw,1.14rem);color:rgba(255,255,255,.82);max-width:62ch;line-height:1.5;text-wrap:pretty}
+.norma-consecuencia b{color:#fff;font-weight:600}
+.norma-consecuencia .relieve{display:inline-block;margin-left:6px;color:#C5B9FF;font-weight:600}
+/* Dos tiles: contraste "Faltan 54 dias" vs "0 tareas" (brief punto 3). */
+.norma-tiles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 44px}
+@media(max-width:720px){.norma-tiles{grid-template-columns:1fr}}
+.tile{position:relative;display:flex;flex-direction:column;gap:4px;padding:22px 24px 20px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);overflow:hidden;isolation:isolate}
+.tile:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1}
+.tile-urgencia{border-color:rgba(255,138,0,.44)}
+.tile-urgencia:before{background:radial-gradient(300px 140px at 90% 10%,rgba(255,138,0,.22),transparent 70%)}
+.tile-alivio{border-color:rgba(139,98,255,.44)}
+.tile-alivio:before{background:radial-gradient(300px 140px at 90% 10%,rgba(82,22,231,.3),transparent 70%)}
+.tile-top{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.72)}
+.tile-urgencia .tile-top{color:#FFB454}
+.tile-alivio   .tile-top{color:#B59CFF}
+.tile-numero{display:flex;align-items:baseline;gap:10px;font-family:var(--mono);font-weight:700;line-height:1;letter-spacing:-.03em;color:#fff;margin:2px 0 4px}
+.tile-numero strong{font-size:clamp(3.4rem,8vw,5rem);font-weight:800}
+.tile-numero em{font-style:normal;font-family:var(--mono);font-size:clamp(1.2rem,2.4vw,1.8rem);font-weight:600;color:rgba(255,255,255,.82)}
+.tile-bottom{font-family:var(--texto);font-size:1rem;line-height:1.4;color:rgba(255,255,255,.9);max-width:30ch}
+.tile-fecha{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:rgba(255,255,255,.56);margin-top:6px}
+/* ============ Wizard de contadores (modal independiente) ============
+   Reutiliza las clases .wz* del wizard de la landing de contadores
+   (sites/alianzas-contables). Se activa desde el CTA del bloque #contadores
+   mediante data-contacto="wz-contador". Variables remapeadas localmente para
+   no obligar a crear tokens globales nuevos. */
+.wz-overlay{
+  --ink:var(--tinta); --ink-soft:var(--gris); --ink-mute:var(--gris-2);
+  --purple:var(--violeta); --purple-deep:#3b0fb0; --purple-soft:var(--violeta-hi);
+  --amber:var(--alerta-vivo); --lilac:var(--nube); --lilac-2:#EDE8FF;
+  --line:var(--linea); --line-soft:#F0EDFB; --r-lg:18px;
+  position:fixed;inset:0;z-index:1000;background:rgba(10,6,22,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s
+}
+.wz-overlay.open{opacity:1;visibility:visible}
+.wz{background:#fff;color:var(--ink);width:100%;max-width:560px;max-height:calc(100vh - 32px);overflow-y:auto;border-radius:var(--r-lg);padding:28px 26px 22px;position:relative;transform:translateY(16px);transition:transform .3s cubic-bezier(.2,.7,.3,1);box-shadow:0 30px 80px -20px rgba(10,6,22,.6)}
+.wz-overlay.open .wz{transform:none}
+.wz-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:var(--lilac);color:var(--ink);cursor:pointer;font-size:1.6rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.wz-x:hover{background:var(--lilac-2)}
+.wz-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-right:44px}
+.wz-count{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+.wz-bar{height:6px;border-radius:6px;background:var(--lilac-2);margin:12px 0 22px;overflow:hidden}
+.wz-bar i{display:block;height:100%;width:20%;border-radius:6px;background:linear-gradient(90deg,var(--purple),var(--amber));transition:width .35s}
+.wz-step{display:none}
+.wz-step.on{display:block;animation:wzIn .3s ease}
+@keyframes wzIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.wz h3{margin:0;font-size:clamp(1.3rem,3vw,1.6rem);font-weight:800;color:var(--ink);font-family:var(--display)}
+.wz .wz-sub{color:var(--ink-soft);font-size:.95rem;margin-top:6px}
+.wz-opts{display:grid;gap:12px;margin-top:20px}
+.wz-opt{position:relative;display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;cursor:pointer;transition:border-color .15s,background .15s}
+.wz-opt:hover{border-color:#cfc3f7}
+.wz-opt input{position:absolute;opacity:0;pointer-events:none}
+.wz-opt .oi{width:42px;height:42px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--lilac)}
+.wz-opt .oi svg{width:21px;height:21px;stroke:var(--purple);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wz-opt b{font-family:var(--display);font-size:1.02rem;display:block;color:var(--ink)}
+.wz-opt small{display:block;color:var(--ink-mute);font-size:.84rem;line-height:1.4}
+.wz-opt:has(input:checked){border-color:var(--purple);background:var(--lilac);box-shadow:0 0 0 3px rgba(82,22,231,.12)}
+.wz-opt:has(input:focus-visible){outline:3px solid var(--purple);outline-offset:2px}
+.wz-fields{margin-top:18px}
+.wz-fields[hidden]{display:none}
+.wz .field{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.wz .field label{font-weight:600;font-size:.9rem;color:var(--ink)}
+.wz .field input,.wz .field select{font-size:16px;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--texto);transition:border-color .15s}
+.wz .field input:focus-visible,.wz .field select:focus-visible{outline:3px solid var(--purple-soft);outline-offset:2px;border-color:var(--purple)}
+.wz-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:460px){.wz-row{grid-template-columns:1fr}}
+.wz-note{background:var(--lilac);border:1px dashed #d9d0f7;border-radius:12px;padding:12px 14px;font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+.wz .field input[aria-invalid="true"],.wz .field select[aria-invalid="true"]{border-color:#b3261e}
+.wz h3:focus{outline:none}
+.wz-err{color:#b3261e;font-size:.86rem;font-weight:600;margin-top:10px;min-height:1.2em}
+.wz-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px}
+.wz-nav .btn-purple{background:var(--purple);color:#fff;border:0;border-radius:999px;padding:13px 26px;font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+.wz-nav .btn-purple:hover{background:var(--purple-deep)}
+.wz-back{background:none;border:0;color:var(--ink-soft);font-family:var(--texto);font-weight:600;font-size:.95rem;cursor:pointer;padding:10px 4px}
+.wz-back:hover{color:var(--purple)}
+.wz-back[hidden]{visibility:hidden;display:inline}
+.wz-done{text-align:center;padding:10px 0 4px}
+.wz-done .ok{width:64px;height:64px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--purple),var(--purple-deep));box-shadow:0 12px 32px -12px rgba(82,22,231,.45)}
+.wz-done .ok svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.wz-done p{color:var(--ink-soft);margin-top:10px;max-width:44ch;margin-left:auto;margin-right:auto;text-wrap:pretty}
+body.wz-lock{overflow:hidden}
 /* Fila del plazo + enlace a la fuente oficial de Hacienda (confianza y CRO:
    el contador se lee como dato verificable, no como urgencia comercial). */
 .norma-plazo{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .fuente-oficial{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:rgba(255,255,255,.74);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:1px;transition:color .15s,border-color .15s}
 .fuente-oficial:hover{color:#fff;border-bottom-color:#fff}
-.norma-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;margin-top:22px}
-@media(max-width:900px){.norma-grid{grid-template-columns:1fr;gap:32px}}
+/* .norma-grid: ahora es columna unica (el contador se mudo a .norma-tiles arriba). */
+.norma-grid{display:block;margin-top:0}
+/* .reloj: ya no se renderiza en el DOM despues del rediseno (brief punto 3),
+   pero se mantiene la clase por si otro bloque la referencia. */
 .reloj{font-family:var(--mono);font-weight:700;font-size:clamp(2.6rem,7vw,4.4rem);letter-spacing:-.05em;line-height:1;color:#fff}
 .reloj small{display:block;font-family:var(--texto);font-size:.94rem;font-weight:400;letter-spacing:0;color:rgba(255,255,255,.6);margin-top:10px}
 .incluido{margin-top:24px;padding:20px 22px;border-radius:14px;background:rgba(14,159,99,.14);border:1px solid rgba(61,214,140,.34);font-size:.98rem;line-height:1.6;color:rgba(255,255,255,.85)}
@@ -842,31 +940,95 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="hero dark" id="top">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Empresa salvadoreña · 12 años · +500 empresas facturando</span>
+      <span class="eyebrow">Empresa salvadoreña · 12 años · +500 empresas</span>
 
-      <h1>Las reglas de Hacienda cambian.<br><span class="grad">Su facturación no se debería enterar.</span></h1>
+      <h1>Facturación electrónica<br><span class="grad">fácil, rápida y segura.</span></h1>
 
       <p class="hero-sub">
-        Emita DTE, gestione compras, libros y anexos desde un solo sistema. Nosotros mantenemos
-        la normativa actualizada.
+        Emita sus facturas en minutos, con <b>soporte que responde</b> y el respaldo de una empresa con
+        más de <b>12 años ayudando a negocios salvadoreños</b>.
       </p>
 
+      <!-- Chips de prueba social: precio inicial, parque instalado y soporte,
+           siempre visibles arriba del fold (criterio del brief). -->
+      <ul class="hero-chips" aria-label="Puntos clave de FactuIA">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Desde $14.99/mes</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>+500 empresas</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Soporte incluido</li>
+      </ul>
+
       <div class="hero-cta">
-        <a class="btn btn-v" href="#precio">Ver precios</a>
-        <button type="button" class="btn btn-cta" data-contacto="hero" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <!-- CTA primario: dispara hero_primary_cta en dataLayer y abre el
+             wizard de contacto que ya existe (data-contacto delega el click). -->
+        <button type="button" class="btn btn-cta lg" data-contacto="hero" data-evt="hero_primary_cta" aria-haspopup="dialog">
+          Empezar a facturar
+          <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <!-- CTA secundario: WhatsApp directo con mensaje precargado. Dispara
+             hero_secondary_cta y whatsapp_click. Numero del asesor: WA (var JS). -->
+        <a class="btn btn-ghost" id="hero-wa"
+           href="https://wa.me/50372559059?text=Hola%2C%20vengo%20de%20la%20landing%20de%20FactuIA%20y%20me%20gustar%C3%ADa%20hablar%20con%20un%20asesor%20sobre%20facturaci%C3%B3n%20electr%C3%B3nica."
+           target="_blank" rel="noopener"
+           data-evt="hero_secondary_cta">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:18px;height:18px"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5H7.5c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.1-1.3c1.5.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          Hablar con un asesor
+        </a>
       </div>
-      <p class="horario">Actualizaciones normativas incluidas en todos los planes · Soporte sin costo · Listo en menos de 24 horas</p>
+      <p class="horario">Soporte sin costo · Listo en menos de 24 horas · Actualizaciones normativas incluidas en todos los planes</p>
     </div>
 
-    <!-- ============ ASSET PRINCIPAL: producto ============ -->
+    <!-- ============ ASSET PRINCIPAL: demo del producto ============
+         Video corto del flujo de emision (seleccionar cliente -> emitir ->
+         enviar). Autoplay silencioso con loop; dispara 'demo_play' en el
+         dataLayer la primera vez que arranca (ver script del hero). -->
     <figure class="shot">
-      <img src="assets/factura-emitida.webp" width="1600" height="1356" loading="eager" decoding="async"
-           alt="Factura electrónica ya emitida en el sistema, con su número de DTE, el sello de Hacienda, el UUID y el número de control llenos, y el estado en Publicado.">
+      <video id="hero-video" width="1600" height="1356" autoplay muted loop playsinline preload="metadata"
+             poster="assets/emitir-factura-poster.webp"
+             aria-label="Demostracion corta de FactuIA: seleccionar cliente, emitir y enviar una factura electronica.">
+        <source src="assets/emitir-factura.webm" type="video/webm">
+        <source src="assets/emitir-factura.mp4" type="video/mp4">
+        <img src="assets/factura-emitida.webp" width="1600" height="1356" loading="eager" decoding="async"
+             alt="Factura electronica ya emitida en el sistema, con sello de Hacienda, UUID y numero de control.">
+      </video>
       <figcaption><span class="ok" aria-hidden="true">✓</span>
-        Una factura recién emitida: sello de Hacienda, UUID y número de control, en el mismo momento. Datos de ejemplo.
+        Facturar toma menos de un minuto. Seleccione el cliente, emita la factura y envíela.
       </figcaption>
     </figure>
   </div>
+
+  <!-- Instrumentacion de eventos del hero (dataLayer/GA4). Se dispara una
+       sola vez por evento gracias al Set 'firedOnce'. -->
+  <script>
+    (function(){
+      window.dataLayer = window.dataLayer || [];
+      var firedOnce = Object.create(null);
+      function push(name, payload){
+        try { window.dataLayer.push(Object.assign({event:name, hero:true}, payload||{})); } catch(e){}
+        if (window.trackGA) { try { window.trackGA(name, payload||{}); } catch(e){} }
+      }
+
+      /* Clicks de los CTAs del hero: lee data-evt del boton clickeado. */
+      document.querySelectorAll('.hero [data-evt]').forEach(function(el){
+        el.addEventListener('click', function(){
+          var evt = el.getAttribute('data-evt');
+          var payload = { cta_label: (el.textContent||'').trim() };
+          push(evt, payload);
+          if (evt === 'hero_secondary_cta') push('whatsapp_click', { source:'hero' });
+        });
+      });
+
+      /* demo_play: el video de emision empieza a reproducirse (incluye autoplay
+         silencioso). Un solo evento por sesion. */
+      var v = document.getElementById('hero-video');
+      if (v) {
+        v.addEventListener('playing', function(){
+          if (firedOnce.demo_play) return;
+          firedOnce.demo_play = true;
+          push('demo_play', { video:'emitir-factura' });
+        });
+      }
+    })();
+  </script>
 </section>
 
 <!-- ================= FRANJA DE CAMPANA =================
@@ -895,15 +1057,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ================= 6. NORMATIVA 2.0 ================= -->
 <section class="norma dark" id="normativa">
   <div class="wrap">
-    <div class="norma-plazo rv">
-      <span class="chip">Plazo oficial: 1 de diciembre de 2026</span>
+    <!-- 1. Qué cambia y cuándo (eyebrow principal, no un tag tecnico). -->
+    <div class="norma-head rv">
+      <p class="norma-eyebrow">Hacienda cambia la <b>Normativa DTE 2.0</b> el <b>1 de diciembre de 2026</b></p>
       <a class="fuente-oficial" href="https://factura.gob.sv/informacion-tecnica-y-funcional/" target="_blank" rel="noopener noreferrer" aria-label="Fuente oficial: Documentos Tecnicos del Ministerio de Hacienda (abre en una pestana nueva)">Fuente: Ministerio de Hacienda ↗</a>
     </div>
+
+    <!-- 2. Consecuencia (urgencia) + alivio en una sola linea. -->
+    <p class="norma-consecuencia rv">
+      Los DTE que no cumplan la <b>Normativa DTE 2.0</b> serán rechazados.
+      <span class="relieve">De eso nos encargamos nosotros.</span>
+    </p>
+
+    <!-- 3. Dos tiles: el contraste 54 vs 0 es el gancho (brief punto 3). -->
+    <div class="norma-tiles rv">
+      <div class="tile tile-urgencia">
+        <span class="tile-top">Faltan</span>
+        <span class="tile-numero"><strong id="cuenta-2">—</strong> <em>días</em></span>
+        <span class="tile-bottom">para que Hacienda exija la Normativa DTE 2.0</span>
+        <span class="tile-fecha" id="cuenta-2-txt">1 de diciembre de 2026</span>
+      </div>
+      <div class="tile tile-alivio">
+        <span class="tile-top">Tareas</span>
+        <span class="tile-numero"><strong>0</strong></span>
+        <span class="tile-bottom">para usted. Nosotros migramos su cuenta.</span>
+        <span class="tile-fecha">Sin trámite · Sin costo adicional</span>
+      </div>
+    </div>
+
+    <!-- 4. Alivio detallado + CTA de migracion (bloque orientado a prospectos). -->
     <div class="norma-grid">
       <div class="rv">
-        <span class="eyebrow">DTE 2.0</span>
         <h2>Usted no tiene que actualizar nada.</h2>
-        <p class="norma-intro">Del cambio a la Normativa 2.0 nos encargamos nosotros:</p>
+        <p class="norma-intro">Del cambio a la <b>Normativa DTE 2.0</b> nos encargamos nosotros:</p>
         <ul class="norma-nosotros">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Actualizamos la plataforma.</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Realizamos las pruebas.</span></li>
@@ -912,7 +1098,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </ul>
         <p class="norma-incluido"><b>Incluido en todos los planes.</b></p>
         <details class="tecnico">
-          <summary>Ver cambios técnicos</summary>
+          <summary>Ver cambios técnicos de la Normativa DTE 2.0</summary>
           <div class="cuerpo">
             <ul>
               <li>Normativa de Cumplimiento DTE versión 2.0, publicada el 25 de mayo de 2026, en sustitución de la 1.2.</li>
@@ -926,19 +1112,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </ul>
           </div>
         </details>
+        <!-- CTA orientado a prospectos (clientes de otros proveedores): el
+             bloque habla de MIGRACION. Dispara migration_cta en el dataLayer. -->
         <div class="hero-cta">
-          <button type="button" class="btn btn-cta" data-contacto="dte20" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </div>
-
-      <div class="rv center">
-        <div class="reloj">
-          <span id="cuenta-2">—</span>
-          <small id="cuenta-2-txt">para el plazo de la Normativa DTE 2.0</small>
+          <button type="button" class="btn btn-cta" data-contacto="dte20" data-evt="migration_cta" aria-haspopup="dialog">
+            Migrar antes del 1 de diciembre
+            <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    /* Instrumentacion del CTA de migracion (dataLayer + trackGA). */
+    (function(){
+      window.dataLayer = window.dataLayer || [];
+      document.querySelectorAll('#normativa [data-evt]').forEach(function(el){
+        el.addEventListener('click', function(){
+          var evt = el.getAttribute('data-evt');
+          var payload = { cta_label: (el.textContent||'').trim(), source: 'normativa' };
+          try { window.dataLayer.push(Object.assign({event:evt}, payload)); } catch(e){}
+          if (window.trackGA) { try { window.trackGA(evt, payload); } catch(e){} }
+        });
+      });
+    })();
+  </script>
 </section>
 
 <!-- ================= 1. QUÉ ES Y CÓMO SE VE ================= -->
@@ -1351,7 +1550,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
             <span><b>La Normativa 2.0 la actualizamos nosotros</b>, en todas sus empresas a la vez.</span></li>
         </ul>
-        <button type="button" class="btn btn-cta sm" data-contacto="contadores" style="margin-top:24px" aria-haspopup="dialog">Contactar <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <!-- CTA de contadores: abre un modal con el wizard del Programa de
+             Alianzas Contables (portado desde sites/alianzas-contables). Se
+             usa data-wz-open (NO data-contacto) para evitar que el listener
+             delegado del wizard de empresas tambien lo capture y abra ambos. -->
+        <button type="button" class="btn btn-cta sm" data-wz-open="contadores" style="margin-top:24px" aria-haspopup="dialog">
+          Soy contador, quiero sumarme
+          <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
       <figure class="shot rv">
@@ -2296,12 +2502,14 @@ var PLANES=[
   function tick(){
     var d=Math.ceil((META-new Date())/86400000);
     if(d>0){
-      set("cuenta",d+" días"); set("cuenta-2",d+" días");
+      /* En #cuenta-2 va SOLO el numero (el "dias" vive en <em> dentro del
+         tile tras el rediseno del brief). */
+      set("cuenta",d+" días"); set("cuenta-2",String(d));
     }else{
       /* plazo vencido: el mensaje cambia a que ya es obligatoria y que ayudamos a cumplir */
       set("cuenta","Ya en vigencia");
       set("cuenta-txt","La Normativa DTE 2.0 ya es obligatoria. Nosotros le ayudamos a cumplir sin que deje de facturar.");
-      set("cuenta-2","Vigente");
+      set("cuenta-2","0");
       set("cuenta-2-txt","La Normativa DTE 2.0 ya es obligatoria — le ayudamos a cumplir.");
     }
   }
@@ -2441,6 +2649,271 @@ document.getElementById("anio").textContent=new Date().getFullYear();
     lastY=y; ticking=false;
   }
   window.addEventListener("scroll",function(){ if(!ticking){ requestAnimationFrame(upd); ticking=true; } },{passive:true});
+})();
+</script>
+
+<!-- ================= WIZARD DE CONTADORES (modal) =================
+     Portado desde sites/alianzas-contables/public/index.html para que el CTA
+     del bloque #contadores recoja el lead sin cambiar de dominio.
+     Submit a /api/lead con medio="landing-contables" (misma identificacion
+     que la landing de contadores separada). -->
+<div class="wz-overlay" id="wz" aria-hidden="true" inert>
+  <form class="wz" id="wzForm" role="dialog" aria-modal="true" aria-label="Contactar al equipo de contadores de FactuIA" aria-describedby="wz-count" novalidate>
+    <button type="button" class="wz-x" data-wz-close aria-label="Cerrar">×</button>
+    <div class="wz-top"><span class="wz-count" id="wz-count">Paso 1 de 5</span></div>
+    <div class="wz-bar" id="wz-barra" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><i id="wz-bar"></i></div>
+
+    <div class="wz-step on" data-step="1">
+      <h3 tabindex="-1">¿Cómo ejerce la contaduría?</h3>
+      <p class="wz-sub">Así le asignamos al asesor indicado.</p>
+      <div class="wz-opts">
+        <label class="wz-opt"><input type="radio" name="perfil" value="Contador independiente"><span class="oi"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span><b>Contador independiente</b><small>Atiende a sus clientes por cuenta propia</small></span></label>
+        <label class="wz-opt"><input type="radio" name="perfil" value="Despacho contable"><span class="oi"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><b>Despacho contable</b><small>Firma o despacho con equipo de trabajo</small></span></label>
+      </div>
+      <div class="wz-fields" id="wz-desp" hidden>
+        <div class="field"><label for="wz-despacho">Nombre del despacho <span style="color:var(--gris-2);font-weight:500">(opcional)</span></label><input id="wz-despacho" name="despacho" type="text" maxlength="80" placeholder="Su despacho o firma" autocomplete="organization"></div>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="2">
+      <h3 tabindex="-1">¿A cuántos clientes les lleva la declaración cada mes?</h3>
+      <p class="wz-sub">Cuente solo a los clientes a los que usted les presenta la declaración mensual.</p>
+      <div class="wz-opts">
+        <label class="wz-opt"><input type="radio" name="clientes" value="1 a 5"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>De 1 a 5 clientes</b><small>Una cartera que empieza a crecer</small></span></label>
+        <label class="wz-opt"><input type="radio" name="clientes" value="6 a 10"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>De 6 a 10 clientes</b><small>Una cartera consolidada</small></span></label>
+        <label class="wz-opt"><input type="radio" name="clientes" value="Más de 10"><span class="oi"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span><span><b>Más de 10 clientes</b><small>Una cartera amplia</small></span></label>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="3">
+      <h3 tabindex="-1">¿En qué zona reside?</h3>
+      <p class="wz-sub">Le conectamos con el asesor de su zona.</p>
+      <div class="wz-fields">
+        <div class="field"><label for="wz-dep">Departamento</label>
+          <select id="wz-dep" name="departamento"><option value="">Seleccione su departamento…</option><option>San Salvador</option><option>La Libertad</option><option>Santa Ana</option><option>San Miguel</option><option>Sonsonate</option><option>La Paz</option><option>Usulután</option><option>Ahuachapán</option><option>Cuscatlán</option><option>La Unión</option><option>Chalatenango</option><option>Morazán</option><option>San Vicente</option><option>Cabañas</option></select>
+        </div>
+        <div class="field"><label for="wz-mun">Municipio <span style="color:var(--gris-2);font-weight:500">(opcional)</span></label><input id="wz-mun" name="municipio" type="text" maxlength="60" placeholder="Ej.: Santa Tecla" autocomplete="address-level2"></div>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="4">
+      <h3 tabindex="-1">¿Cómo desea que le contactemos?</h3>
+      <p class="wz-sub">Elija el medio que le quede más cómodo.</p>
+      <div class="wz-opts">
+        <label class="wz-opt"><input type="radio" name="medio" value="Llamada telefónica"><span class="oi"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><span><b>Llamada telefónica</b><small>Un asesor le llama en el horario que usted elija</small></span></label>
+        <label class="wz-opt"><input type="radio" name="medio" value="WhatsApp"><span class="oi"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span><b>Mensaje por WhatsApp</b><small>Un asesor le escribe a su WhatsApp</small></span></label>
+        <label class="wz-opt"><input type="radio" name="medio" value="Videollamada"><span class="oi"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span><span><b>Videollamada con un asesor</b><small>Usted elige el día y la hora; le enviamos la invitación</small></span></label>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="5">
+      <h3 tabindex="-1">Sus datos de contacto</h3>
+      <p class="wz-sub" id="wz-s5">Complete sus datos para que el asesor le contacte.</p>
+      <div class="wz-fields">
+        <div class="field"><label for="wz-nom">Nombre completo</label><input id="wz-nom" name="nombre" type="text" maxlength="80" placeholder="Su nombre" autocomplete="name"></div>
+      </div>
+      <div class="wz-fields" data-medio="Llamada telefónica" hidden>
+        <div class="wz-row">
+          <div class="field"><label for="wz-tel">Teléfono</label><input id="wz-tel" name="telefono" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel"></div>
+          <div class="field"><label for="wz-hor">Horario para llamarle</label>
+            <select id="wz-hor" name="horario"><option value="">Seleccione…</option><option>Mañana (8:00 a 12:00)</option><option>Mediodía (12:00 a 2:00)</option><option>Tarde (2:00 a 5:00)</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="wz-fields" data-medio="WhatsApp" hidden>
+        <div class="field"><label for="wz-wa">Número de WhatsApp</label><input id="wz-wa" name="whatsapp" type="tel" inputmode="tel" maxlength="16" placeholder="7000-0000" autocomplete="tel"></div>
+      </div>
+      <div class="wz-fields" data-medio="Videollamada" hidden>
+        <div class="field"><label for="wz-mail">Correo electrónico</label><input id="wz-mail" name="correo" type="email" maxlength="120" placeholder="usted@despacho.com" autocomplete="email"></div>
+        <div class="wz-row">
+          <div class="field"><label for="wz-dia">Día disponible</label><input id="wz-dia" name="dia" type="date"></div>
+          <div class="field"><label for="wz-hora">Hora</label><select id="wz-hora" name="hora"><option value="">Seleccione…</option><option>8:00 a. m.</option><option>9:00 a. m.</option><option>10:00 a. m.</option><option>11:00 a. m.</option><option>2:00 p. m.</option><option>3:00 p. m.</option><option>4:00 p. m.</option></select></div>
+        </div>
+        <p class="wz-note">Uno de nuestros asesores le estará enviando la invitación a la videollamada a este correo.</p>
+      </div>
+    </div>
+
+    <div class="wz-step" data-step="done">
+      <div class="wz-done">
+        <div class="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3 tabindex="-1">¡Gracias! Ya casi está</h3>
+        <p id="wz-done-msg"></p>
+      </div>
+    </div>
+
+    <p class="wz-err" id="wz-err" role="alert"></p>
+    <div class="wz-nav" id="wz-nav">
+      <button type="button" class="wz-back" id="wz-back" hidden>← Atrás</button>
+      <button type="submit" class="btn-purple" id="wz-next">Siguiente</button>
+    </div>
+  </form>
+</div>
+
+<script>
+/* Wizard de contadores embebido en factuiasv.com (misma logica que
+   sites/alianzas-contables). Submit a /api/lead con medio="landing-contables"
+   para que los leads se identifiquen por separado en Odoo. */
+(function(){
+  var ov=document.getElementById('wz'); if(!ov) return;
+  var f=document.getElementById('wzForm');
+  var steps=[].slice.call(f.querySelectorAll('.wz-step')),TOTAL=5,cur=1,lastFocus=null,porPuntero=false,inertes=[];
+  var err=document.getElementById('wz-err'),next=document.getElementById('wz-next'),back=document.getElementById('wz-back');
+  var barra=document.getElementById('wz-barra');
+
+  function el(id){return document.getElementById(id);}
+  function val(n){var x=f.elements[n];if(!x)return'';if(x.length&&x[0]&&x[0].type==='radio'){var c=f.querySelector('input[name="'+n+'"]:checked');return c?c.value:'';}return (x.value||'').trim();}
+  function telDig(v){var d=String(v).replace(/\D/g,'');if(d.length===11&&d.indexOf('503')===0)d=d.slice(3);return d;}
+  function telOk(v){return /^[267]\d{7}$/.test(telDig(v));}
+  function telFmt(v){var d=telDig(v);return d.slice(0,4)+'-'+d.slice(4);}
+  function fechaLarga(iso){var p=iso.split('-');var d=new Date(+p[0],+p[1]-1,+p[2]);return d.toLocaleDateString('es-SV',{weekday:'long',day:'numeric',month:'long'});}
+
+  var dia=el('wz-dia');
+  (function(){var t=new Date();t.setDate(t.getDate()+1);dia.min=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');})();
+
+  function limpiarError(){err.textContent='';[].forEach.call(f.querySelectorAll('[aria-invalid="true"]'),function(x){x.removeAttribute('aria-invalid');});}
+  function error(msg,campo){err.textContent=msg;if(campo){if(campo.type!=='radio')campo.setAttribute('aria-invalid','true');try{campo.focus({preventScroll:false});}catch(e){}}}
+
+  function show(n,sinFoco){
+    cur=n;limpiarError();
+    steps.forEach(function(s){s.classList.toggle('on',s.dataset.step===String(n));});
+    var done=n==='done';
+    el('wz-count').textContent=done?'Último paso':'Paso '+n+' de '+TOTAL;
+    el('wz-bar').style.width=(done?100:n/TOTAL*100)+'%';
+    barra.setAttribute('aria-valuenow',done?TOTAL:n);
+    back.hidden=done||n===1;
+    next.textContent=done?'Cerrar':(n===TOTAL?'Enviar solicitud':'Siguiente');
+    if(n===5){
+      var m=val('medio');
+      f.querySelectorAll('[data-medio]').forEach(function(b){b.hidden=b.dataset.medio!==m;});
+      el('wz-s5').textContent=
+        m==='Llamada telefónica'?'Déjenos su teléfono y el horario en que le conviene recibir la llamada.':
+        m==='WhatsApp'?'Déjenos su número de WhatsApp y un asesor le escribirá.':
+        'Elija el día y la hora. Uno de nuestros asesores le enviará la invitación a su correo.';
+    }
+    f.scrollTop=0;
+    if(!sinFoco){var h=f.querySelector('.wz-step.on h3');if(h)setTimeout(function(){try{h.focus({preventScroll:true});}catch(e){}},60);}
+  }
+
+  function check(n){
+    function q(sel){return f.querySelector(sel);}
+    if(n===1&&!val('perfil'))return ['Elija una opción para continuar.',q('input[name="perfil"]')];
+    if(n===2&&!val('clientes'))return ['Elija la cantidad de clientes.',q('input[name="clientes"]')];
+    if(n===3&&!val('departamento'))return ['Seleccione su departamento.',el('wz-dep')];
+    if(n===4&&!val('medio'))return ['Elija cómo desea que le contactemos.',q('input[name="medio"]')];
+    if(n===5){
+      if(val('nombre').length<3)return ['Escriba su nombre completo.',el('wz-nom')];
+      var m=val('medio');
+      if(m==='Llamada telefónica'){
+        if(!telOk(val('telefono')))return ['Escriba un teléfono de El Salvador de 8 dígitos (por ejemplo 7000-0000).',el('wz-tel')];
+        if(!val('horario'))return ['Elija el horario para llamarle.',el('wz-hor')];
+      }
+      if(m==='WhatsApp'&&!telOk(val('whatsapp')))return ['Escriba un número de WhatsApp de El Salvador de 8 dígitos (por ejemplo 7000-0000).',el('wz-wa')];
+      if(m==='Videollamada'){
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('correo')))return ['Escriba un correo válido para enviarle la invitación.',el('wz-mail')];
+        var d=val('dia');if(!d)return ['Elija el día para la videollamada.',dia];
+        if(d<dia.min)return ['Elija un día a partir de mañana.',dia];
+        var wd=new Date(d+'T12:00').getDay();if(wd===0||wd===6)return ['Elija un día de lunes a viernes.',dia];
+        if(!val('hora'))return ['Elija la hora de la videollamada.',el('wz-hora')];
+      }
+    }
+    return null;
+  }
+
+  function lead(){
+    var m=val('medio'),o={perfil:val('perfil'),despacho:val('perfil')==='Despacho contable'?val('despacho'):'',clientes:val('clientes'),departamento:val('departamento'),municipio:val('municipio'),medio:m,nombre:val('nombre')};
+    if(m==='Llamada telefónica'){o.telefono=telFmt(val('telefono'));o.horario=val('horario');}
+    if(m==='WhatsApp'){o.whatsapp=telFmt(val('whatsapp'));}
+    if(m==='Videollamada'){o.correo=val('correo');o.dia=val('dia');o.hora=val('hora');}
+    return o;
+  }
+
+  function fijarInert(on){
+    if(on){inertes=[].filter.call(document.body.children,function(x){return x!==ov&&x.tagName!=='SCRIPT'&&!/(^|\s)ck-/.test(x.className||'')&&!x.inert;});inertes.forEach(function(x){x.inert=true;});}
+    else{inertes.forEach(function(x){x.inert=false;});inertes=[];}
+  }
+  function reiniciar(){f.reset();el('wz-desp').hidden=true;show(1,true);}
+
+  function open(e){
+    if(e)e.preventDefault();
+    lastFocus=e&&e.currentTarget?e.currentTarget:document.activeElement;
+    if(cur==='done')reiniciar();
+    ov.inert=false;ov.classList.add('open');ov.setAttribute('aria-hidden','false');
+    document.body.classList.add('wz-lock');fijarInert(true);
+    show(cur);
+    /* Instrumentacion: abrir wizard de contadores desde la landing principal. */
+    try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'contadores_cta',source:'contadores',action:'open_wizard'});}catch(ignored){}
+    if(window.trackGA){try{window.trackGA('contadores_cta',{source:'contadores',action:'open_wizard'});}catch(ignored){}}
+    if(window.trackMeta){try{window.trackMeta('Contact',{content_name:'Wizard Alianzas Contables (desde factuiasv)'});}catch(ignored){}}
+  }
+  function close(){
+    ov.classList.remove('open');ov.setAttribute('aria-hidden','true');ov.inert=true;
+    document.body.classList.remove('wz-lock');fijarInert(false);
+    /* Si el submit habia cambiado la URL a /gracias con pushState, la volvemos
+       a la URL original de la landing (coherente con el wizard de empresas). */
+    try{if(history.state&&history.state.fx==='gracias'){var prev=history.state.prev||'/';history.replaceState({},'',prev);}}catch(ignored){}
+    if(lastFocus&&lastFocus.focus&&document.contains(lastFocus)){try{lastFocus.focus({preventScroll:true});}catch(ignored){}}
+  }
+  window.addEventListener('popstate',function(){if(ov.classList.contains('open')){ov.classList.remove('open');ov.setAttribute('aria-hidden','true');ov.inert=true;document.body.classList.remove('wz-lock');fijarInert(false);}});
+
+  /* Delegacion: cualquier CTA con data-wz-open abre este modal. Usamos
+     data-wz-open (NO data-contacto) para no colisionar con el listener
+     delegado del wizard de empresas, que escucha [data-contacto] y abriria
+     tambien ese modal al mismo tiempo. */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest?e.target.closest('[data-wz-open]'):null;
+    if(b){e.preventDefault();open({preventDefault:function(){},currentTarget:b});}
+  });
+  ov.addEventListener('click',function(e){if(e.target===ov)close();});
+  f.querySelector('[data-wz-close]').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(ov.classList.contains('open')&&e.key==='Escape'){e.preventDefault();close();}});
+  back.addEventListener('click',function(){if(typeof cur==='number'&&cur>1)show(cur-1);});
+
+  f.addEventListener('pointerdown',function(e){porPuntero=!!(e.target.closest&&e.target.closest('.wz-opt'));});
+  f.addEventListener('keydown',function(){porPuntero=false;});
+  f.addEventListener('change',function(e){
+    var t=e.target;if(t.type!=='radio')return;limpiarError();
+    if(t.name==='perfil'){var d=t.value==='Despacho contable';el('wz-desp').hidden=!d;if(d){setTimeout(function(){el('wz-despacho').focus();},50);return;}}
+    if(!porPuntero)return;
+    var paso=t.closest('.wz-step').dataset.step;
+    setTimeout(function(){if(String(cur)===paso&&!check(cur))show(cur+1);},260);
+  });
+
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(cur==='done'){close();return;}
+    var m=check(cur);if(m){error(m[0],m[1]);return;}
+    if(cur<TOTAL){show(cur+1);return;}
+    var o=lead();
+    var leadId='';try{leadId=crypto.randomUUID();}catch(ignored){leadId='ev-'+Date.now();}
+    var cd={content_name:'Alianzas Contables',content_category:o.perfil,clientes:o.clientes,departamento:o.departamento,medio:o.medio};
+    try{if(window.fbq)fbq('track','Lead',cd,{eventID:leadId});}catch(ignored){}
+    /* POST al backend Odoo (landing_crm_api). Mismo backend que el wizard de
+       empresas; se diferencia con medio="landing-contables" en Odoo. */
+    try{
+      var numero=o.telefono||o.whatsapp||''; var correo=o.correo||'';
+      fetch('/api/lead',{method:'POST',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({
+        nombre:o.nombre,numero:numero,correo:correo,medio:'landing-contables',
+        perfil:o.perfil||'',despacho:o.despacho||'',clientes:o.clientes||'',departamento:o.departamento||'',municipio:o.municipio||'',
+        medio_contacto:o.medio||'',horario:o.horario||'',dia:o.dia||'',hora:o.hora||'',
+        cta_origen:'bloque-contadores-factuiasv',lead_event_id:leadId
+      })}).catch(function(){});
+    }catch(ignored){}
+    el('wz-done-msg').textContent=
+      o.medio==='Llamada telefónica'?'Un asesor le llamará al '+o.telefono+' en el horario que eligió: '+o.horario+'.':
+      o.medio==='WhatsApp'?'Un asesor le escribirá a su WhatsApp '+o.whatsapp+'.':
+      'Un asesor le estará enviando la invitación a '+o.correo+' para el '+fechaLarga(o.dia)+' a las '+o.hora.replace(/\.$/,'')+'.';
+    show('done');
+    /* Cambia la URL a /gracias con pushState para que Google Ads y Meta
+       cuenten el envio como pageview (coherente con el wizard de empresas). */
+    try{
+      if(location.pathname!=='/gracias'){history.pushState({fx:'gracias',prev:location.pathname+location.search+location.hash},'Gracias · FactuIA','/gracias');}
+      if(window.gtag){gtag('event','page_view',{page_location:location.origin+'/gracias',page_path:'/gracias',page_title:'Gracias · FactuIA'});gtag('event','conversion_lead_contables',{perfil:o.perfil,medio:o.medio,transaction_id:leadId});}
+      if(window.fbq){fbq('track','PageView');}
+      window.dataLayer=window.dataLayer||[];
+      window.dataLayer.push({event:'form_submit',form:'contadores',perfil:o.perfil,medio:o.medio,transaction_id:leadId});
+      window.dataLayer.push({event:'thankyou_view',landing:'contables',perfil:o.perfil,medio:o.medio});
+    }catch(ignored){}
+  });
 })();
 </script>
 </body>

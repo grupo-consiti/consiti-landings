@@ -27,10 +27,15 @@ const MAX_BODY_BYTES = 8 * 1024;
 // esté aquí se descarta antes de reenviar (evita que un atacante ensucie
 // las notas del lead con basura arbitraria).
 const EXTRAS_PERMITIDOS = new Set([
+  // Wizard de empresas (medio: factuia-landing).
   'negocio', 'cta_origen', 'tipo_negocio', 'rango_facturas', 'rol',
   'usa_otro_sistema', 'sistema_actual', 'medio_contacto',
   'franja_horaria', 'dia_preferido', 'plan_interesado', 'plan_origen',
   'lead_event_id',
+  // Wizard de contadores embebido en factuiasv.com (medio: landing-contables).
+  // Mismos nombres que sites/alianzas-contables/api/lead.js para consistencia.
+  'perfil', 'despacho', 'clientes', 'departamento', 'municipio',
+  'horario', 'dia', 'hora',
 ]);
 
 // Mensajes al visitante. Los códigos crudos de Odoo no se le muestran.

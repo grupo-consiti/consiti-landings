@@ -1,0 +1,2 @@
+# Excepciones de Trivy para worky (gate ARQ-6 / runbook ARQ-A-2).
+# Formato: una línea por CVE, con justificación y fecha de revisión. Vacío = sin excepciones.

@@ -51,8 +51,9 @@ reunión "Revisión de Worky" (16-sep) y la 1a1 de Administración y RRHH (17-se
 | N1 | Envío de la propuesta a Rafael, que desbloquea las observaciones formales | Nohemy |
 | — | **Revisión legal de `/privacidad` y `/terminos`**: los redactamos nosotros, no un abogado. Revisar el plazo de 15 días hábiles y el correo de contacto | Dirección / legal |
 
-> **Nota sobre el título de la plaza de contador:** debe publicarse como **"contador"**,
-> sin variantes tipo "analista financiero" (acuerdo de la reunión del 16-sep).
+> **Nota sobre el título de la plaza de contador:** desde el 27-sep se publica como
+> **"Encargado Contable"** (nueva ficha de RR. HH., perfil junior a semi sénior), que
+> reemplaza a "Contador General". Sin variantes tipo "analista financiero".
 
 > **Nota sobre la base única:** conviene decirle a RRHH que en el sitio **nunca hubo**
 > formularios separados de plazas y freelance; el segundo canal era el Google Form.

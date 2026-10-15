@@ -81,7 +81,7 @@ Son **reales**, no de ejemplo. Hoy hay cuatro:
 | Practicante de QA con Automatización e IA | Híbrido o remoto, San Salvador | Dos vías de ingreso que compiten igual |
 | Practicante de Infraestructura Cloud | Híbrido o remoto, San Salvador | **Cierra el 9 de octubre de 2026** |
 | Vendedor/a Freelance B2B | Remoto, toda Latinoamérica | La única no limitada a El Salvador |
-| Contador General | Presencial, San Salvador | Requisitos legales: CVPCPA vigente |
+| Encargado Contable (reemplaza a Contador General) | Presencial, San Salvador | Requisito indispensable: registro y sello vigente ante el CVPCPA |
 
 **Reglas de contenido que vienen de Recursos Humanos y de Dirección:**
 
@@ -90,7 +90,7 @@ Son **reales**, no de ejemplo. Hoy hay cuatro:
 - Nada de requisitos de edad, sexo, estado civil ni apariencia: además de alejar buenos
   candidatos, es riesgo legal en un anuncio de empleo.
 - No se nombran clientes ni proveedores de Consiti.
-- La plaza de contador se publica como "Contador General", sin variantes tipo "analista
+- La plaza de contabilidad se publica como "Encargado Contable", sin variantes tipo "analista
   financiero". Fue un acuerdo expreso.
 
 Están todas en [`src/lib/positions.js`](../../src/lib/positions.js), con esas reglas

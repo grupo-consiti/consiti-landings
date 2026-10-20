@@ -1705,15 +1705,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
           <h3 class="cw-q" id="cw-qdone" tabindex="-1">¡Gracias! Ya casi está</h3>
           <p id="cw-done-msg"></p>
-          <!-- CTA a WhatsApp deshabilitado (decisión: dejar solo la thank-you page).
-               El JS que abría WhatsApp también quedó comentado en el submit. Para
-               reactivar: descomentar este bloque y los 4 renglones marcados en
-               index.html cerca de `var url=waURL(resumen(o))`. -->
-          <!--
           <p>Se abrió WhatsApp con su solicitud lista. <b>Presione enviar en WhatsApp</b> para que nos llegue.</p>
           <p class="cw-bloqueo" id="cw-bloqueo" hidden>Su navegador no dejó abrir WhatsApp. Presione el botón para abrirlo.</p>
           <a class="btn btn-cta" id="cw-wa-link" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
-          -->
         </div>
       </div>
 
@@ -1962,11 +1956,17 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
     l.push("Facturas al mes: "+o.facturas);
     l.push("Quién soy: "+o.rol);
     l.push("Sistema actual: "+o.sistema+(o.sistemaCual?" ("+o.sistemaCual+")":""));
+    /* "Plan de interés" solo si la persona lo eligió explícitamente (clic en
+       un plan de la tabla o del wizard "Descubrir mi plan"). El plan sugerido
+       automáticamente por el rango de facturas no se muestra en el mensaje de
+       WhatsApp para no condicionar al asesor con una propuesta prematura. */
     if(o.planCta) l.push("Plan de interés: "+o.planCta.plan+" ("+precio(o.planCta.valor)+" + IVA al mes)");
-    else if(o.plan) l.push("Plan sugerido por volumen: "+o.plan.plan+" ("+precio(o.plan.valor)+" + IVA al mes)");
     l.push("");
     l.push(punto("Prefiero que me contacten por: "+o.medio+", "+(FRANJA_TXT[o.franja]||o.franja)+(o.dia?", de preferencia el "+o.dia.toLowerCase():"")));
-    l.push("","Origen: "+(ORIGEN[o.cta]||"página de FactuIA")+" (ref: "+o.cta+")");
+    /* La línea "Origen: … (ref: …)" se omite del mensaje de WhatsApp — es
+       un dato operativo útil para el equipo, pero no para el cliente. El
+       cta_origen sigue viajando al backend /api/lead (ver fetch), así que
+       en Odoo el lead sí queda con el origen en la descripción. */
     return l.join("\n");
   }
 
@@ -2146,15 +2146,14 @@ function waURL(t){ return "https://wa.me/"+WA+"?text="+encodeURIComponent(t); }
         })
       }).catch(function(){});
     } catch(err){}
-    /* CTA a WhatsApp deshabilitado: el lead ya se creó en Odoo por /api/lead
-       y el asesor lo contactará por el medio y franja indicados en el paso 6.
-       Se mantiene comentado por si se decide reactivar; para hacerlo, quitar
-       los comentarios de las 3 líneas de abajo y también los del bloque
-       WhatsApp del paso "done" (index.html:1700-1702). */
-    // var url=waURL(resumen(o));
-    // document.getElementById("cw-wa-link").href=url;
-    // var abierta=abrirWA(url);
-    // document.getElementById("cw-bloqueo").hidden=abierta;
+    /* CTA a WhatsApp: abre WhatsApp con el resumen de la solicitud. Si el
+       navegador bloquea el popup, se muestra el aviso .cw-bloqueo y el
+       usuario puede pulsar el botón "Abrir WhatsApp" (cw-wa-link). El lead
+       ya se creó en Odoo via /api/lead en paralelo. */
+    var url=waURL(resumen(o));
+    document.getElementById("cw-wa-link").href=url;
+    var abierta=abrirWA(url);
+    document.getElementById("cw-bloqueo").hidden=abierta;
     document.getElementById("cw-done-msg").textContent=punto("Un asesor le contactará por "+(MEDIO_TXT[o.medio]||o.medio)+" "+(FRANJA_TXT[o.franja]||o.franja)+(o.dia?", de preferencia el "+o.dia.toLowerCase():""));
     show("done");
     /* Cambiamos la URL a /gracias con pushState (sin recargar) para que

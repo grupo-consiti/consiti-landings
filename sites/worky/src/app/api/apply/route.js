@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 /**
  * POST /api/apply
- * Recibe una postulación (perfil del banco de talento o aplicación a una vacante)
+ * Recibe la postulación a una vacante (el formulario de esa plaza)
  * y la reenvía al Google Sheet vía el Web App de Apps Script (SHEETS_WEBHOOK_URL).
  *
- * Incluye foto y CV (dataURL base64): el Apps Script los guarda en Google Drive y
+ * Incluye el CV (dataURL base64): el Apps Script los guarda en Google Drive y
  * escribe los enlaces en la hoja, para que Recursos Humanos pueda buscar currículums
  * desde el Drive. Ver docs/GOOGLE-SHEETS.md.
  */
@@ -24,7 +24,7 @@ export async function POST(request) {
   }
 
   const record = {
-    vacante: data.vacante || "Banco de talento (general)",
+    vacante: data.vacante || "Sin plaza",
     departamento: data.departamento || "General",
     modalidad: data.modalidad || "",
     nombre: data.nombre,
@@ -45,7 +45,7 @@ export async function POST(request) {
     cvArchivo: data.cvArchivo || "",
     cvTipo: data.cvTipo || "",
     foto: data.foto || "",
-    origen: data.origen || "landing-worky",
+    origen: data.origen || "bolsa-de-trabajo",
     campania: data.campania || "",
     fuente: data.fuente || "",
     anuncio: data.anuncio || "",
@@ -73,7 +73,7 @@ export async function POST(request) {
     });
   }
 
-  return NextResponse.json({ ok: true, message: "Perfil recibido" }, { status: 200 });
+  return NextResponse.json({ ok: true, message: "Postulación recibida" }, { status: 200 });
 }
 
 export function GET() {

@@ -1,4 +1,5 @@
 import { ArrowRight } from "./Icon";
+import { BrandMark } from "./Header";
 
 // Marco común de las páginas legales: cabecera simple, contenido y pie con la
 // firma de Grupo Consiti. No repite la navegación de la landing a propósito:
@@ -9,10 +10,8 @@ export default function LegalShell({ title, updated, children }) {
     <>
       <header className="header is-stuck">
         <div className="container header__inner">
-          <a href="/" className="brand" aria-label="Worky by Consiti · inicio">
-            <img className="brand__logo" src="/logo-worky.png" alt="Worky by Consiti" width={600} height={146} />
-          </a>
-          <a href="/#plazas" className="btn btn--ghost">Ver plazas</a>
+          <BrandMark href="/" />
+          <a href="/#vacantes" className="btn btn--ghost">Ver vacantes</a>
         </div>
       </header>
 
@@ -24,7 +23,7 @@ export default function LegalShell({ title, updated, children }) {
 
           <div className="legal__back">
             <a href="/" className="btn btn--primary">
-              Volver a Worky <ArrowRight size={18} />
+              Volver a la Bolsa de Trabajo <ArrowRight size={18} />
             </a>
           </div>
         </div>
@@ -33,7 +32,7 @@ export default function LegalShell({ title, updated, children }) {
       <footer className="footer footer--slim">
         <div className="container">
           <div className="footer__bottom" style={{ marginTop: 0, borderTop: 0, paddingTop: 0 }}>
-            <span>© {year} Worky · un producto de Grupo Consiti S.A. de C.V.</span>
+            <span>© {year} Grupo Consiti S.A. de C.V.</span>
             <span className="legal__links">
               <a href="/privacidad">Privacidad</a>
               <a href="/terminos">Términos</a>

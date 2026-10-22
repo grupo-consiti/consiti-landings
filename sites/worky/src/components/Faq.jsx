@@ -2,42 +2,38 @@ import { Plus } from "./Icon";
 
 const faqs = [
   {
-    q: "¿Quién está detrás de Worky?",
-    a: "Grupo Consiti S.A. de C.V., empresa salvadoreña de transformación digital con más de 12 años de trayectoria. Worky es nuestro banco de talento: las plazas que ves son vacantes reales de Consiti y tu perfil lo revisa nuestro equipo de Recursos Humanos.",
+    q: "¿Necesito crear una cuenta?",
+    a: "No. Eliges la vacante, llenas su formulario y listo. No hay usuario ni contraseña que recordar.",
   },
   {
-    q: "¿Cuánto cuesta?",
-    a: "Nada. Crear tu perfil y postularte es gratis, hoy y siempre. Consiti no cobra por participar en un proceso de selección, ni por capacitaciones, ni por nada. Si alguien te pide dinero a nombre nuestro, no somos nosotros.",
+    q: "¿Puedo aplicar a más de una vacante?",
+    a: "Sí. Cada plaza tiene su propio formulario: si te interesan dos, llenas los dos. Así Recursos Humanos ve tus respuestas a lo que pide cada puesto.",
   },
   {
-    q: "¿Qué pasa después de registrarme?",
-    a: "Recibes un correo de confirmación y tu perfil queda en el banco de talento. Cuando abrimos una plaza, tu perfil entra en la comparación automáticamente: no tienes que volver a postularte.",
+    q: "¿Cuánto cuesta postularme?",
+    a: "Nada. Grupo Consiti no cobra por participar en un proceso de selección, ni por capacitaciones, ni por nada. Si alguien te pide dinero a nombre nuestro, no somos nosotros.",
   },
   {
-    q: "¿Necesito un CV perfecto?",
-    a: "No. El CV es opcional. Con tu contacto, tus habilidades y un resumen breve ya quedas dentro. Si quieres destacar, agrega tu CV o un video de presentación, pero nadie queda fuera por no tenerlos.",
+    q: "¿Es obligatorio el CV?",
+    a: "No. Suma si lo adjuntas, pero con tus datos y las respuestas del formulario ya quedas postulado.",
   },
   {
-    q: "¿Cómo eligen a quién contactar?",
-    a: "Worky ordena el banco de talento según lo que pide el perfil de puesto, y Recursos Humanos revisa primero a quienes mejor encajan. La decisión final siempre la toma una persona, no un algoritmo.",
-  },
-  {
-    q: "¿Puedo postularme a varias plazas?",
-    a: "Sí, a todas las que quieras. Con tu perfil creado solo respondes lo puntual de cada vacante; tus datos ya están.",
+    q: "¿Qué pasa después de aplicar?",
+    a: "Te llega un correo de confirmación. Recursos Humanos revisa cada postulación y, si avanzas en el proceso, te contacta por correo o WhatsApp.",
   },
   {
     q: "¿Qué hacen con mis datos?",
-    a: "Se usan solo para procesos de selección de Grupo Consiti. No los vendemos ni los compartimos con terceros. Si quieres que borremos tu perfil, lo borramos: basta con escribirnos.",
+    a: "Se usan solo para los procesos de selección de Grupo Consiti. No los vendemos ni los compartimos con terceros. Si quieres que los borremos, basta con escribirnos.",
   },
 ];
 
 export default function Faq() {
   return (
-    <section className="section" id="faq">
+    <section className="section section--white" id="faq">
       <div className="container">
         <div className="section-head section-head--center reveal">
           <span className="eyebrow">Preguntas frecuentes</span>
-          <h2>Lo que solemos responder</h2>
+          <h2>Lo que más nos preguntan</h2>
         </div>
         <div className="faq reveal">
           {faqs.map((f, i) => (

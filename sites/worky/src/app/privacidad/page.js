@@ -1,18 +1,18 @@
 import LegalShell from "@/components/LegalShell";
 
 export const metadata = {
-  title: "Privacidad · Worky by Consiti",
+  title: "Privacidad · Bolsa de Trabajo Grupo Consiti",
   description:
-    "Qué datos guardamos cuando creas tu perfil en Worky, para qué los usamos, dónde viven, cuánto duran y cómo pedir que los borremos.",
+    "Qué datos guardamos cuando te postulas a una vacante de Grupo Consiti, para qué los usamos, dónde viven, cuánto duran y cómo pedir que los borremos.",
 };
 
 export default function Privacidad() {
   return (
-    <LegalShell title="Cómo manejamos tus datos" updated="22 de septiembre de 2026">
+    <LegalShell title="Cómo manejamos tus datos" updated="22 de octubre de 2026">
       <p className="legal__lead">
-        Worky es el banco de talento de <strong>Grupo Consiti S.A. de C.V.</strong> Aquí te
-        contamos sin rodeos qué datos nos dejas, para qué los usamos y cómo pedir que
-        los borremos. Si algo no te queda claro, escríbenos y te respondemos.
+        Esta es la Bolsa de Trabajo de <strong>Grupo Consiti S.A. de C.V.</strong> Aquí te
+        contamos sin rodeos qué datos nos dejas al postularte, para qué los usamos y cómo
+        pedir que los borremos. Si algo no te queda claro, escríbenos y te respondemos.
       </p>
 
       <h2>1. Quién es responsable de tus datos</h2>
@@ -23,11 +23,11 @@ export default function Privacidad() {
       </p>
 
       <h2>2. Qué datos recogemos</h2>
-      <p>Solo lo que escribes en el formulario. No tomamos nada de ningún otro lado.</p>
+      <p>Solo lo que escribes en el formulario de la plaza. No tomamos nada de ningún otro lado.</p>
       <ul>
         <li><strong>Para contactarte:</strong> nombre, correo, WhatsApp y país.</li>
-        <li><strong>Para evaluar tu perfil:</strong> grado académico, titular, resumen, habilidades técnicas y blandas, experiencia laboral, idiomas y enlaces o redes que compartas.</li>
-        <li><strong>Opcionales:</strong> tu foto de perfil y tu CV en PDF o Word.</li>
+        <li><strong>Para evaluar tu postulación:</strong> grado académico, por qué encajas en la plaza y el enlace a tu LinkedIn o portafolio, si lo compartes.</li>
+        <li><strong>Opcional:</strong> tu CV en PDF o Word.</li>
         <li><strong>Respuestas de cada plaza:</strong> las preguntas propias de la vacante a la que te postulas.</li>
         <li><strong>De qué campaña llegaste:</strong> si entraste desde un anuncio, guardamos el nombre de esa campaña. No dice nada de ti: nos sirve para saber qué anuncio funciona.</li>
       </ul>
@@ -38,9 +38,8 @@ export default function Privacidad() {
 
       <h2>3. Para qué los usamos</h2>
       <ul>
-        <li>Evaluar tu perfil frente a las plazas abiertas de Grupo Consiti.</li>
-        <li>Contactarte por correo o WhatsApp si avanzas en un proceso.</li>
-        <li>Avisarte cuando abrimos plazas nuevas que encajan con tu perfil.</li>
+        <li>Evaluar tu postulación a la plaza que elegiste.</li>
+        <li>Contactarte por correo o WhatsApp si avanzas en el proceso.</li>
         <li>Medir cuántas postulaciones trae cada campaña, en números agregados.</li>
       </ul>
       <p>
@@ -50,8 +49,8 @@ export default function Privacidad() {
 
       <h2>4. Dónde se guardan</h2>
       <p>
-        En cuentas de Google de Grupo Consiti: los datos del perfil en una hoja de Google
-        Sheets y los archivos —tu foto y tu CV— en Google Drive. El sitio está alojado en
+        En cuentas de Google de Grupo Consiti: las respuestas del formulario en una hoja de
+        Google Sheets y tu CV en Google Drive. El sitio está alojado en
         Google Cloud (Cloud Run). Google actúa como proveedor de infraestructura y
         puede almacenar la información en servidores fuera de El Salvador.
       </p>
@@ -68,25 +67,23 @@ export default function Privacidad() {
       <ul>
         <li>Una copia de los datos que tenemos tuyos.</li>
         <li>Que corrijamos lo que esté mal o desactualizado.</li>
-        <li>Que borremos tu perfil por completo.</li>
-        <li>Que dejemos de escribirte sobre plazas nuevas.</li>
+        <li>Que borremos tu postulación por completo.</li>
       </ul>
       <p>
         Escribinos a <a href="mailto:administracion@consiti.com">administracion@consiti.com</a>{" "}
-        desde el mismo correo con el que te registraste. Atendemos la solicitud en un
-        plazo máximo de <strong>15 días hábiles</strong>. Para dejar de recibir avisos de
-        plazas también puedes responder <strong>BAJA</strong> a cualquiera de nuestros correos.
+        desde el mismo correo con el que te postulaste. Atendemos la solicitud en un
+        plazo máximo de <strong>15 días hábiles</strong>.
       </p>
 
       <h2>7. Cookies y almacenamiento en tu navegador</h2>
       <p>
-        Worky <strong>no usa cookies de publicidad ni de analítica</strong>. Lo único que
+        Este sitio <strong>no usa cookies de publicidad ni de analítica</strong>. Lo único que
         guardamos en tu navegador es:
       </p>
       <ul>
         <li><strong>Tu elección de cookies</strong>, para no volver a preguntarte. Es necesaria y no se puede desactivar.</li>
         <li>
-          <strong>El borrador de tu perfil o de tu postulación</strong>, mientras lo
+          <strong>El borrador de tu postulación</strong>, mientras lo
           estás llenando. Si cierras la ventana a medias, al volver lo retomas donde lo
           dejaste en lugar de empezar de cero. <strong>Ese borrador no sale de tu
           dispositivo</strong>: no nos llega nada hasta que pulsas Enviar. Se borra solo
@@ -109,14 +106,14 @@ export default function Privacidad() {
 
       <h2>9. Mayoría de edad</h2>
       <p>
-        Worky está dirigido a personas mayores de edad en busca de empleo o de prácticas
+        La Bolsa de Trabajo está dirigida a personas mayores de edad en busca de empleo o de prácticas
         profesionales. No recogemos datos de menores de forma intencional.
       </p>
 
       <h2>10. Cambios</h2>
       <p>
         Si cambiamos algo de esta página, actualizamos la fecha del encabezado. Si el
-        cambio es importante y ya estás en el banco de talento, te avisamos por correo.
+        cambio es importante y tienes una postulación en curso, te avisamos por correo.
       </p>
     </LegalShell>
   );

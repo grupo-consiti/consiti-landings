@@ -183,10 +183,11 @@ export default function ApplyModal({ vacancy, departamento, onClose }) {
           <div className="pm-body">
             <div className="form-success" style={{ padding: "26px 6px" }}>
               <div className="form-success__ic"><Check size={34} /></div>
-              <h3>¡Aplicación enviada, {data.nombre.split(" ")[0] || "crack"}! 🎉</h3>
+              <h3>¡Listo{data.nombre.split(" ")[0] ? ", " + data.nombre.split(" ")[0] : ""}! Recibimos tu postulación</h3>
               <p>
-                Recibimos tu postulación a <strong>{vacancy.role}</strong>. Si avanzas
-                en el proceso, Recursos Humanos te contacta por correo o WhatsApp.
+                Te postulaste a <strong>{vacancy.role}</strong>. Te enviamos un correo de
+                confirmación y, si avanzas en el proceso, Recursos Humanos te contacta
+                por correo o WhatsApp.
               </p>
               <div className="hero__meta" style={{ justifyContent: "center", marginTop: 20 }}>
                 <span className="chk"><Mail size={16} /> Revisa tu correo</span>
@@ -328,8 +329,8 @@ export default function ApplyModal({ vacancy, departamento, onClose }) {
                       <label className="form-consent" style={{ marginTop: 22 }}>
                         <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
                         <span>
-                          Autorizo a Grupo Consiti S.A. de C.V. a guardar mis datos en el banco
-                          de talento de Worky y a contactarme sobre esta y otras plazas.{" "}
+                          Autorizo a Grupo Consiti S.A. de C.V. a guardar mis datos para el
+                          proceso de selección de esta plaza y a contactarme sobre ella.{" "}
                           <a href="/privacidad" target="_blank" rel="noopener noreferrer">Cómo manejamos tus datos</a>.
                           {errors.consent && <span className="field-error">{errors.consent}</span>}
                         </span>

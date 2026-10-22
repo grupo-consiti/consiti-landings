@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Worky — El banco de talento de Grupo Consiti";
+export const alt = "Bolsa de Trabajo de Grupo Consiti";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,56 +16,37 @@ export default function OG() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "90px",
-          background: "linear-gradient(135deg, #6E35F0 0%, #5216E7 52%, #3B0FAF 118%)",
+          background: "#000000",
           color: "#ffffff",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div
-            style={{
-              width: 96,
-              height: 96,
-              borderRadius: 26,
-              background: "rgba(255,255,255,0.18)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 60,
-              fontWeight: 800,
-            }}
-          >
-            W
-          </div>
-          <div style={{ fontSize: 44, fontWeight: 700, marginLeft: 26, letterSpacing: -1 }}>
-            Worky
-          </div>
+        <div style={{ display: "flex", alignItems: "center", fontSize: 30, fontWeight: 700, color: "#DFD2FF", letterSpacing: 4 }}>
+          <div style={{ width: 40, height: 4, background: "#5216E7", marginRight: 18 }} />
+          GRUPO CONSITI
         </div>
 
-        <div style={{ fontSize: 84, fontWeight: 800, marginTop: 40, lineHeight: 1.05, letterSpacing: -2 }}>
-          Un perfil.
-        </div>
-        <div style={{ fontSize: 84, fontWeight: 800, lineHeight: 1.05, letterSpacing: -2 }}>
-          Todas nuestras plazas.
+        <div style={{ fontSize: 96, fontWeight: 800, marginTop: 34, lineHeight: 1.02, letterSpacing: -3 }}>
+          Bolsa de Trabajo
         </div>
 
-        <div style={{ fontSize: 32, marginTop: 30, color: "rgba(255,255,255,0.92)" }}>
-          Créalo gratis · Postúlate con un clic
+        <div style={{ fontSize: 36, marginTop: 28, color: "#C4C0D0", lineHeight: 1.35 }}>
+          Elige la vacante, llena su formulario y Recursos Humanos te contacta.
         </div>
 
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            marginTop: 40,
-            paddingTop: 26,
-            borderTop: "1px solid rgba(255,255,255,0.28)",
-            fontSize: 26,
-            color: "rgba(255,255,255,0.88)",
-            letterSpacing: 0.5,
+            marginTop: 48,
+            alignSelf: "flex-start",
+            background: "#5216E7",
+            borderRadius: 999,
+            padding: "18px 34px",
+            fontSize: 30,
+            fontWeight: 700,
           }}
         >
-          Un producto de Grupo Consiti · worky.consiti.com
+          Ver vacantes abiertas
         </div>
       </div>
     ),

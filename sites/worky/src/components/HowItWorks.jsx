@@ -1,30 +1,27 @@
-import { Clipboard, Search, Bolt, Chat } from "./Icon";
-
 const steps = [
-  { n: "1", ic: <Clipboard size={22} />, t: "Crea tu perfil", d: "Quién eres, qué sabes hacer y qué buscas. Una vez y gratis." },
-  { n: "2", ic: <Search size={22} />, t: "Mira las plazas", d: "Las vacantes abiertas hoy en Grupo Consiti, filtradas por área." },
-  { n: "3", ic: <Bolt size={22} />, t: "Postúlate con un clic", d: "Solo respondes lo puntual de esa plaza. Tus datos ya están." },
-  { n: "4", ic: <Chat size={22} />, t: "Te escribimos", d: "Si tu perfil encaja, Recursos Humanos te contacta por correo o WhatsApp." },
+  { n: "01", t: "Elige la vacante", d: "Revisa las plazas abiertas, lo que pide cada una y sus condiciones." },
+  { n: "02", t: "Llena su formulario", d: "Tus datos de contacto, tu CV si lo tienes y las preguntas propias de esa plaza." },
+  { n: "03", t: "Recursos Humanos te contacta", d: "Revisamos cada postulación. Si avanzas, te escribimos por correo o WhatsApp." },
 ];
 
 export default function HowItWorks() {
   return (
-    <section className="section" id="como-funciona">
+    <section className="section section--black" id="como-aplicar">
       <div className="container">
-        <div className="section-head section-head--center reveal">
-          <span className="eyebrow">Cómo funciona</span>
-          <h2>Cuatro pasos y listo</h2>
-          <p>Sin cuentas que confirmar ni formularios interminables.</p>
+        <div className="section-head reveal">
+          <span className="eyebrow eyebrow--dark">Cómo aplicar</span>
+          <h2>Tres pasos, sin crear cuenta</h2>
+          <p>Te postulas directo a la plaza que te interesa. Si quieres aplicar a otra, llenas el formulario de esa otra.</p>
         </div>
-        <div className="steps reveal">
+        <ol className="steps reveal">
           {steps.map((s) => (
-            <div className="step" key={s.n}>
-              <div className="step__n">{s.n}</div>
+            <li className="step" key={s.n}>
+              <span className="step__n">{s.n}</span>
               <h3>{s.t}</h3>
               <p>{s.d}</p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

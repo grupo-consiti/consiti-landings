@@ -1,73 +1,39 @@
-# Worky · Landing
+# Bolsa de Trabajo · Grupo Consiti
 
-Landing y banco de talento de **Grupo Consiti S.A. de C.V.** Worky es la página
-"Trabaja con nosotros": el candidato crea su perfil una vez y queda visible para todas
-las plazas que abre Consiti.
+Sitio donde **Grupo Consiti S.A. de C.V.** publica sus vacantes. El candidato elige la
+plaza, llena **el formulario de esa plaza** y la respuesta cae en el Google Sheet de
+Recursos Humanos (vía Apps Script). No hay cuentas, perfiles guardados ni IA que
+recomiende plazas.
 
 - **Framework:** Next.js 15 (App Router) + React 18
-- **Estilo:** CSS propio con design tokens (sin dependencias de UI)
-- **Tipografías:** Sora (títulos) + Inter (texto) vía `next/font`
-- **Hosting:** Vercel → **https://worky-zeta.vercel.app**
-- **Dominio destino:** `worky.consiti.com` *(pendiente de DNS)*
+- **Estilo:** CSS propio con la paleta del manual de Consiti (negro, morado `#5216E7`,
+  lavanda `#DFD2FF`, blanco), sin degradados
+- **Tipografía:** Hanken Grotesk (versión abierta de HK Grotesk) vía `next/font`
+- **Dominio:** `worky.consiti.com` (Cloud Run, servicio `worky-landing`)
 
-> 📦 **¿Vas a retomar el proyecto?** Empezá por
-> [`docs/entrega/00-LEEME-PRIMERO.md`](docs/entrega/00-LEEME-PRIMERO.md): contexto
-> funcional, arquitectura, lo que falta y los accesos que necesitás.
+> **Cambio de enfoque (22-oct-2026).** El sitio dejó de ser "Worky", el banco de
+> talento con perfil e IA, y pasó a ser la Bolsa de Trabajo de Consiti con marca
+> 100 % Consiti. La carpeta y el servicio conservan el nombre `worky` para no romper
+> el despliegue. `docs/BRANDING.md` y `docs/entrega/` describen el modelo anterior.
 
-> **Marca:** Worky va co-branded con Grupo Consiti (sello en el header, bloque de marca
-> en el footer, firma legal y correos). Las reglas están en
-> [`docs/BRANDING.md`](docs/BRANDING.md) §0. La premisa de "marca blanca" de la v1
-> quedó sin efecto por corrección de Dirección (21-sep-2026).
+## Publicar o quitar una vacante
+
+Todo vive en [`src/lib/positions.js`](src/lib/positions.js): cada plaza trae su
+descripción, requisitos y sus preguntas propias (`extraFields`), que son las que arma
+su formulario. Para quitar una plaza, se borra del archivo. Enlace directo para la
+pauta: `/?plaza=<id>` abre el formulario de esa plaza.
 
 ---
 
 ## 🗂️ Estructura del proyecto
 
 ```
-WORKY/
-├── public/                     # Assets estáticos y marca
-│   ├── logo-worky.png          # Logotipo "Worky by Consiti" (fondo claro)
-│   ├── logo-worky-white.png    # El mismo para fondo oscuro
-│   ├── isotipo-worky.png       # Isotipo solo (la W con la lupa)
-│   ├── consiti-logotipo-morado.svg    # Marca madre (header)
-│   ├── consiti-imagologo-blanco.svg   # Marca madre (footer)
-│   └── favicon.png
-├── src/
-│   ├── app/
-│   │   ├── layout.js           # Metadatos, SEO, tipografías
-│   │   ├── page.js             # Composición de la landing
-│   │   ├── privacidad/         # Cómo manejamos los datos del candidato
-│   │   ├── terminos/           # Términos y condiciones de uso
-│   │   ├── globals.css         # Design system (tokens, componentes)
-│   │   ├── opengraph-image.js  # Imagen social (OG) generada
-│   │   └── api/apply/route.js  # Endpoint que recibe los registros
-│   ├── components/             # Secciones y UI
-│   │   ├── Header.jsx  Hero.jsx  Stats.jsx  Problem.jsx
-│   │   ├── HowItWorks.jsx  Audience.jsx  Positions.jsx  AiEngine.jsx
-│   │   ├── Apply.jsx  ApplyForm.jsx  ApplyModal.jsx  Faq.jsx
-│   │   ├── ProfileModal.jsx  ProfileModalHost.jsx
-│   │   ├── FinalCta.jsx  Footer.jsx  Reveal.jsx
-│   │   └── Icon.jsx            # Iconografía propia (SVG)
-│   └── lib/
-│       ├── positions.js        # Vacantes reales + requisitos y preguntas por plaza
-│       ├── profileOptions.js   # Stack, habilidades, idiomas y tipos de enlace
-│       ├── cvFile.js           # Lectura y validación del CV antes de subirlo
-│       ├── consent.js          # Consentimiento de cookies / almacenamiento
-│       ├── draft.js            # Autoguardado de los wizards (solo en el navegador)
-│       ├── tracking.js         # Atribución de campañas (UTM)
-│       └── formOptions.js      # Países y grados académicos
-├── docs/
-│   ├── entrega/                # 📦 Carpeta de traspaso técnico (empezá por acá)
-│   ├── BRANDING.md             # Guía de marca (logo, paleta, tipografía, voz)
-│   ├── CAMPANAS-META.md        # URLs de la pauta + medición por campaña
-│   ├── PROMPT-ARTES.md         # Prompts para el copy y el arte de cada plaza
-│   ├── DEPLOY.md               # Cómo se despliega en Vercel
-│   ├── GOOGLE-SHEETS.md        # Conectar el formulario a Google Sheets
-│   ├── ROADMAP.md              # Próximos pasos (correo, matching IA, etc.)
-│   └── apps-script/Codigo.gs   # Script que crea la hoja y recibe postulaciones
-├── next.config.mjs
-├── vercel.json
-└── package.json
+src/
+├── app/            layout (SEO, tipografía), page, privacidad, terminos, api/apply, OG
+├── components/     Header, Hero, Positions (listado + filtros), ApplyModal (formulario
+│                   por plaza), HowItWorks, WhyConsiti, Faq, FinalCta, Footer, LegalShell
+└── lib/            positions (catálogo), tracking y consent (UTM), draft, cvFile
+docs/apps-script/   Codigo.gs: webhook → Google Sheets + CV en Drive + correo
 ```
 
 ---

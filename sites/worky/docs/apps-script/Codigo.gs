@@ -1,15 +1,16 @@
 /**
- * Worky — Webhook a Google Sheets + Archivos en Drive + Correos
+ * Bolsa de Trabajo Consiti — Webhook a Google Sheets + CV en Drive + Correos
  * -----------------------------------------------------------------------
- * Worky es el banco de talento de Grupo Consiti S.A. de C.V.
+ * Recibe las postulaciones del formulario de cada vacante (antes "Worky").
+ * La hoja y las carpetas conservan su nombre original para no romper lo existente.
  *
  * 1) CREA la hoja "Worky — Postulaciones" (al correr `setup` una vez).
- * 2) Recibe perfiles/postulaciones en `doPost` y agrega una fila.
+ * 2) Recibe las postulaciones en `doPost` y agrega una fila (columna "Vacante").
  * 3) Guarda la FOTO y el CV en Google Drive y pone sus enlaces en la hoja,
  *    para que Recursos Humanos pueda buscar currículums desde el Drive.
  * 4) Envía al postulante un CORREO de confirmación.
- * 5) Permite enviar el CORREO DE REACTIVACIÓN a candidatos del banco
- *    (`enviarReactivacion`), avisándoles que hay plazas nuevas abiertas.
+ * 5) `enviarReactivacion` es del modelo anterior (banco de talento). Ya no aplica
+ *    a la Bolsa de Trabajo: no correrlo sin revisar su texto antes.
  * 6) Guarda la CAMPAÑA de la que vino cada postulación (UTM de la pauta de Meta),
  *    para contar registros por campaña y calcular el costo por registro.
  *
@@ -30,8 +31,10 @@ var HEADERS = [
 
 // worky.consiti.com ya está en producción: los enlaces de los correos apuntan al
 // dominio propio. (Antes iban al dominio temporal de Vercel.)
-var URL_PLAZAS = "https://worky.consiti.com/#plazas";
+var URL_PLAZAS = "https://worky.consiti.com/#vacantes";
 var URL_CONSITI = "https://consiti.com";
+// Logo de los correos de reactivación (modelo anterior). El de confirmación ya no
+// usa imagen: la cabecera es texto, con la marca de Consiti.
 // Logo para los correos. Va la versión MONOCROMÁTICA (todo blanco): la cabecera
 // del correo es morada, y en la versión normal la W y la "y" son moradas y se
 // perderían sobre ese fondo.
@@ -143,16 +146,16 @@ function sendConfirmation_(data) {
 
   var nombre = (data.nombre || "").trim();
   var primerNombre = nombre ? nombre.split(" ")[0] : "";
-  var vacante = data.vacante || "el banco de talento de Grupo Consiti";
+  var vacante = data.vacante || "una vacante de Grupo Consiti";
   var departamento = data.departamento || "";
 
   var html = emailHtml_(primerNombre || "hola", vacante, departamento);
 
   MailApp.sendEmail({
     to: correo,
-    subject: "Ya estás en el banco de talento de Grupo Consiti" + (primerNombre ? ", " + primerNombre : ""),
+    subject: "Recibimos tu postulación a " + vacante,
     htmlBody: html,
-    name: "Worky · Grupo Consiti",
+    name: "Bolsa de Trabajo · Grupo Consiti",
   });
 }
 
@@ -206,55 +209,56 @@ var EMAIL_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional/
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>Ya estás en el banco de talento de Grupo Consiti</title>
+<title>Recibimos tu postulación · Grupo Consiti</title>
 <style>
 body { margin:0; padding:0; -webkit-text-size-adjust:100%; }
 table { border-collapse:collapse; }
-img { border:0; outline:none; text-decoration:none; }
 a { text-decoration:none; }
 @media only screen and (max-width:620px){
 .wrap{width:100% !important;} .px{padding-left:24px !important;padding-right:24px !important;} .h1{font-size:26px !important;}
 }
 </style>
 </head>
-<body style="margin:0; padding:0; background-color:#F6F5FC;">
-<div style="display:none; max-height:0; overflow:hidden; opacity:0; color:#F6F5FC; font-size:1px; line-height:1px;">Recibimos tu postulación. Si avanzas en el proceso, te escribimos.</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F6F5FC;">
+<body style="margin:0; padding:0; background-color:#F7F6FA;">
+<div style="display:none; max-height:0; overflow:hidden; opacity:0; color:#F7F6FA; font-size:1px; line-height:1px;">Recibimos tu postulación. Si avanzas en el proceso, te escribimos.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F7F6FA;">
 <tr><td align="center" style="padding:32px 12px;">
-<table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:600px; background-color:#ffffff; border-radius:22px; overflow:hidden; box-shadow:0 20px 45px -20px rgba(22,15,51,0.28);">
-<tr><td style="background-color:#5216E7; background-image:linear-gradient(135deg,#6E35F0 0%,#5216E7 52%,#3B0FAF 118%); padding:34px 40px;">
-<img src="{{URL_LOGO}}" alt="Worky by Consiti" width="172" style="display:block; width:172px; max-width:172px; height:auto; border:0; outline:none; text-decoration:none;" />
+<table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:600px; background-color:#ffffff; border-radius:20px; overflow:hidden;">
+<tr><td style="background-color:#000000; padding:30px 40px; font-family:Arial,Helvetica,sans-serif;">
+<div style="color:#ffffff; font-size:20px; font-weight:bold; letter-spacing:0.12em;">GRUPO CONSITI</div>
+<div style="color:#DFD2FF; font-size:14px; margin-top:4px;">Bolsa de Trabajo</div>
 </td></tr>
+<tr><td style="background-color:#5216E7; height:4px; line-height:4px; font-size:4px;">&nbsp;</td></tr>
 <tr><td class="px" style="padding:38px 40px 8px 40px;">
-<div style="display:inline-block; background-color:#E4F8F1; color:#0E9E74; font-family:Arial,Helvetica,sans-serif; font-size:12px; font-weight:bold; letter-spacing:0.06em; text-transform:uppercase; padding:7px 13px; border-radius:999px;">Perfil recibido</div>
-<h1 class="h1" style="margin:18px 0 0 0; font-family:Arial,Helvetica,sans-serif; font-size:30px; line-height:1.15; color:#160F33; font-weight:bold; letter-spacing:-0.5px;">Listo, {{NOMBRE}}. Ya estás dentro.</h1>
+<div style="font-family:Arial,Helvetica,sans-serif; font-size:12px; font-weight:bold; letter-spacing:0.1em; text-transform:uppercase; color:#5216E7;">Postulación recibida</div>
+<h1 class="h1" style="margin:14px 0 0 0; font-family:Arial,Helvetica,sans-serif; font-size:30px; line-height:1.15; color:#000000; font-weight:bold;">Gracias, {{NOMBRE}}.</h1>
 </td></tr>
-<tr><td class="px" style="padding:16px 40px 4px 40px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.65; color:#565273;">Tu perfil ya está en el <strong style="color:#160F33;">banco de talento de Grupo Consiti</strong>. Gracias por tomarte el tiempo.</td></tr>
+<tr><td class="px" style="padding:14px 40px 4px 40px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.65; color:#4A4757;">Recibimos tu postulación en la Bolsa de Trabajo de <strong style="color:#000000;">Grupo Consiti</strong>.</td></tr>
 <tr><td class="px" style="padding:20px 40px 4px 40px;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F6F5FC; border:1px solid #E9E7F3; border-radius:16px;"><tr><td style="padding:18px 20px; font-family:Arial,Helvetica,sans-serif;">
-<div style="font-size:12px; color:#8B87A6; text-transform:uppercase; letter-spacing:0.06em; font-weight:bold;">Te postulaste a</div>
-<div style="font-size:18px; color:#160F33; font-weight:bold; margin-top:5px;">{{VACANTE}}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F3EEFF; border-radius:14px;"><tr><td style="padding:18px 20px; font-family:Arial,Helvetica,sans-serif;">
+<div style="font-size:12px; color:#4A4757; text-transform:uppercase; letter-spacing:0.06em; font-weight:bold;">Te postulaste a</div>
+<div style="font-size:18px; color:#000000; font-weight:bold; margin-top:5px;">{{VACANTE}}</div>
 <div style="font-size:14px; color:#5216E7; font-weight:bold; margin-top:3px;">{{DEPARTAMENTO}}</div>
 </td></tr></table>
 </td></tr>
-<tr><td class="px" style="padding:24px 40px 4px 40px; font-family:Arial,Helvetica,sans-serif; font-size:16px; color:#160F33; font-weight:bold;">¿Qué sigue?</td></tr>
-<tr><td class="px" style="padding:8px 40px 0 40px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#565273;">
+<tr><td class="px" style="padding:24px 40px 4px 40px; font-family:Arial,Helvetica,sans-serif; font-size:16px; color:#000000; font-weight:bold;">¿Qué sigue?</td></tr>
+<tr><td class="px" style="padding:8px 40px 0 40px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#4A4757;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-<tr><td width="26" valign="top" style="color:#12B886; font-weight:bold;">1.</td><td style="padding-bottom:10px;">Worky compara tu perfil con lo que pide la plaza.</td></tr>
-<tr><td width="26" valign="top" style="color:#12B886; font-weight:bold;">2.</td><td style="padding-bottom:10px;"><strong style="color:#160F33;">Si avanzas</strong> en esta o en otra plaza, Recursos Humanos te escribe por correo o WhatsApp.</td></tr>
-<tr><td width="26" valign="top" style="color:#12B886; font-weight:bold;">3.</td><td>Tu perfil se queda guardado: entra en cada vacante que abrimos, sin que tengas que hacer nada.</td></tr>
+<tr><td width="26" valign="top" style="color:#5216E7; font-weight:bold;">1.</td><td style="padding-bottom:10px;">Recursos Humanos revisa tu postulación y tus respuestas.</td></tr>
+<tr><td width="26" valign="top" style="color:#5216E7; font-weight:bold;">2.</td><td style="padding-bottom:10px;"><strong style="color:#000000;">Si avanzas</strong>, te escribimos por correo o WhatsApp.</td></tr>
+<tr><td width="26" valign="top" style="color:#5216E7; font-weight:bold;">3.</td><td>Si te interesa otra vacante, puedes aplicar a ella con su propio formulario.</td></tr>
 </table>
 </td></tr>
 <tr><td class="px" align="center" style="padding:30px 40px 8px 40px;">
-<table role="presentation" cellpadding="0" cellspacing="0"><tr><td align="center" style="background-color:#5216E7; background-image:linear-gradient(135deg,#6E35F0 0%,#5216E7 52%,#3B0FAF 118%); border-radius:999px;">
-<a href="{{URL_PLAZAS}}" target="_blank" style="display:inline-block; padding:15px 30px; font-family:Arial,Helvetica,sans-serif; font-size:16px; font-weight:bold; color:#ffffff;">Ver las plazas abiertas →</a>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td align="center" style="background-color:#5216E7; border-radius:999px;">
+<a href="{{URL_PLAZAS}}" target="_blank" style="display:inline-block; padding:15px 30px; font-family:Arial,Helvetica,sans-serif; font-size:16px; font-weight:bold; color:#ffffff;">Ver las vacantes abiertas →</a>
 </td></tr></table>
 </td></tr>
-<tr><td class="px" style="padding:22px 40px 36px 40px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#565273;">Gracias por confiar en nosotros.<br />— Recursos Humanos · Grupo Consiti</td></tr>
-<tr><td style="background-color:#160F33; padding:26px 40px; font-family:Arial,Helvetica,sans-serif;">
-<div style="color:#ffffff; font-size:16px; font-weight:bold;">Worky <span style="color:#A9A4CC; font-weight:normal;">by Consiti</span></div>
-<div style="color:#A9A4CC; font-size:13px; line-height:1.6; margin-top:6px;">El banco de talento con IA de <a href="{{URL_CONSITI}}" target="_blank" style="color:#C9C5E4; font-weight:bold;">Grupo Consiti S.A. de C.V.</a> · San Salvador, El Salvador</div>
-<div style="color:#8480A6; font-size:12px; margin-top:14px;">Correo automático de confirmación. Si no te postulaste en Worky, ignora este mensaje.</div>
+<tr><td class="px" style="padding:22px 40px 36px 40px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#4A4757;">Gracias por tu interés en trabajar con nosotros.<br />— Recursos Humanos · Grupo Consiti</td></tr>
+<tr><td style="background-color:#000000; padding:26px 40px; font-family:Arial,Helvetica,sans-serif;">
+<div style="color:#ffffff; font-size:14px; font-weight:bold;">Grupo Consiti S.A. de C.V.</div>
+<div style="color:#B9B5C6; font-size:13px; line-height:1.6; margin-top:6px;">Transformación digital con Software, IA y Cloud. · <a href="{{URL_CONSITI}}" target="_blank" style="color:#DFD2FF; font-weight:bold;">consiti.com</a></div>
+<div style="color:#8E8A9B; font-size:12px; margin-top:14px;">Correo automático de confirmación. Si no te postulaste a una vacante de Consiti, ignora este mensaje.</div>
 </td></tr>
 </table>
 </td></tr></table>

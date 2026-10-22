@@ -6,10 +6,10 @@ import { ArrowRight, Menu, Close } from "./Icon";
 // El orden coincide con el orden de las secciones en la página, para que el
 // indicador del menú avance de izquierda a derecha conforme se baja.
 const LINKS = [
-  { href: "#como-funciona", label: "Cómo funciona" },
-  { href: "#plazas", label: "Plazas" },
-  { href: "#beneficios", label: "Beneficios" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#vacantes", label: "Vacantes" },
+  { href: "#como-aplicar", label: "Cómo aplicar" },
+  { href: "#por-que-consiti", label: "Por qué Consiti" },
+  { href: "#faq", label: "Preguntas" },
 ];
 
 export default function Header() {
@@ -80,9 +80,7 @@ export default function Header() {
   return (
     <header className={`header ${stuck ? "is-stuck" : ""}`}>
       <div className="container header__inner">
-        <a href="#top" className="brand" aria-label="Worky by Consiti · inicio" onClick={() => setMenu(false)}>
-          <img className="brand__logo" src="/logo-worky.png" alt="Worky by Consiti" width={600} height={146} />
-        </a>
+        <BrandMark onClick={() => setMenu(false)} />
 
         <nav className="nav" ref={navRef}>
           <span
@@ -103,9 +101,8 @@ export default function Header() {
         </nav>
 
         <div className="header__cta">
-          <a href="#plazas" className="btn btn--ghost">Ver plazas</a>
-          <a href="#aplicar" className="btn btn--primary">
-            Crear mi perfil <ArrowRight size={18} />
+          <a href="#vacantes" className="btn btn--primary">
+            Ver vacantes <ArrowRight size={18} />
           </a>
         </div>
 
@@ -133,12 +130,23 @@ export default function Header() {
                 {l.label}
               </a>
             ))}
-            <a href="#aplicar" className="btn btn--primary btn--block btn--lg" onClick={() => setMenu(false)}>
-              Crear mi perfil <ArrowRight size={18} />
+            <a href="#vacantes" className="btn btn--primary btn--block btn--lg" onClick={() => setMenu(false)}>
+              Ver vacantes <ArrowRight size={18} />
             </a>
           </nav>
         </>
       )}
     </header>
+  );
+}
+
+// Logotipo de Consiti + el nombre del sitio. Se reutiliza en las páginas legales.
+export function BrandMark({ href = "#top", onClick }) {
+  return (
+    <a href={href} className="brand" aria-label="Bolsa de Trabajo Grupo Consiti · inicio" onClick={onClick}>
+      <img className="brand__logo" src="/consiti-logotipo-morado.svg" alt="Grupo Consiti" width={636} height={126} />
+      <span className="brand__sep" aria-hidden="true" />
+      <span className="brand__name">Bolsa de Trabajo</span>
+    </a>
   );
 }

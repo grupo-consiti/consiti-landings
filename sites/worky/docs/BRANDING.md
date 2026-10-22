@@ -1,5 +1,8 @@
 # Worky · Guía de marca
 
+> **Sin efecto desde el 22-oct-2026.** El sitio ahora es la Bolsa de Trabajo de Grupo
+> Consiti y usa solo la marca Consiti. Esta guía queda como referencia histórica.
+
 Identidad visual de **Worky**, el banco de talento de **Grupo Consiti S.A. de C.V.**
 Worky tiene personalidad propia —tecnológica, optimista y humana— pero **no es una
 marca independiente**: siempre se presenta respaldada por Consiti.
